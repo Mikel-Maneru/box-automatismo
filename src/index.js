@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors({
   origin: process.env.NODE_ENV === 'production'
-    ? [process.env.ALLOWED_ORIGIN || 'https://web-production-35183.up.railway.app']
+    ? [process.env.ALLOWED_ORIGIN || 'https://web-anboto.up.railway.app']
     : '*'
 }));
 app.use(express.json());
