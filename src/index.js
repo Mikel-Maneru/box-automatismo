@@ -21,7 +21,11 @@ app.use('/api', chatRouter);
 app.use('/api', signupRouter);
 
 app.get('/health', (_req, res) => {
-  res.json({ status: 'ok' });
+  res.json({
+    status: 'ok',
+    supabase: !!process.env.SUPABASE_URL,
+    env: process.env.NODE_ENV || 'development'
+  });
 });
 
 app.get('/', (_req, res) => {
