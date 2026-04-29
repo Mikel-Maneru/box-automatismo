@@ -415,6 +415,7 @@
           <div class="form-group"><label for="signup-telefono">Telefono</label><input type="tel" id="signup-telefono" placeholder="612 345 678"></div>
           <div class="form-group"><label for="signup-email">Email</label><input type="email" id="signup-email" placeholder="tu@email.com"></div>
           <div class="form-group"><label for="signup-nivel">Experiencia</label><select id="signup-nivel"><option value="Sin experiencia">Sin experiencia</option><option value="Algo de experiencia">Algo de experiencia</option><option value="Vengo de otro box">Vengo de otro box</option></select></div>
+          <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
           <button type="submit" class="form-btn" id="signupBtn">Quiero mi clase gratis</button>
           <div class="form-msg" id="signupMsg"></div>
         </form>
@@ -540,7 +541,7 @@
         const res = await fetch('/api/signup', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ nombre, telefono, email, nivel, origen: 'formulario' })
+          body: JSON.stringify({ nombre, telefono, email, nivel, origen: 'formulario', website: document.querySelector('input[name=website]')?.value || '' })
         });
         if (res.ok) {
           msg.className = 'form-msg success';

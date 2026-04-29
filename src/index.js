@@ -3,6 +3,7 @@ require('dotenv').config({ override: true }); // v1
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const rateLimit = require('express-rate-limit');
 const chatRouter = require('./routes/chat');
 const signupRouter = require('./routes/signup');
 
@@ -17,21 +18,31 @@ app.use(cors({
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+// Rate limiting
+const signupLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 3,
+  message: { error: 'Demasiados intentos. Inténtalo más tarde.' },
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
+const chatLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 30,
+  message: { error: 'Demasiados mensajes. Inténtalo más tarde.' },
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
+app.use('/api/signup', signupLimiter);
+app.use('/api/chat', chatLimiter);
+
 app.use('/api', chatRouter);
 app.use('/api', signupRouter);
 
-app.get('/health', async (_req, res) => {
-  const supabase = require('./lib/supabase');
-  const { data, error } = await supabase.from('boxes').select('widget_token, name').limit(1);
-  const key = process.env.SUPABASE_SERVICE_KEY || '';
-  res.json({
-    status: 'ok',
-    supabaseUrl: process.env.SUPABASE_URL ? 'set' : 'missing',
-    keyLength: key.length,
-    keyStart: key.substring(0, 20),
-    keyEnd: key.substring(key.length - 10),
-    boxQuery: error ? `error: ${error.message}` : (data && data.length ? `found: ${data[0].name}` : 'no boxes found')
-  });
+app.get('/health', (_req, res) => {
+  res.json({ status: 'ok' });
 });
 
 app.get('/', (_req, res) => {
