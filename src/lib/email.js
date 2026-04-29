@@ -70,6 +70,7 @@ async function createSignup({ nombre, telefono, email, nivel, origen }) {
 
   // Send notification email as fallback (fire-and-forget)
   const notifyEmail = process.env.NOTIFY_EMAIL;
+  console.log('Email config:', { user: process.env.GMAIL_USER ? 'set' : 'missing', pass: process.env.GMAIL_APP_PASSWORD ? 'set' : 'missing', notify: notifyEmail || 'missing' });
   if (notifyEmail) {
     const fecha = new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' });
     transporter.sendMail({
@@ -87,7 +88,15 @@ async function createSignup({ nombre, telefono, email, nivel, origen }) {
         <hr>
         <p>Responde a este email o llama directamente al cliente.</p>
       `
-    }).catch(err => console.error('Error enviando email:', err.message || err));
+    }).catch(err => {
+      console.error('Error enviando email:', JSON.stringify({
+        code: err.code,
+        message: err.message,
+        command: err.command,
+        responseCode: err.responseCode,
+        response: err.response
+      }, null, 2));
+    });
   }
 
   return data;
