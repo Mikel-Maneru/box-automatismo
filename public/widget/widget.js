@@ -121,35 +121,9 @@
   }
 
   async function loadBoxInfo() {
-    try {
-      // Send a hidden "init" to get the box name via a first interaction
-      // We'll use a welcome message based on the first response
-      addMessage('assistant', '¡Hola! Soy el asistente del box. ¿En qué puedo ayudarte?');
-      // Now do a real init call to get the box name
-      const res = await fetch(`${API_URL}/api/chat`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: 'Hola', boxToken: token, sessionId })
-      });
-      const data = await res.json();
-      if (data.sessionId) {
-        sessionId = data.sessionId;
-        sessionStorage.setItem('box_chat_session', sessionId);
-      }
-      if (data.reply) {
-        // Replace welcome with the real one
-        const msgs = document.getElementById('box-chat-messages');
-        if (msgs && msgs.lastChild) {
-          msgs.lastChild.textContent = data.reply;
-          const title = document.getElementById('box-chat-title');
-          // Extract box name from the reply
-          const match = data.reply.match(/asistente(?:\s+virtual)?\s+de\s+(.+)/i);
-          if (match) title.textContent = match[1];
-        }
-      }
-    } catch {
-      // Keep default welcome if API fails
-    }
+    const title = document.getElementById('box-chat-title');
+    title.textContent = 'Anboto Crossfit';
+    addMessage('assistant', '¡Hola! Soy el asistente de Anboto Crossfit. ¿En qué puedo ayudarte?');
   }
 
   function addMessage(role, text) {
