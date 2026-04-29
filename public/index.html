@@ -547,12 +547,14 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ nombre, telefono, email, nivel, origen: 'formulario', website: document.querySelector('input[name=website]')?.value || '' })
         });
+        const data = await res.json();
         if (res.ok) {
           msg.className = 'form-msg success';
           msg.textContent = '¡Perfecto! En breve nos ponemos en contacto contigo.';
           document.getElementById('signupForm').reset();
         } else {
-          throw new Error();
+          msg.className = 'form-msg error';
+          msg.textContent = data.error || 'Algo ha fallado, escríbenos por WhatsApp';
         }
       } catch {
         msg.className = 'form-msg error';
