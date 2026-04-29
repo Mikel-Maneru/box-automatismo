@@ -69,32 +69,33 @@ async function createSignup({ nombre, telefono, email, nivel, origen }) {
 
   if (error) throw error;
 
-  // Send WhatsApp notification (fire-and-forget)
-  sendWhatsAppNotification({ nombre, telefono, email, nivel, origen });
+  // Send WhatsApp notification
+  await sendWhatsAppNotification({ nombre, telefono, email, nivel, origen });
 
-  // Send notification email as fallback (fire-and-forget)
+  // Send notification email
   const notifyEmail = process.env.NOTIFY_EMAIL;
   console.log('Email config:', { user: process.env.GMAIL_USER ? 'set' : 'missing', pass: process.env.GMAIL_APP_PASSWORD ? 'set' : 'missing', notify: notifyEmail || 'missing' });
   if (notifyEmail) {
     const fecha = new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' });
-    transporter.sendMail({
-      from: `"Anboto Crossfit" <${process.env.GMAIL_USER}>`,
-      to: notifyEmail,
-      subject: '\u{1F525} Nueva inscripci\u00f3n - Anboto Crossfit',
-      html: `
-        <h2>Nueva inscripci\u00f3n en Anboto Crossfit</h2>
-        <p><strong>Nombre:</strong> ${nombre}</p>
-        <p><strong>Tel\u00e9fono:</strong> ${telefono || 'No indicado'}</p>
-        <p><strong>Email:</strong> ${email || 'No indicado'}</p>
-        <p><strong>Nivel:</strong> ${nivel || 'No indicado'}</p>
-        <p><strong>Origen:</strong> ${origen}</p>
-        <p><strong>Fecha:</strong> ${fecha}</p>
-        <hr>
-        <p>Responde a este email o llama directamente al cliente.</p>
-      `
-    }).then(info => {
+    try {
+      const info = await transporter.sendMail({
+        from: `"Anboto Crossfit" <${process.env.GMAIL_USER}>`,
+        to: notifyEmail,
+        subject: '\u{1F525} Nueva inscripci\u00f3n - Anboto Crossfit',
+        html: `
+          <h2>Nueva inscripci\u00f3n en Anboto Crossfit</h2>
+          <p><strong>Nombre:</strong> ${nombre}</p>
+          <p><strong>Tel\u00e9fono:</strong> ${telefono || 'No indicado'}</p>
+          <p><strong>Email:</strong> ${email || 'No indicado'}</p>
+          <p><strong>Nivel:</strong> ${nivel || 'No indicado'}</p>
+          <p><strong>Origen:</strong> ${origen}</p>
+          <p><strong>Fecha:</strong> ${fecha}</p>
+          <hr>
+          <p>Responde a este email o llama directamente al cliente.</p>
+        `
+      });
       console.log('Email enviado:', info.messageId, info.response);
-    }).catch(err => {
+    } catch (err) {
       console.error('Error enviando email:', JSON.stringify({
         code: err.code,
         message: err.message,
@@ -102,7 +103,7 @@ async function createSignup({ nombre, telefono, email, nivel, origen }) {
         responseCode: err.responseCode,
         response: err.response
       }, null, 2));
-    });
+    }
   }
 
   return data;
