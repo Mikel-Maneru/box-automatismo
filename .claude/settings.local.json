@@ -1,0 +1,50 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(curl -s http://localhost:3002/health)",
+      "Bash(node:*)",
+      "Bash(curl -s -X POST http://localhost:3002/api/chat -H \"Content-Type: application/json\" -d '{\"\"message\"\":\"\"Hola, ¿qué es un WOD?\"\",\"\"boxToken\"\":\"\"anboto-token-2024\"\"}')",
+      "Bash(curl -s -X POST http://localhost:3001/api/chat -H \"Content-Type: application/json\" -d '{\"\"message\"\":\"\"Hola, ¿qué es un WOD?\"\",\"\"boxToken\"\":\"\"anboto-token-2024\"\"}')",
+      "Bash(curl:*)",
+      "Bash(netstat -ano)",
+      "Bash(taskkill //PID 35364 //F)",
+      "Bash(taskkill //PID 4536 //F)",
+      "Bash(python3 -c \"from PIL import Image; print\\(''PIL OK''\\)\")",
+      "Bash(python3 -c \"from pillow import Image; print\\(''OK''\\)\")",
+      "Bash(pip install:*)",
+      "Bash(python3 -m pip install Pillow)",
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(ngrok --version)",
+      "Bash(npx localtunnel:*)",
+      "Bash(ngrok http:*)",
+      "Bash(ngrok config:*)",
+      "Bash(NGROK_AUTHTOKEN=3CxQqZWK3NZV7vx8lrtVtiduayX_71CKPkcsZkbXewVysb43G)",
+      "Bash(mkdir -p ~/.ngrok2)",
+      "Bash(~/.ngrok2/ngrok.yml:*)",
+      "Bash(ngrok version:*)",
+      "Bash(where ngrok:*)",
+      "Bash(find C:Usersmikel.maneruAppDataRoamingnpmnode_modulesngrok -name ngrok*)",
+      "Bash(\"C:\\\\Users\\\\mikel.maneru\\\\AppData\\\\Roaming\\\\npm\\\\node_modules\\\\ngrok\\\\bin\\\\ngrok.exe\" version:*)",
+      "Bash(\"/c/Users/mikel.maneru/AppData/Roaming/npm/node_modules/ngrok/bin/ngrok.exe\" version:*)",
+      "WebSearch",
+      "WebFetch(domain:www.tugimnasio.es)",
+      "Bash(bash memory-hook.sh)",
+      "Bash(npm run *)",
+      "Bash(npm install *)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          "bash memory-hook.sh"
+        ]
+      }
+    ]
+  }
+}
