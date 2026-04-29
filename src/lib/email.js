@@ -27,15 +27,19 @@ Responde directamente a este número para contactarle.`;
 }
 
 async function sendWhatsAppNotification(data) {
-  if (!twilioClient || !process.env.TWILIO_WHATSAPP_FROM || !process.env.TWILIO_WHATSAPP_TO) return;
+  if (!twilioClient || !process.env.TWILIO_WHATSAPP_FROM || !process.env.TWILIO_WHATSAPP_TO) {
+    console.log('WhatsApp skipped:', { client: !!twilioClient, from: !!process.env.TWILIO_WHATSAPP_FROM, to: !!process.env.TWILIO_WHATSAPP_TO });
+    return;
+  }
   try {
-    await twilioClient.messages.create({
+    const msg = await twilioClient.messages.create({
       from: process.env.TWILIO_WHATSAPP_FROM,
       to: process.env.TWILIO_WHATSAPP_TO,
       body: buildWhatsAppMessage(data)
     });
+    console.log('WhatsApp enviado:', msg.sid, msg.status);
   } catch (err) {
-    console.error('Error enviando WhatsApp:', err.message || err);
+    console.error('Error enviando WhatsApp:', err.code, err.message);
   }
 }
 
@@ -88,6 +92,8 @@ async function createSignup({ nombre, telefono, email, nivel, origen }) {
         <hr>
         <p>Responde a este email o llama directamente al cliente.</p>
       `
+    }).then(info => {
+      console.log('Email enviado:', info.messageId, info.response);
     }).catch(err => {
       console.error('Error enviando email:', JSON.stringify({
         code: err.code,
