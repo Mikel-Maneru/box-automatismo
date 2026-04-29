@@ -47,7 +47,8 @@
     .btn-secondary{background:rgba(255,255,255,.06);color:#fff;border:1px solid rgba(255,255,255,.12)}
     .btn-secondary:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
     .btn svg{width:18px;height:18px}
-    .hero-stats{display:flex;gap:40px;margin-top:56px;padding-top:32px;border-top:1px solid rgba(255,255,255,.08)}
+    .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;margin-top:56px;padding-top:32px;border-top:1px solid rgba(255,255,255,.08)}
+    .stat-item{text-align:center}
     .stat-num{font-size:2.2rem;font-weight:800;color:var(--red);line-height:1}
     .stat-label{font-size:.82rem;color:rgba(255,255,255,.4);margin-top:4px;font-weight:500}
 
@@ -210,9 +211,10 @@
       nav.scrolled{padding:10px 24px}
       .nav-links{display:none}
       .hamburger{display:block}
-      .hero-content{padding:0 24px;margin:0}
+      .hero-content{padding:0 24px;margin:0;padding-top:100px}
       .hero-img{width:100%;opacity:.04}
-      .hero-stats{gap:24px;flex-wrap:wrap}
+      .hero-stats{grid-template-columns:1fr 1fr;gap:20px}
+      .stat-item{padding:16px 0;border-bottom:1px solid rgba(255,255,255,.06)}
       .section{padding:64px 24px}
       .about-inner{grid-template-columns:1fr;gap:32px;padding:64px 24px}
       .about-photo{min-height:280px}
@@ -230,8 +232,12 @@
     @media(max-width:480px){
       .coaches-grid{grid-template-columns:1fr}
       .coach-img{height:220px}
-      .hero-buttons{flex-direction:column;width:100%}
-      .btn{width:100%;justify-content:center}
+      .hero-content{padding:0 20px;padding-top:90px}
+      .hero h1{letter-spacing:-2px}
+      .hero-buttons{flex-direction:column;width:100%;gap:10px}
+      .btn{width:100%;justify-content:center;padding:14px 28px}
+      .hero-stats{gap:12px}
+      .stat-num{font-size:1.8rem}
       .schedule-grid{grid-template-columns:repeat(2,1fr)}
     }
   </style>
@@ -279,10 +285,10 @@
         <a href="#que-es" class="btn btn-secondary">Que es CrossFit</a>
       </div>
       <div class="hero-stats">
-        <div><div class="stat-num">4.9<span style="font-size:1.2rem">/5</span></div><div class="stat-label">Valoracion Google</div></div>
-        <div><div class="stat-num">46+</div><div class="stat-label">Miembros activos</div></div>
-        <div><div class="stat-num">4</div><div class="stat-label">Coaches</div></div>
-        <div><div class="stat-num">8+</div><div class="stat-label">Anos de experiencia</div></div>
+        <div class="stat-item"><div class="stat-num">4.9<span style="font-size:1.2rem">/5</span></div><div class="stat-label">Valoracion Google</div></div>
+        <div class="stat-item"><div class="stat-num">46+</div><div class="stat-label">Miembros activos</div></div>
+        <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">Coaches</div></div>
+        <div class="stat-item"><div class="stat-num">8+</div><div class="stat-label">Anos de experiencia</div></div>
       </div>
     </div>
   </section>
