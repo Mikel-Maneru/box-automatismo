@@ -10,6 +10,7 @@ const signupRouter = require('./routes/signup');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.set('trust proxy', 1);
 app.use(cors({
   origin: process.env.NODE_ENV === 'production'
     ? [process.env.ALLOWED_ORIGIN || 'https://web-anboto.up.railway.app']
