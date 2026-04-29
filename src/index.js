@@ -20,11 +20,14 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/api', chatRouter);
 app.use('/api', signupRouter);
 
-app.get('/health', (_req, res) => {
+app.get('/health', async (_req, res) => {
+  const supabase = require('./lib/supabase');
+  const { data, error } = await supabase.from('boxes').select('widget_token, name').limit(1);
   res.json({
     status: 'ok',
-    supabase: !!process.env.SUPABASE_URL,
-    env: process.env.NODE_ENV || 'development'
+    supabaseUrl: process.env.SUPABASE_URL ? 'set' : 'missing',
+    supabaseKey: process.env.SUPABASE_SERVICE_KEY ? 'set' : 'missing',
+    boxQuery: error ? `error: ${error.message}` : (data && data.length ? `found: ${data[0].name}` : 'no boxes found')
   });
 });
 
