@@ -28,7 +28,11 @@
     .nav-links a:hover{color:#fff}
     .nav-cta{background:var(--red)!important;color:#fff!important;padding:10px 24px!important;border-radius:50px!important;font-size:.85rem!important;font-weight:600!important;transition:transform .2s,box-shadow .2s!important}
     .nav-cta:hover{transform:scale(1.05)!important;box-shadow:0 4px 20px rgba(230,57,70,.4)!important}
-    .hamburger{display:none;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer}
+    .hamburger{display:none;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;position:relative;width:28px;height:28px}
+    .hamburger .icon-open,.hamburger .icon-close{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;transition:opacity .2s}
+    .hamburger .icon-close{opacity:0}
+    .hamburger.menu-open .icon-open{opacity:0;pointer-events:none}
+    .hamburger.menu-open .icon-close{opacity:1}
 
     /* HERO */
     .hero{min-height:100vh;background:var(--dark);color:#fff;display:flex;align-items:center;position:relative;overflow:hidden}
@@ -257,11 +261,10 @@
       <a href="#faq">FAQ</a>
       <a href="#apuntarse" class="nav-cta">Prueba gratis</a>
     </div>
-    <button class="hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span class="icon-open">&#9776;</span><span class="icon-close">&#10005;</span></button>
   </nav>
 
   <div class="mobile-menu" id="mobileMenu">
-    <button class="close" id="closeMenu">&times;</button>
     <a href="#que-es" onclick="closeMobile()">CrossFit</a>
     <a href="#horarios" onclick="closeMobile()">Horarios</a>
     <a href="#coaches" onclick="closeMobile()">Coaches</a>
@@ -496,10 +499,18 @@
     // Mobile menu
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
-    const closeMenuBtn = document.getElementById('closeMenu');
-    hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
-    closeMenuBtn.addEventListener('click', () => mobileMenu.classList.remove('open'));
-    function closeMobile() { mobileMenu.classList.remove('open'); }
+    hamburger.addEventListener('click', () => {
+      if (mobileMenu.classList.contains('open')) {
+        closeMobile();
+      } else {
+        mobileMenu.classList.add('open');
+        hamburger.classList.add('menu-open');
+      }
+    });
+    function closeMobile() {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('menu-open');
+    }
 
     // FAQ accordion
     document.querySelectorAll('.faq-question').forEach(q => {
