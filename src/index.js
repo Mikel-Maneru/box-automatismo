@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 // Rate limiting
 const signupLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,
-  max: 3,
+  max: 10,
   message: { error: 'Demasiados intentos. Inténtalo más tarde.' },
   standardHeaders: true,
   legacyHeaders: false

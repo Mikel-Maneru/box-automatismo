@@ -12,8 +12,11 @@ router.post('/signup', async (req, res) => {
     // Honeypot: if filled, silently accept without saving
     if (website) return res.json({ ok: true, honeypot: true });
 
+    console.log('Signup request body:', JSON.stringify(req.body));
+
     // Validation
     if (!nombre || nombre.trim().length < 2 || nombre.trim().length > 50) {
+      console.log('Validation failed: nombre=', JSON.stringify(nombre));
       return res.status(400).json({ error: 'El nombre debe tener entre 2 y 50 caracteres' });
     }
 
