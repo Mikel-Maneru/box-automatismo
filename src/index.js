@@ -23,10 +23,13 @@ app.use('/api', signupRouter);
 app.get('/health', async (_req, res) => {
   const supabase = require('./lib/supabase');
   const { data, error } = await supabase.from('boxes').select('widget_token, name').limit(1);
+  const key = process.env.SUPABASE_SERVICE_KEY || '';
   res.json({
     status: 'ok',
     supabaseUrl: process.env.SUPABASE_URL ? 'set' : 'missing',
-    supabaseKey: process.env.SUPABASE_SERVICE_KEY ? 'set' : 'missing',
+    keyLength: key.length,
+    keyStart: key.substring(0, 20),
+    keyEnd: key.substring(key.length - 10),
     boxQuery: error ? `error: ${error.message}` : (data && data.length ? `found: ${data[0].name}` : 'no boxes found')
   });
 });
