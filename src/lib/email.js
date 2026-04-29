@@ -68,11 +68,11 @@ async function createSignup({ nombre, telefono, email, nivel, origen }) {
   // Send WhatsApp notification (fire-and-forget)
   sendWhatsAppNotification({ nombre, telefono, email, nivel, origen });
 
-  // Send notification email as fallback
+  // Send notification email as fallback (fire-and-forget)
   const notifyEmail = process.env.NOTIFY_EMAIL;
   if (notifyEmail) {
     const fecha = new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' });
-    await transporter.sendMail({
+    transporter.sendMail({
       from: `"Anboto Crossfit" <${process.env.GMAIL_USER}>`,
       to: notifyEmail,
       subject: '\u{1F525} Nueva inscripci\u00f3n - Anboto Crossfit',
@@ -87,7 +87,7 @@ async function createSignup({ nombre, telefono, email, nivel, origen }) {
         <hr>
         <p>Responde a este email o llama directamente al cliente.</p>
       `
-    });
+    }).catch(err => console.error('Error enviando email:', err.message || err));
   }
 
   return data;
