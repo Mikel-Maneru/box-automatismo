@@ -1,8 +1,7 @@
 const { createClient } = require('@supabase/supabase-js');
 
 if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_KEY) {
-  console.error('SUPABASE_URL y SUPABASE_SERVICE_KEY son obligatorias');
-  process.exit(1);
+  throw new Error('SUPABASE_URL y SUPABASE_SERVICE_KEY son obligatorias');
 }
 
 const supabase = createClient(

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://anbotofitness.com/sitemap.xml

@@ -1,54 +1,20 @@
-const nodemailer = require('nodemailer');
-const twilio = require('twilio');
+const { Resend } = require('resend');
 const supabase = require('./supabase');
+const { sendNewSignupNotification } = require('./whatsapp');
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD
-  }
-});
-
-const twilioClient = process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN
-  ? new twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
-  : null;
-
-function buildWhatsAppMessage({ nombre, telefono, email, nivel, origen }) {
-  return `🔥 Nueva inscripción - Anboto Crossfit
-
-👤 Nombre: ${nombre}
-📱 Teléfono: ${telefono || 'No indicado'}
-📧 Email: ${email || 'No indicado'}
-💪 Nivel: ${nivel || 'No indicado'}
-📋 Origen: ${origen}
-
-Responde directamente a este número para contactarle.`;
+let resend = null;
+if (process.env.RESEND_API_KEY) {
+  resend = new Resend(process.env.RESEND_API_KEY);
 }
 
-async function sendWhatsAppNotification(data) {
-  if (!twilioClient || !process.env.TWILIO_WHATSAPP_FROM || !process.env.TWILIO_WHATSAPP_TO) {
-    console.log('WhatsApp skipped:', { client: !!twilioClient, from: !!process.env.TWILIO_WHATSAPP_FROM, to: !!process.env.TWILIO_WHATSAPP_TO });
-    return;
-  }
-  try {
-    const msg = await twilioClient.messages.create({
-      from: process.env.TWILIO_WHATSAPP_FROM,
-      to: process.env.TWILIO_WHATSAPP_TO,
-      body: buildWhatsAppMessage(data)
-    });
-    console.log('WhatsApp enviado:', msg.sid, msg.status);
-  } catch (err) {
-    console.error('Error enviando WhatsApp:', err.code, err.message);
-  }
-}
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3003';
 
 async function createSignup({ nombre, telefono, email, nivel, origen }) {
   // Get box_id for Anboto
   const { data: box } = await supabase
     .from('boxes')
     .select('id')
-    .eq('slug', 'anboto-crossfit')
+    .eq('slug', 'anboto-fitness')
     .single();
 
   if (!box) throw new Error('Box no encontrado');
@@ -69,23 +35,19 @@ async function createSignup({ nombre, telefono, email, nivel, origen }) {
 
   if (error) throw error;
 
-  // Send WhatsApp notification
-  await sendWhatsAppNotification({ nombre, telefono, email, nivel, origen });
-
-  // Send notification email
+  // Send notification email via Resend
   const notifyEmail = process.env.NOTIFY_EMAIL;
-  console.log('Email config:', { user: process.env.GMAIL_USER ? 'set' : 'missing', pass: process.env.GMAIL_APP_PASSWORD ? 'set' : 'missing', notify: notifyEmail || 'missing' });
-  if (notifyEmail) {
+  if (notifyEmail && resend) {
     const fecha = new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' });
     try {
-      const info = await transporter.sendMail({
-        from: `"Anboto Crossfit" <${process.env.GMAIL_USER}>`,
+      const { data: emailData, error: emailError } = await resend.emails.send({
+        from: 'Anboto Crossfit <onboarding@resend.dev>',
         to: notifyEmail,
-        subject: '\u{1F525} Nueva inscripci\u00f3n - Anboto Crossfit',
+        subject: '\u{1F525} Nueva inscripción - Anboto Crossfit',
         html: `
-          <h2>Nueva inscripci\u00f3n en Anboto Crossfit</h2>
+          <h2>Nueva inscripción en Anboto Crossfit</h2>
           <p><strong>Nombre:</strong> ${nombre}</p>
-          <p><strong>Tel\u00e9fono:</strong> ${telefono || 'No indicado'}</p>
+          <p><strong>Teléfono:</strong> ${telefono || 'No indicado'}</p>
           <p><strong>Email:</strong> ${email || 'No indicado'}</p>
           <p><strong>Nivel:</strong> ${nivel || 'No indicado'}</p>
           <p><strong>Origen:</strong> ${origen}</p>
@@ -94,19 +56,134 @@ async function createSignup({ nombre, telefono, email, nivel, origen }) {
           <p>Responde a este email o llama directamente al cliente.</p>
         `
       });
-      console.log('Email enviado:', info.messageId, info.response);
+      if (emailError) {
+        console.error('Error enviando email via Resend:', emailError);
+      } else {
+        console.log('Email enviado via Resend:', emailData?.id);
+      }
     } catch (err) {
-      console.error('Error enviando email:', JSON.stringify({
-        code: err.code,
-        message: err.message,
-        command: err.command,
-        responseCode: err.responseCode,
-        response: err.response
-      }, null, 2));
+      console.error('Error enviando email via Resend:', err.message || err);
+    }
+  }
+
+  // Send WhatsApp notification
+  try {
+    await sendNewSignupNotification(nombre, telefono, email, nivel, origen);
+  } catch (err) {
+    console.error('Error enviando WhatsApp de notificacion:', err.message || err);
+  }
+
+  // Generate scheduling token and send scheduling email
+  if (data?.id && email) {
+    try {
+      const crypto = require('crypto');
+      const token = crypto.randomBytes(32).toString('hex');
+
+      const { error: tokenError } = await supabase
+        .from('signup_tokens')
+        .insert({
+          signup_id: data.id,
+          token,
+          expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+        });
+
+      if (tokenError) {
+        console.error('Error guardando signup_token:', tokenError);
+      } else {
+        await sendSchedulingEmail(email, nombre, token);
+
+        await supabase
+          .from('signups')
+          .update({ scheduling_email_sent: true })
+          .eq('id', data.id);
+      }
+    } catch (err) {
+      console.error('Error en flujo de scheduling:', err.message || err);
     }
   }
 
   return data;
 }
 
-module.exports = { createSignup };
+async function sendSchedulingEmail(toEmail, nombre, token) {
+  if (!resend) {
+    console.log('Resend no configurado, saltando email de scheduling');
+    return;
+  }
+
+  const schedulingUrl = `${BASE_URL}/reservar?token=${token}`;
+
+  try {
+    const { data: emailData, error: emailError } = await resend.emails.send({
+      from: 'Anboto Crossfit <onboarding@resend.dev>',
+      to: toEmail,
+      subject: 'Elige tu clase gratuita en Anboto Crossfit',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #1a1a1a;">Hola ${nombre}!</h2>
+          <p>Gracias por querer probar una clase en Anboto Crossfit.</p>
+          <p>Elige el dia y la hora que mejor te vengan para tu clase gratuita:</p>
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${schedulingUrl}" style="background-color: #ff6b35; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-size: 18px; font-weight: bold; display: inline-block;">Elige tu clase gratuita</a>
+          </div>
+          <p style="color: #666; font-size: 14px;">Este enlace caduca en 7 dias. Si tienes cualquier duda, escribenos por WhatsApp al 688 661 924.</p>
+        </div>
+      `
+    });
+    if (emailError) {
+      console.error('Error enviando email de scheduling:', emailError);
+    } else {
+      console.log('Email de scheduling enviado:', emailData?.id);
+    }
+  } catch (err) {
+    console.error('Error enviando email de scheduling:', err.message || err);
+  }
+}
+
+async function sendFollowupEmail(toEmail, nombre, signupId) {
+  if (!resend) return;
+
+  // Generate a new token for the follow-up actions
+  const crypto = require('crypto');
+  const followupToken = crypto.randomBytes(32).toString('hex');
+
+  await supabase
+    .from('signup_tokens')
+    .insert({
+      signup_id: signupId,
+      token: followupToken,
+      expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+    });
+
+  const yesUrl = `${BASE_URL}/api/followup/yes?token=${followupToken}`;
+  const noUrl = `${BASE_URL}/api/followup/no?token=${followupToken}`;
+
+  try {
+    const { data: emailData, error: emailError } = await resend.emails.send({
+      from: 'Anboto Crossfit <onboarding@resend.dev>',
+      to: toEmail,
+      subject: 'Como te fue en tu clase en Anboto?',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #1a1a1a;">Hola ${nombre}!</h2>
+          <p>Esperamos que disfrutaras tu clase en Anboto Crossfit!</p>
+          <p>Te ha gustado? Quieres formar parte de la familia Anboto?</p>
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${yesUrl}" style="background-color: #4caf50; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-size: 18px; font-weight: bold; display: inline-block; margin-right: 10px;">Si, me quiero apuntar!</a>
+            <a href="${noUrl}" style="background-color: #999; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-size: 18px; font-weight: bold; display: inline-block;">No, gracias</a>
+          </div>
+          <p style="color: #666; font-size: 14px;">Si tienes cualquier duda, escribenos por WhatsApp al 688 661 924.</p>
+        </div>
+      `
+    });
+    if (emailError) {
+      console.error('Error enviando email de follow-up:', emailError);
+    } else {
+      console.log('Email de follow-up enviado:', emailData?.id);
+    }
+  } catch (err) {
+    console.error('Error enviando email de follow-up:', err.message || err);
+  }
+}
+
+module.exports = { createSignup, sendSchedulingEmail, sendFollowupEmail };

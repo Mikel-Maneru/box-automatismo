@@ -39,12 +39,12 @@ CREATE INDEX idx_boxes_widget_token ON boxes(widget_token);
 CREATE INDEX idx_conversations_box_session ON conversations(box_id, session_id);
 CREATE INDEX idx_messages_conversation ON messages(conversation_id, created_at);
 
--- Anboto Crossfit - Real box data
+-- Anboto Fitness - Real box data
 INSERT INTO boxes (name, slug, widget_token, description, address, phone, schedule, membership_plans, classes, faqs, extra_info, coaches, widget_active) VALUES (
-  'Anboto Crossfit',
-  'anboto-crossfit',
+  'Anboto Fitness',
+  'anboto-fitness',
   'anboto-token-2024',
-  'Box de crossfit en Iurreta con ambiente familiar y acogedor. Valorado con 4.9/5 por más de 46 miembros. Box grande con fácil acceso, muy cerca de la salida de la autopista A8 Durango.',
+  'Box de entrenamiento en Iurreta con ambiente familiar y acogedor. Valorado con 4.9/5 por más de 46 miembros. Box grande con fácil acceso, muy cerca de la salida de la autopista A8 Durango.',
   'Polígono Ertzilla, P4, 48215 Iurreta, Bizkaia',
   '688 661 924',
   '[
@@ -57,7 +57,74 @@ INSERT INTO boxes (name, slug, widget_token, description, address, phone, schedu
     {"day": "Domingo", "hours": "Cerrado"}
   ]'::jsonb,
   '[]'::jsonb,
-  '[]'::jsonb,
+  '[
+    {"day": 1, "classes": [
+      {"time": "06:30", "name": "Wod", "wodbuster_id": 13638},
+      {"time": "07:45", "name": "Oinarriak", "wodbuster_id": 13641},
+      {"time": "10:15", "name": "Wod", "wodbuster_id": 13643},
+      {"time": "12:45", "name": "Wod", "wodbuster_id": 13646},
+      {"time": "14:30", "name": "Wod", "wodbuster_id": 13648},
+      {"time": "17:15", "name": "Oinarriak", "wodbuster_id": 13652},
+      {"time": "18:15", "name": "Wod", "wodbuster_id": 13653},
+      {"time": "19:15", "name": "Wod", "wodbuster_id": 13655},
+      {"time": "20:15", "name": "Kickbox", "wodbuster_id": 13658}
+    ]},
+    {"day": 2, "classes": [
+      {"time": "06:30", "name": "Wod", "wodbuster_id": 13638},
+      {"time": "07:45", "name": "Oinarriak", "wodbuster_id": 13641},
+      {"time": "10:15", "name": "Wod", "wodbuster_id": 13643},
+      {"time": "12:45", "name": "Wod", "wodbuster_id": 13646},
+      {"time": "14:30", "name": "Wod", "wodbuster_id": 13648},
+      {"time": "17:15", "name": "Oinarriak", "wodbuster_id": 13652},
+      {"time": "18:15", "name": "Wod", "wodbuster_id": 13653},
+      {"time": "19:15", "name": "Wod", "wodbuster_id": 13655},
+      {"time": "20:15", "name": "Kickbox", "wodbuster_id": 13658}
+    ]},
+    {"day": 3, "classes": [
+      {"time": "06:30", "name": "Wod", "wodbuster_id": 13638},
+      {"time": "07:45", "name": "Oinarriak", "wodbuster_id": 13641},
+      {"time": "10:15", "name": "Wod", "wodbuster_id": 13643},
+      {"time": "12:45", "name": "Wod", "wodbuster_id": 13646},
+      {"time": "14:30", "name": "Wod", "wodbuster_id": 13648},
+      {"time": "17:15", "name": "Oinarriak", "wodbuster_id": 13652},
+      {"time": "18:15", "name": "Wod", "wodbuster_id": 13653},
+      {"time": "19:15", "name": "Wod", "wodbuster_id": 13655},
+      {"time": "20:15", "name": "Kickbox", "wodbuster_id": 13658}
+    ]},
+    {"day": 4, "classes": [
+      {"time": "06:30", "name": "Wod", "wodbuster_id": 13638},
+      {"time": "07:45", "name": "Oinarriak", "wodbuster_id": 13641},
+      {"time": "10:15", "name": "Wod", "wodbuster_id": 13643},
+      {"time": "12:45", "name": "Wod", "wodbuster_id": 13646},
+      {"time": "14:30", "name": "Wod", "wodbuster_id": 13648},
+      {"time": "17:15", "name": "Oinarriak", "wodbuster_id": 13652},
+      {"time": "18:15", "name": "Wod", "wodbuster_id": 13653},
+      {"time": "19:15", "name": "Wod", "wodbuster_id": 13655},
+      {"time": "20:15", "name": "Kickbox", "wodbuster_id": 13658}
+    ]},
+    {"day": 5, "classes": [
+      {"time": "06:30", "name": "Wod", "wodbuster_id": 13638},
+      {"time": "07:45", "name": "Oinarriak", "wodbuster_id": 13641},
+      {"time": "10:15", "name": "Wod", "wodbuster_id": 13643},
+      {"time": "12:45", "name": "Wod", "wodbuster_id": 13646},
+      {"time": "14:30", "name": "Wod", "wodbuster_id": 13648},
+      {"time": "17:15", "name": "Oinarriak", "wodbuster_id": 13652},
+      {"time": "18:15", "name": "Wod", "wodbuster_id": 13653},
+      {"time": "19:15", "name": "Wod", "wodbuster_id": 13655},
+      {"time": "20:15", "name": "Kickbox", "wodbuster_id": 13658}
+    ]},
+    {"day": 6, "classes": [
+      {"time": "06:30", "name": "Wod", "wodbuster_id": 13638},
+      {"time": "07:45", "name": "Oinarriak", "wodbuster_id": 13641},
+      {"time": "10:15", "name": "Wod", "wodbuster_id": 13643},
+      {"time": "12:45", "name": "Wod", "wodbuster_id": 13646},
+      {"time": "14:30", "name": "Wod", "wodbuster_id": 13648},
+      {"time": "17:15", "name": "Oinarriak", "wodbuster_id": 13652},
+      {"time": "18:15", "name": "Wod", "wodbuster_id": 13653},
+      {"time": "19:15", "name": "Wod", "wodbuster_id": 13655},
+      {"time": "20:15", "name": "Kickbox", "wodbuster_id": 13658}
+    ]}
+  ]'::jsonb,
   '[
     {"question": "¿Necesito experiencia previa?", "answer": "No, en absoluto. Empezarás aprendiendo los movimientos básicos adaptados a tu nivel. Todos hemos empezado desde cero."},
     {"question": "¿Qué es un WOD?", "answer": "WOD significa Workout of the Day, el entrenamiento del día. Cada día es diferente y se adapta a tu nivel."},
@@ -65,7 +132,7 @@ INSERT INTO boxes (name, slug, widget_token, description, address, phone, schedu
     {"question": "¿Dónde estáis exactamente?", "answer": "Estamos en el Polígono Ertzilla, P4, Iurreta. Muy cerca de la salida de la autopista A8 de Durango, fácil aparcamiento."},
     {"question": "¿Puedo ir a una clase de prueba?", "answer": "¡Claro! Contáctanos y te apuntamos a una clase de prueba para que veas cómo es el ambiente."}
   ]'::jsonb,
-  'Usamos WodBuster para gestionar las reservas de clases. Las plazas son limitadas y siempre hay un coach pendiente de ti. Ambiente muy familiar, somos una gran comunidad crossfitera en Durangaldea.',
+  'Usamos WodBuster para gestionar las reservas de clases. Las plazas son limitadas y siempre hay un coach pendiente de ti. Ambiente muy familiar, somos una gran comunidad en Durangaldea.',
   'Xabi Osa (entrenador y propietario), Mikel Blanco (entrenador), Illan Setien (entrenador), Izas Gastañaga',
   true
 );
@@ -78,5 +145,43 @@ CREATE TABLE signups (
   email TEXT,
   nivel TEXT,
   origen TEXT DEFAULT 'formulario',
+  followup_sent BOOLEAN DEFAULT false,
+  followup_sent_at TIMESTAMPTZ,
+  wants_to_join BOOLEAN,
+  scheduling_email_sent BOOLEAN DEFAULT false,
   created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE signup_tokens (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  signup_id UUID NOT NULL REFERENCES signups(id) ON DELETE CASCADE,
+  token TEXT NOT NULL UNIQUE,
+  used BOOLEAN DEFAULT false,
+  expires_at TIMESTAMPTZ NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE class_bookings (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  signup_id UUID NOT NULL REFERENCES signups(id) ON DELETE CASCADE,
+  box_id UUID NOT NULL REFERENCES boxes(id) ON DELETE CASCADE,
+  wodbuster_class_id INTEGER NOT NULL,
+  class_date DATE NOT NULL,
+  class_time TIME NOT NULL,
+  class_capacity INTEGER,
+  booked_at TIMESTAMPTZ DEFAULT NOW(),
+  booking_status TEXT DEFAULT 'confirmed' CHECK (booking_status IN ('confirmed', 'cancelled', 'failed')),
+  UNIQUE(signup_id, class_date, class_time)
+);
+
+CREATE INDEX idx_signup_tokens_token ON signup_tokens(token);
+CREATE INDEX idx_signup_tokens_signup ON signup_tokens(signup_id);
+CREATE INDEX idx_class_bookings_signup ON class_bookings(signup_id);
+CREATE INDEX idx_class_bookings_date ON class_bookings(class_date, class_time);
+
+-- WodBuster config (session cookie, etc.)
+CREATE TABLE wodbuster_config (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW()
 );

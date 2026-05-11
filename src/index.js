@@ -2,18 +2,28 @@ require('dotenv').config({ override: true }); // v1
 
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
 const chatRouter = require('./routes/chat');
 const signupRouter = require('./routes/signup');
+const schedulingRouter = require('./routes/scheduling');
+const cronRouter = require('./routes/cron');
+const webhookRouter = require('./routes/webhook');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.set('trust proxy', 1);
+app.use(helmet({
+  contentSecurityPolicy: false,
+  crossOriginEmbedderPolicy: false,
+  crossOriginOpenerPolicy: false,
+  crossOriginResourcePolicy: false
+}));
 app.use(cors({
   origin: process.env.NODE_ENV === 'production'
-    ? [process.env.ALLOWED_ORIGIN || 'https://web-anboto.up.railway.app']
+    ? [process.env.ALLOWED_ORIGIN || 'https://anbotofitness.com']
     : '*'
 }));
 app.use(express.json());
@@ -41,6 +51,9 @@ app.use('/api/chat', chatLimiter);
 
 app.use('/api', chatRouter);
 app.use('/api', signupRouter);
+app.use('/api', schedulingRouter);
+app.use('/api/cron', cronRouter);
+app.use('/api/followup', webhookRouter);
 
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok' });
@@ -48,6 +61,10 @@ app.get('/health', (_req, res) => {
 
 app.get('/', (_req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+});
+
+app.get('/reservar', (_req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'reservar.html'));
 });
 
 app.listen(PORT, '0.0.0.0', () => {

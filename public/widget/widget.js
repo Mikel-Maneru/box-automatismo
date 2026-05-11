@@ -3,7 +3,7 @@
   const token = script.getAttribute('data-token');
   if (!token) { console.error('Box Automatismo: falta data-token'); return; }
 
-  const API_URL = script.dataset.apiUrl || script.src.replace(/\/widget\/widget\.js$/, '');
+  const API_URL = script.dataset.apiUrl || '';
 
   let isOpen = false;
   let sessionId = sessionStorage.getItem('box_chat_session') || null;
