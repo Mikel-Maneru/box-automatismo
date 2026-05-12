@@ -113,8 +113,10 @@
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     :root{--color-primary:#F97316;--color-secondary:#FB923C;--color-cta:#22C55E;--color-background:#1F2937;--color-text:#F8FAFC;--dark:#111827;--dark2:#1F2937;--dark3:#374151;--light:#F3F4F6;--gray:#9CA3AF;--white:#fff;--space-xs:4px;--space-sm:8px;--space-md:16px;--space-lg:24px;--space-xl:32px;--space-2xl:48px;--space-3xl:64px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow-md:0 4px 6px rgba(0,0,0,.1);--shadow-lg:0 10px 15px rgba(0,0,0,.1);--shadow-xl:0 20px 25px rgba(0,0,0,.15)}
-    html{scroll-behavior:smooth;scroll-padding-top:80px}
-    body{font-family:'Barlow',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--dark);background:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    html{scroll-behavior:smooth;scroll-padding-top:80px;overflow-y:auto;scrollbar-width:none}
+    html::-webkit-scrollbar{display:none}
+    body{font-family:'Barlow',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--dark);background:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden;scrollbar-width:none}
+    body::-webkit-scrollbar{display:none}
     h1,h2,h3,h4,.logo,.stat-num,.coach-info h3,.section-label{font-family:'Barlow Condensed','Barlow',sans-serif}
     a{text-decoration:none;color:inherit}
     img{display:block;max-width:100%;height:auto}
@@ -203,9 +205,6 @@
     .price-value{font-family:'Barlow Condensed','Barlow',sans-serif;font-size:3rem;font-weight:900;line-height:1;color:#fff}
     .price-currency{font-size:1.2rem;font-weight:600;color:var(--color-primary)}
     .price-period{font-size:.9rem;color:rgba(255,255,255,.4);font-weight:500}
-    .pricing-card-annual{font-size:.82rem;color:rgba(255,255,255,.45);margin-bottom:20px;display:none}
-    .pricing-card-annual.show{display:block}
-    .annual-savings{display:inline-block;background:rgba(34,197,94,.15);color:var(--color-cta);font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:50px;margin-left:8px}
     .pricing-card-features{list-style:none;padding:0;margin:0 0 24px;flex:1}
     .pricing-card-features li{font-size:.88rem;color:rgba(255,255,255,.55);padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:8px}
     .pricing-card-features li::before{content:'';display:inline-block;width:16px;height:16px;flex-shrink:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2322C55E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/contain no-repeat}
@@ -215,10 +214,6 @@
     .pricing-card-btn:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.25);transform:translateY(-2px)}
     .pricing-card-btn-popular{background:var(--color-cta);border-color:var(--color-cta);color:#fff}
     .pricing-card-btn-popular:hover{background:#16a34a;border-color:#16a34a;box-shadow:0 8px 24px rgba(34,197,94,.3)}
-    .pricing-toggle{display:flex;background:var(--dark3);border-radius:50px;padding:4px;margin-bottom:32px;max-width:280px;border:1px solid rgba(255,255,255,.08)}
-    .pricing-toggle-btn{flex:1;padding:10px 20px;border:none;border-radius:50px;font-size:.88rem;font-weight:600;color:rgba(255,255,255,.5);background:transparent;cursor:pointer;transition:all .2s;font-family:inherit}
-    .pricing-toggle-btn.active{background:var(--color-primary);color:#fff;box-shadow:0 4px 12px rgba(249,115,22,.3)}
-    .toggle-save{font-size:.7rem;background:rgba(34,197,94,.15);color:var(--color-cta);padding:2px 6px;border-radius:50px;margin-left:4px;font-weight:700}
     .pricing-bonos{margin-bottom:48px}
     .pricing-bonos-title{font-family:'Barlow Condensed','Barlow',sans-serif;font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:16px}
     .pricing-bonos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:600px}
@@ -388,7 +383,6 @@
       .pricing-bonos-grid{grid-template-columns:1fr;max-width:400px;margin-inline:auto}
       .pricing-trial{flex-direction:column;text-align:center}
       .pricing-trial-text{text-align:center;min-width:0}
-      .pricing-toggle{margin-inline:auto}
     }
     @media(max-width:480px){
       nav{top:0;left:0;right:0;border-radius:0}
@@ -416,7 +410,7 @@
     }
 
     /* Focus visible for keyboard nav */
-    .faq-question:focus-visible,.btn:focus-visible,.nav-cta:focus-visible,.form-btn:focus-visible,.box-chat-btn:focus-visible,.nav-links a:focus-visible,.insta-item:focus-visible,.insta-cta a:focus-visible,.testimonial:focus-visible,.schedule-card:focus-visible,.pricing-card-btn:focus-visible,.pricing-toggle-btn:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px}
+    .faq-question:focus-visible,.btn:focus-visible,.nav-cta:focus-visible,.form-btn:focus-visible,.box-chat-btn:focus-visible,.nav-links a:focus-visible,.insta-item:focus-visible,.insta-cta a:focus-visible,.testimonial:focus-visible,.schedule-card:focus-visible,.pricing-card-btn:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px}
   </style>
 </head>
 <body>
@@ -537,19 +531,10 @@
       <h2 style="color:#fff">Elige tu plan <span>mensual</span></h2>
       <p class="section-desc" style="color:rgba(255,255,255,.45);margin-bottom:48px">Todas las actividades incluidas. Sin compromiso de permanencia.</p>
 
-      <div class="pricing-toggle" data-aos="fade-up">
-        <button class="pricing-toggle-btn active" data-period="monthly">Mensual</button>
-        <button class="pricing-toggle-btn" data-period="annual">Anual <span class="toggle-save">-17%</span></button>
-      </div>
-
       <div class="pricing-grid">
         <div class="pricing-card" data-aos="fade-up" data-aos-delay="100">
           <div class="pricing-card-name">8 Clases</div>
-          <div class="pricing-card-price"><span class="price-value" data-monthly="60" data-annual="600">60</span><span class="price-currency">&euro;</span><span class="price-period">/mes</span></div>
-          <div class="pricing-card-annual" data-monthly="60" data-annual="600">
-            <span class="annual-price">600 &euro;/a&ntilde;o</span>
-            <span class="annual-savings">120 &euro; de ahorro</span>
-          </div>
+          <div class="pricing-card-price"><span class="price-value">60</span><span class="price-currency">&euro;</span><span class="price-period">/mes</span></div>
           <ul class="pricing-card-features">
             <li>8 clases al mes</li>
             <li>Wod, Open box, Total Strength</li>
@@ -561,11 +546,7 @@
 
         <div class="pricing-card" data-aos="fade-up" data-aos-delay="200">
           <div class="pricing-card-name">12 Clases</div>
-          <div class="pricing-card-price"><span class="price-value" data-monthly="70" data-annual="780">70</span><span class="price-currency">&euro;</span><span class="price-period">/mes</span></div>
-          <div class="pricing-card-annual" data-monthly="70" data-annual="780">
-            <span class="annual-price">780 &euro;/a&ntilde;o</span>
-            <span class="annual-savings">60 &euro; de ahorro</span>
-          </div>
+          <div class="pricing-card-price"><span class="price-value">70</span><span class="price-currency">&euro;</span><span class="price-period">/mes</span></div>
           <ul class="pricing-card-features">
             <li>12 clases al mes</li>
             <li>Wod, Open box, Total Strength</li>
@@ -577,11 +558,7 @@
 
         <div class="pricing-card" data-aos="fade-up" data-aos-delay="300">
           <div class="pricing-card-name">16 Clases</div>
-          <div class="pricing-card-price"><span class="price-value" data-monthly="80" data-annual="900">80</span><span class="price-currency">&euro;</span><span class="price-period">/mes</span></div>
-          <div class="pricing-card-annual" data-monthly="80" data-annual="900">
-            <span class="annual-price">900 &euro;/a&ntilde;o</span>
-            <span class="annual-savings">60 &euro; de ahorro</span>
-          </div>
+          <div class="pricing-card-price"><span class="price-value">80</span><span class="price-currency">&euro;</span><span class="price-period">/mes</span></div>
           <ul class="pricing-card-features">
             <li>16 clases al mes</li>
             <li>Wod, Open box, Total Strength</li>
@@ -594,11 +571,7 @@
         <div class="pricing-card pricing-card-popular" data-aos="fade-up" data-aos-delay="400">
           <div class="pricing-card-badge">Popular</div>
           <div class="pricing-card-name">Ilimitado</div>
-          <div class="pricing-card-price"><span class="price-value" data-monthly="95" data-annual="1080">95</span><span class="price-currency">&euro;</span><span class="price-period">/mes</span></div>
-          <div class="pricing-card-annual" data-monthly="95" data-annual="1080">
-            <span class="annual-price">1.080 &euro;/a&ntilde;o</span>
-            <span class="annual-savings">60 &euro; de ahorro</span>
-          </div>
+          <div class="pricing-card-price"><span class="price-value">95</span><span class="price-currency">&euro;</span><span class="price-period">/mes</span></div>
           <ul class="pricing-card-features">
             <li>Clases ilimitadas</li>
             <li>Wod, Open box, Total Strength</li>
@@ -783,27 +756,6 @@
   <script src="/widget/widget.js" data-token="anboto-token-2024"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>AOS.init({ duration: 700, once: true, offset: 80 });</script>
-
-  <script>
-    // Pricing toggle
-    const toggleBtns = document.querySelectorAll('.pricing-toggle-btn');
-    toggleBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        toggleBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const isAnnual = btn.dataset.period === 'annual';
-        document.querySelectorAll('.price-value').forEach(el => {
-          el.textContent = isAnnual ? el.dataset.annual : el.dataset.monthly;
-        });
-        document.querySelectorAll('.price-period').forEach(el => {
-          el.textContent = isAnnual ? '/año' : '/mes';
-        });
-        document.querySelectorAll('.pricing-card-annual').forEach(el => {
-          el.classList.toggle('show', isAnnual);
-        });
-      });
-    });
-  </script>
 
   <script>
     // Nav scroll
