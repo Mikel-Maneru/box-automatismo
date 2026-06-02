@@ -95,7 +95,8 @@
       --ff-d:'Archivo',system-ui,sans-serif;--ff-m:'Space Mono',ui-monospace,monospace;
       --arc:clamp(70px,16vw,150px);--maxw:1200px;
     }
-    html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
+    html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%;scrollbar-width:none;-ms-overflow-style:none}
+    html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
     body{font-family:var(--ff-d);color:var(--pizarra);background:var(--caliza);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.5}
     h1,h2,h3{font-family:var(--ff-d);font-weight:900;letter-spacing:-.03em;line-height:.98;text-wrap:balance}
     a{text-decoration:none;color:inherit}
