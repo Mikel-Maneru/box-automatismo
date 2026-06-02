@@ -396,6 +396,39 @@
     .step::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--bruma);font-size:1.4rem;font-weight:700;z-index:2}
     .step:last-child::after{display:none}
     .steps-cta{margin-top:36px;text-align:center}
+    /* ===== LISTAS EDITORIALES (de-card) ===== */
+    .elist{margin-top:46px;border-top:1px solid var(--bruma)}
+    .dark .elist{border-top-color:rgba(246,243,236,.16)}
+    .ei{display:grid;grid-template-columns:88px 1fr;gap:26px;padding:30px 4px;border-bottom:1px solid var(--bruma);align-items:start;transition:padding .25s}
+    .dark .ei{border-bottom-color:rgba(246,243,236,.16)}
+    .ei:hover{padding-left:16px}
+    .ei .mk{display:flex;flex-direction:column;gap:12px;align-items:flex-start;font-family:var(--ff-m);font-weight:700;font-size:1.05rem;color:var(--brasa)}
+    .ei .mk .tri{width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:14px solid var(--brasa)}
+    .ei .eu{font-family:var(--ff-m);font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--larre);display:block;margin-bottom:7px}
+    .ei h3{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;letter-spacing:-.02em;line-height:1.02;margin-bottom:9px}
+    .ei p{color:var(--granito);font-size:1.02rem;line-height:1.55;font-weight:500;max-width:640px}
+    .dark .ei p{color:rgba(246,243,236,.7)}
+    .ei.cls .bd{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.5fr);gap:6px 30px;align-items:baseline}
+    .ei.cls h3{margin-bottom:0}
+    @media(max-width:720px){
+      .ei{grid-template-columns:48px 1fr;gap:16px;padding:24px 2px}
+      .ei .mk{font-size:.85rem;gap:8px}
+      .ei .mk .tri{border-left-width:6px;border-right-width:6px;border-bottom-width:11px}
+      .ei.cls .bd{grid-template-columns:1fr;gap:5px}
+    }
+    /* ===== ARCO estructural (cúpula) ===== */
+    .arch{border-radius:clamp(40px,7vw,110px) clamp(40px,7vw,110px) 0 0}
+    /* ===== HILO DE ALTITUD (ascenso) ===== */
+    .altitude{position:fixed;left:22px;top:50%;transform:translateY(-50%);z-index:120;display:none;flex-direction:column;align-items:center;gap:10px;height:46vh;pointer-events:none}
+    @media(min-width:1300px){.altitude{display:flex}}
+    .altitude .lab{font-family:var(--ff-m);font-size:.56rem;font-weight:700;letter-spacing:.1em;color:var(--granito);text-align:center;line-height:1.3}
+    .altitude .track{position:relative;flex:1;width:2px;background:var(--bruma);border-radius:2px}
+    .altitude .fill{position:absolute;top:0;left:0;width:100%;height:0;background:var(--brasa);border-radius:2px}
+    .altitude .dot{position:absolute;top:0;left:50%;transform:translate(-50%,-50%);background:var(--pizarra);color:var(--caliza);font-family:var(--ff-m);font-weight:700;font-size:.56rem;padding:4px 8px;border-radius:50px;white-space:nowrap;box-shadow:0 4px 14px rgba(27,26,24,.35)}
+    /* ===== CRESTA DEL MONTE (footer) ===== */
+    footer{position:relative}
+    .footer-ridge{position:absolute;left:0;right:0;top:0;transform:translateY(-99%);height:52px;line-height:0;pointer-events:none}
+    .footer-ridge svg{width:100%;height:100%;display:block}
     @media(max-width:900px){
       .disc-grid{grid-template-columns:1fr 1fr}
       .statband .wrap{grid-template-columns:1fr 1fr;gap:34px 16px}
@@ -495,6 +528,13 @@
     <div class="mm-foot">GORA ANBOTO! · ↑ 1.331 M</div>
   </div>
 
+  <!-- HILO DE ALTITUD (ascenso al monte) -->
+  <div class="altitude" aria-hidden="true">
+    <span class="lab">BASE</span>
+    <div class="track"><div class="fill" id="altFill"></div><div class="dot" id="altDot">↑ 0 M</div></div>
+    <span class="lab">CIMA<br>1.331 M</span>
+  </div>
+
   <!-- HERO -->
   <header class="hero" id="top">
     <div class="h-bg" aria-hidden="true">
@@ -540,51 +580,24 @@
       <span class="sec-index rev-up" data-i18n="p.idx">01 — Esentzia · Sobre nosotros</span>
       <h2 class="title rev-up" data-i18n="p.title">No elegimos el nombre<br>de un monte <em>por azar</em></h2>
       <p class="lead rev-up" data-i18n="p.lead">Anboto es la montaña de Durangaldea: 1.331 metros de roca que se ven desde todo el valle. Entrenar es escalar — cada quien sube a su ritmo, pero la cima se conquista en grupo.</p>
-      <div class="pillars-grid">
-        <div class="pillar rev-up">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 20h18L13.5 6l-3.5 6-2-3z"/></svg></div>
-          <span class="eu" data-i18n="p1.eu">Harria · Fuerza</span>
-          <h3 data-i18n="p1.h">La roca</h3>
-          <p data-i18n="p1.p">Sólidos, exigentes, sin atajos. Transmitimos esfuerzo real y constancia en cada WOD.</p>
-        </div>
-        <div class="pillar rev-up">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
-          <span class="eu" data-i18n="p2.eu">Komunitatea · Cercanía</span>
-          <h3 data-i18n="p2.h">La comunidad</h3>
-          <p data-i18n="p2.p">Aquí te conocen por tu nombre. Cálidos, familiares, de barrio. Un box grande con alma de pueblo.</p>
-        </div>
-        <div class="pillar rev-up">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M12 4l6 16H6z"/><path d="M12 4v16"/></svg></div>
-          <span class="eu" data-i18n="p3.eu">Helmuga · Progreso</span>
-          <h3 data-i18n="p3.h">La cima</h3>
-          <p data-i18n="p3.p">Escalable para todos. Del primer día al primer Hyrox, cada paso cuenta y se celebra en grupo.</p>
-        </div>
+      <div class="elist">
+        <div class="ei rev-up"><div class="mk"><span class="tri"></span>01</div><div class="bd"><span class="eu" data-i18n="p1.eu">Harria · Fuerza</span><h3 data-i18n="p1.h">La roca</h3><p data-i18n="p1.p">Sólidos, exigentes, sin atajos. Transmitimos esfuerzo real y constancia en cada WOD.</p></div></div>
+        <div class="ei rev-up"><div class="mk"><span class="tri"></span>02</div><div class="bd"><span class="eu" data-i18n="p2.eu">Komunitatea · Cercanía</span><h3 data-i18n="p2.h">La comunidad</h3><p data-i18n="p2.p">Aquí te conocen por tu nombre. Cálidos, familiares, de barrio. Un box grande con alma de pueblo.</p></div></div>
+        <div class="ei rev-up"><div class="mk"><span class="tri"></span>03</div><div class="bd"><span class="eu" data-i18n="p3.eu">Helmuga · Progreso</span><h3 data-i18n="p3.h">La cima</h3><p data-i18n="p3.p">Escalable para todos. Del primer día al primer Hyrox, cada paso cuenta y se celebra en grupo.</p></div></div>
       </div>
     </div>
   </section>
 
   <!-- QUE ES -->
-  <section class="pad dark on-dark" id="que-es">
+  <section class="pad dark on-dark arch" id="que-es">
     <div class="wrap">
       <span class="sec-index rev-up" data-i18n="q.idx">02 — Zer da Anboto · Qué es</span>
       <h2 class="title rev-up" data-i18n="q.title">Más que un box,<br>una <em>comunidad</em></h2>
       <p class="lead rev-up" data-i18n="q.lead">Constantemente variado, funcional y a tu intensidad. Pero tranqui: todo se adapta a tu nivel, con un coach pendiente de ti en cada clase.</p>
-      <div class="feat-grid">
-        <div class="feat rev-up">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-          <h3 data-i18n="f1.h">WOD del día</h3>
-          <p data-i18n="f1.p">Workout of the Day. Cada día un entrenamiento distinto: gimnasia, halterofilia, cardio. Nunca te aburres.</p>
-        </div>
-        <div class="feat rev-up">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M12 4l6 16H6z"/></svg></div>
-          <h3 data-i18n="f2.h">Escalable</h3>
-          <p data-i18n="f2.p">Mismo WOD, distinta intensidad. Un principiante y un atleta lo hacen juntos, cada uno a su nivel.</p>
-        </div>
-        <div class="feat rev-up">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
-          <h3 data-i18n="f3.h">En grupo</h3>
-          <p data-i18n="f3.p">Entrenar en grupo empuja más que solo. Aquí el de al lado te anima a sacar ese último rep.</p>
-        </div>
+      <div class="elist">
+        <div class="ei rev-up"><div class="mk"><span class="tri"></span>01</div><div class="bd"><h3 data-i18n="f1.h">WOD del día</h3><p data-i18n="f1.p">Workout of the Day. Cada día un entrenamiento distinto: gimnasia, halterofilia, cardio. Nunca te aburres.</p></div></div>
+        <div class="ei rev-up"><div class="mk"><span class="tri"></span>02</div><div class="bd"><h3 data-i18n="f2.h">Escalable</h3><p data-i18n="f2.p">Mismo WOD, distinta intensidad. Un principiante y un atleta lo hacen juntos, cada uno a su nivel.</p></div></div>
+        <div class="ei rev-up"><div class="mk"><span class="tri"></span>03</div><div class="bd"><h3 data-i18n="f3.h">En grupo</h3><p data-i18n="f3.p">Entrenar en grupo empuja más que solo. Aquí el de al lado te anima a sacar ese último rep.</p></div></div>
       </div>
     </div>
   </section>
@@ -595,19 +608,19 @@
       <span class="sec-index rev-up" data-i18n="disc.idx">03 — Klaseak · Disciplinas</span>
       <h2 class="title rev-up" data-i18n="disc.title">Una clase para <em>cada objetivo</em></h2>
       <p class="lead rev-up" data-i18n="disc.lead">CrossFit, halterofilia, Hyrox, endurance y más. Todo guiado y escalable a tu nivel.</p>
-      <div class="disc-grid">
-        <div class="disc rev-up"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><span class="eu">Eguneroko · Todos</span><h3>WOD</h3><p data-i18n="disc.d1">El entrenamiento del día: gimnasia, cardio y fuerza combinados. Cada día distinto.</p></div>
-        <div class="disc rev-up"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 20h18L13.5 6l-3.5 6-2-3z"/></svg></div><span class="eu">Hasiberriak · Inicio</span><h3>Oinarriak</h3><p data-i18n="disc.d2">Los fundamentos para empezar. Técnica y movimientos base, sin agobios.</p></div>
-        <div class="disc rev-up"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10"/></svg></div><span class="eu">Indarra · Técnica</span><h3>Halterofilia</h3><p data-i18n="disc.d3">Arrancada y dos tiempos. Fuerza, potencia y técnica olímpica bien guiada.</p></div>
-        <div class="disc rev-up"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></div><span class="eu">Lehiakorra · Híbrido</span><h3>Hyrox</h3><p data-i18n="disc.d4">Resistencia híbrida: correr + estaciones funcionales. Prepárate para competir.</p></div>
-        <div class="disc rev-up"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 6 4-14 2 8h6"/></svg></div><span class="eu">Aerobikoa · Fondo</span><h3>Endurance</h3><p data-i18n="disc.d5">Capacidad cardiovascular y aguante para rendir más y recuperar mejor.</p></div>
-        <div class="disc rev-up"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V6z"/></svg></div><span class="eu">Indarra · Fuerza</span><h3>Total Strength</h3><p data-i18n="disc.d6">Fuerza estructurada para ganar músculo, solidez y prevenir lesiones.</p></div>
+      <div class="elist">
+        <div class="ei cls rev-up"><div class="mk"><span class="tri"></span></div><div class="bd"><div class="nm"><span class="eu">Eguneroko · Todos</span><h3>WOD</h3></div><p data-i18n="disc.d1">El entrenamiento del día: gimnasia, cardio y fuerza combinados. Cada día distinto.</p></div></div>
+        <div class="ei cls rev-up"><div class="mk"><span class="tri"></span></div><div class="bd"><div class="nm"><span class="eu">Hasiberriak · Inicio</span><h3>Oinarriak</h3></div><p data-i18n="disc.d2">Los fundamentos para empezar. Técnica y movimientos base, sin agobios.</p></div></div>
+        <div class="ei cls rev-up"><div class="mk"><span class="tri"></span></div><div class="bd"><div class="nm"><span class="eu">Indarra · Técnica</span><h3>Halterofilia</h3></div><p data-i18n="disc.d3">Arrancada y dos tiempos. Fuerza, potencia y técnica olímpica bien guiada.</p></div></div>
+        <div class="ei cls rev-up"><div class="mk"><span class="tri"></span></div><div class="bd"><div class="nm"><span class="eu">Lehiakorra · Híbrido</span><h3>Hyrox</h3></div><p data-i18n="disc.d4">Resistencia híbrida: correr + estaciones funcionales. Prepárate para competir.</p></div></div>
+        <div class="ei cls rev-up"><div class="mk"><span class="tri"></span></div><div class="bd"><div class="nm"><span class="eu">Aerobikoa · Fondo</span><h3>Endurance</h3></div><p data-i18n="disc.d5">Capacidad cardiovascular y aguante para rendir más y recuperar mejor.</p></div></div>
+        <div class="ei cls rev-up"><div class="mk"><span class="tri"></span></div><div class="bd"><div class="nm"><span class="eu">Indarra · Fuerza</span><h3>Total Strength</h3></div><p data-i18n="disc.d6">Fuerza estructurada para ganar músculo, solidez y prevenir lesiones.</p></div></div>
       </div>
     </div>
   </section>
 
   <!-- CIFRAS -->
-  <section class="statband">
+  <section class="statband arch">
     <div class="wrap">
       <div class="stat rev-up"><div class="n"><span data-count="8" data-suffix="+">8+</span></div><div class="t" data-i18n="st.l1">Años de experiencia</div></div>
       <div class="stat rev-up"><div class="n"><span data-count="46" data-suffix="+">46+</span></div><div class="t" data-i18n="st.l2">Miembros activos</div></div>
@@ -629,7 +642,7 @@
   </section>
 
   <!-- TARIFAS -->
-  <section class="pad dark on-dark" id="tarifas">
+  <section class="pad dark on-dark arch" id="tarifas">
     <div class="wrap">
       <span class="sec-index rev-up" data-i18n="t.idx">05 — Tarifak · Tarifas</span>
       <h2 class="title rev-up" data-i18n="t.title">Elige tu plan <em>mensual</em></h2>
@@ -764,7 +777,7 @@
   </section>
 
   <!-- SIGNUP -->
-  <section class="pad dark on-dark" id="apuntarse">
+  <section class="pad dark on-dark arch" id="apuntarse">
     <div class="wrap">
       <div class="signup-grid">
         <div>
@@ -851,6 +864,7 @@
 
   <!-- FOOTER -->
   <footer>
+    <div class="footer-ridge" aria-hidden="true"><svg viewBox="0 0 1440 52" preserveAspectRatio="none"><path d="M0,52 L150,20 L300,40 L470,8 L650,36 L820,16 L1010,44 L1180,18 L1320,40 L1440,14 L1440,52 Z" fill="#1B1A18"/></svg></div>
     <div class="wrap">
       <div class="foot-top">
         <a href="#top" class="logo">
@@ -1048,6 +1062,14 @@
         else if(idx <= 0){ idx = 0; dir = 1; }
         slides[idx].classList.add('show');
       }, 4200);
+    })();
+
+    // ---------- Hilo de altitud (ascenso) ----------
+    (function(){
+      const fill = document.getElementById('altFill'), dot = document.getElementById('altDot');
+      if(!fill || !dot) return;
+      const upd = () => { const h = document.documentElement.scrollHeight - window.innerHeight; const p = h > 0 ? Math.min(1, Math.max(0, window.scrollY / h)) : 0; fill.style.height = (p*100) + '%'; dot.style.top = (p*100) + '%'; dot.textContent = '↑ ' + Math.round(p*1331) + ' M'; };
+      upd(); window.addEventListener('scroll', upd, { passive: true }); window.addEventListener('resize', upd);
     })();
 
     // ---------- Horario interactivo ----------
