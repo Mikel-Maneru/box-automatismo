@@ -112,6 +112,49 @@
     #v3 .strip{position:absolute;left:0;right:0;bottom:0;z-index:2;border-top:1px solid rgba(246,243,236,.14);background:rgba(20,19,18,.45);backdrop-filter:blur(4px);display:flex;gap:34px;justify-content:center;flex-wrap:wrap;padding:16px 24px;font-family:var(--ff-m);font-size:.74rem;font-weight:700;letter-spacing:.08em;color:rgba(246,243,236,.75)}
     #v3 .strip .s{color:var(--brasa)}
 
+    /* ===== V4 · INMERSIVO VÍDEO (estilo LinkFlow, con fotos) ===== */
+    #v4{background:var(--pizarra);color:var(--caliza)}
+    #v4 .v4bg{position:absolute;inset:0;overflow:hidden}
+    #v4 .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.6s ease;filter:sepia(.18) saturate(1.05)}
+    #v4 .slide.show{opacity:1;animation:v4kb 9s ease-out forwards}
+    @keyframes v4kb{from{transform:scale(1.04)}to{transform:scale(1.16)}}
+    #v4 .v4scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,19,18,.55),rgba(20,19,18,.18) 32%,rgba(20,19,18,.78)),radial-gradient(120% 80% at 50% 28%,transparent,rgba(20,19,18,.4))}
+    #v4 .v4nav{position:absolute;top:0;left:0;right:0;z-index:30;max-width:1280px;margin:0 auto;padding:26px 28px 0;display:flex;align-items:center;justify-content:space-between;gap:14px}
+    #v4 .v4nav .logo{color:var(--caliza);text-shadow:0 2px 10px rgba(0,0,0,.4)}
+    #v4 .v4nav .logo .lk i{color:var(--brasa)}
+    #v4 .pill{display:none}
+    @media(min-width:1000px){#v4 .pill{display:flex;align-items:center;gap:2px;background:rgba(246,243,236,.82);backdrop-filter:blur(12px);border:1px solid rgba(246,243,236,.6);border-radius:50px;padding:5px 6px 5px 18px;box-shadow:0 8px 24px rgba(0,0,0,.18)}}
+    #v4 .pill a{font-family:var(--ff-m);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--granito);padding:8px 12px;transition:color .2s}
+    #v4 .pill a:hover{color:var(--pizarra)}
+    #v4 .pill .pbtn{background:var(--brasa);color:#fff;border-radius:50px;padding:9px 18px;font-family:var(--ff-d);font-weight:700;letter-spacing:0;text-transform:none;font-size:.8rem}
+    #v4 .v4right{display:flex;align-items:center;gap:14px;color:var(--caliza)}
+    #v4 .v4hero{position:relative;z-index:10;max-width:1000px;margin:0 auto;text-align:center;padding:150px 24px 0;width:100%}
+    #v4 .v4hero .eyebrow{color:var(--brasa);text-shadow:0 2px 10px rgba(0,0,0,.45);animation:fadeUp .6s .1s both}
+    #v4 .v4hero h1{font-size:clamp(2.4rem,7.5vw,5.6rem);color:var(--caliza);text-shadow:0 4px 30px rgba(0,0,0,.55);margin-top:18px;animation:fadeUp .8s .18s both}
+    #v4 .v4hero h1 span:last-child{color:var(--brasa)}
+    #v4 .v4hero p{margin:22px auto 0;max-width:480px;font-size:1.1rem;color:rgba(246,243,236,.85);line-height:1.6;font-weight:500;text-shadow:0 2px 12px rgba(0,0,0,.5);animation:fadeUp .6s .32s both}
+    #v4 .v4hero p b{color:#fff}
+    #v4 .v4hero .h-btns{justify-content:center;animation:fadeUp .6s .42s both}
+    #v4 .btn-line{color:var(--caliza);border-color:rgba(246,243,236,.55)}
+    #v4 .btn-line:hover{background:var(--caliza);color:var(--pizarra)}
+    #v4 .v4card{position:absolute;left:28px;bottom:28px;z-index:10;max-width:340px;text-align:left;animation:fadeUp .7s .5s both}
+    #v4 .v4card .t{display:flex;align-items:center;gap:8px;color:var(--caliza);font-family:var(--ff-m);font-size:.76rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;text-shadow:0 2px 10px rgba(0,0,0,.45)}
+    #v4 .v4card .t svg{width:18px;height:18px;color:var(--brasa)}
+    #v4 .v4card p{color:rgba(246,243,236,.85);font-size:.82rem;line-height:1.55;margin-bottom:16px;text-shadow:0 2px 10px rgba(0,0,0,.55)}
+    #v4 .v4card .cbtns{display:flex;align-items:center;gap:16px}
+    #v4 .v4card .cbtns .b1{background:var(--caliza);color:var(--pizarra);font-weight:700;font-size:.82rem;padding:10px 18px;border-radius:50px;transition:transform .2s}
+    #v4 .v4card .cbtns .b1:hover{transform:translateY(-2px)}
+    #v4 .v4card .cbtns .b2{color:var(--caliza);font-weight:700;font-size:.82rem;text-shadow:0 2px 10px rgba(0,0,0,.45)}
+    #v4 .v4ig{position:absolute;right:28px;bottom:32px;z-index:10;display:flex;align-items:center;gap:9px;color:rgba(246,243,236,.92);font-family:var(--ff-m);font-size:.74rem;font-weight:700;text-shadow:0 2px 10px rgba(0,0,0,.4)}
+    #v4 .v4ig .pl{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:rgba(246,243,236,.2);backdrop-filter:blur(4px)}
+    #v4 .v4ig .pl svg{width:13px;height:13px;color:#fff}
+    @media(max-width:600px){
+      #v4 .v4nav{padding:22px 20px 0}
+      #v4 .v4hero{padding:128px 20px 0}
+      #v4 .v4card{left:20px;right:20px;bottom:20px;max-width:none}
+      #v4 .v4ig{display:none}
+    }
+
     @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 
     @media(max-width:860px){
@@ -143,6 +186,7 @@
     <button class="on" data-v="v1">1 · Kinético</button>
     <button data-v="v2">2 · Arco reveal</button>
     <button data-v="v3">3 · Inmersivo</button>
+    <button data-v="v4">4 · Vídeo ★</button>
   </div>
 
   <!-- ===== V1 KINÉTICO ===== -->
@@ -218,13 +262,61 @@
     </div>
   </section>
 
+  <!-- ===== V4 VÍDEO (estilo LinkFlow) ===== -->
+  <section class="hero" id="v4">
+    <div class="v4bg" aria-hidden="true">
+      <div class="slide" style="background-image:url('/fotos/681663370_18141850495507230_842418771480859784_n.jpeg')"></div>
+      <div class="slide" style="background-image:url('/fotos/684158573_18141850543507230_7164727509411748566_n.jpeg')"></div>
+      <div class="slide" style="background-image:url('/fotos/684166869_18141850504507230_4228607507298611888_n.jpeg')"></div>
+      <div class="slide" style="background-image:url('/fotos/622920499_18141564865474629_8282454509847242170_n.jpeg')"></div>
+    </div>
+    <div class="v4scrim" aria-hidden="true"></div>
+    <nav class="v4nav">
+      <a class="logo" href="#"><svg class="pico" viewBox="0 0 100 100" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M50 10 L91 88 H9 Z M30 66 H70 V75 H30 Z"></path></svg><span class="lk"><b>ANBOTO</b><i>SC</i></span></a>
+      <div class="pill">
+        <a href="#">Entrenamiento</a>
+        <a href="#">Tarifas</a>
+        <a href="#">Coaches</a>
+        <a href="#" class="pbtn" data-i18n="cta">Reserva tu clase gratis</a>
+      </div>
+      <div class="v4right">
+        <div class="lang"><button class="on" data-lang="es">ES</button><button data-lang="eu">EU</button></div>
+      </div>
+    </nav>
+    <div class="v4hero">
+      <span class="eyebrow" data-i18n="eyebrow">↑ 1.331 M · Iurreta, Bizkaia</span>
+      <h1><span data-i18n="l1b">Ven como estás.</span> <span data-i18n="l2b">Sube a tu ritmo.</span></h1>
+      <p data-i18n="desc">Box de entrenamiento funcional con buen ambiente — CrossFit, halterofilia, Hyrox y endurance. <b>Tu primera clase es gratis.</b></p>
+      <div class="h-btns">
+        <a class="btn btn-primary" href="#"><span data-i18n="cta">Reserva tu clase gratis</span> <span class="arr">→</span></a>
+        <a class="btn btn-line" href="#" data-i18n="what">¿Qué es Anboto?</a>
+      </div>
+    </div>
+    <div class="v4card">
+      <div class="t"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 22h18L12 3z"/></svg> ANBOTO SC</div>
+      <p data-i18n="v4msg">Box de entrenamiento funcional en Iurreta. Comunidad de verdad, coaches certificados y primera clase gratis.</p>
+      <div class="cbtns">
+        <a class="b1" href="#" data-i18n="cta">Reserva tu clase gratis</a>
+        <a class="b2" href="#" data-i18n="v4more">Saber más</a>
+      </div>
+    </div>
+    <a class="v4ig" href="https://www.instagram.com/anbotofitness/" target="_blank" rel="noopener">
+      <span class="pl"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
+      <span data-i18n="v4ig">Cómo es el box</span>
+      <span style="color:rgba(246,243,236,.6)">@anbotofitness</span>
+    </a>
+  </section>
+
   <script>
     const I18N = {
       eyebrow:['↑ 1.331 M · Iurreta, Bizkaia','↑ 1.331 M · Iurreta, Bizkaia'],
       v1pre:['HOY TOCA','GAUR'],
       l1:['VEN COMO ESTÁS.','ZATOZ ZAUDEN BEZALA.'],l2:['SUBE A TU RITMO.','IGO ZURE ERRITMOAN.'],l3:['LLEGA MÁS LEJOS.','IRITSI URRUNAGO.'],
       desc:['Box de entrenamiento funcional con buen ambiente — CrossFit, halterofilia, Hyrox y endurance. <b>Tu primera clase es gratis.</b>','Entrenamendu funtzionaleko boxa, giro hurbilean — CrossFit, halterofilia, Hyrox eta endurance. <b>Zure lehen klasea doakoa da.</b>'],
-      cta:['Reserva tu clase gratis','Erreserbatu doako klasea'],what:['¿Qué es Anboto?','Zer da Anboto?']
+      cta:['Reserva tu clase gratis','Erreserbatu doako klasea'],what:['¿Qué es Anboto?','Zer da Anboto?'],
+      l1b:['Ven como estás.','Zatoz zauden bezala.'],l2b:['Sube a tu ritmo.','Igo zure erritmoan.'],
+      v4msg:['Box de entrenamiento funcional en Iurreta. Comunidad de verdad, coaches certificados y primera clase gratis.','Iurretako entrenamendu funtzionaleko boxa. Benetako komunitatea, coach ziurtatuak eta lehen klasea doan.'],
+      v4more:['Saber más','Gehiago jakin'],v4ig:['Cómo es el box','Nolakoa den boxa']
     };
     function setLang(lang){
       const i = lang==='eu'?1:0; document.documentElement.lang=lang;
@@ -238,6 +330,22 @@
       btns.forEach(x=>x.classList.remove('on')); heroes.forEach(h=>h.classList.remove('on'));
       b.classList.add('on'); document.getElementById(b.dataset.v).classList.add('on');
     }));
+
+    // V4 fondo "boomerang": crossfade ping-pong de fotos (recrea el video loop con tus fotos)
+    (function(){
+      const slides = [...document.querySelectorAll('#v4 .slide')];
+      if(!slides.length) return;
+      slides[0].classList.add('show');
+      if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+      let idx = 0, dir = 1;
+      setInterval(() => {
+        slides[idx].classList.remove('show');
+        idx += dir;
+        if(idx >= slides.length - 1){ idx = slides.length - 1; dir = -1; }
+        else if(idx <= 0){ idx = 0; dir = 1; }
+        slides[idx].classList.add('show');
+      }, 4200);
+    })();
   </script>
 </body>
 </html>
