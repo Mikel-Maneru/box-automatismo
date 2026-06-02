@@ -351,6 +351,52 @@
     .foot-bottom{padding-top:22px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-family:var(--ff-m);font-size:.72rem;color:var(--granito);letter-spacing:.06em}
     .foot-bottom .gora{color:var(--brasa)}
 
+    /* DISCIPLINAS */
+    .disc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:50px}
+    .disc{background:var(--caliza);border:1px solid var(--bruma);border-radius:18px;padding:28px;transition:transform .25s,box-shadow .25s,border-color .25s}
+    .disc:hover{transform:translateY(-4px);box-shadow:0 18px 40px -22px rgba(27,26,24,.3);border-color:var(--brasa)}
+    .disc .ic{width:44px;height:44px;border-radius:12px;background:rgba(225,108,52,.12);display:flex;align-items:center;justify-content:center;color:var(--brasa);margin-bottom:16px}
+    .disc .ic svg{width:22px;height:22px}
+    .disc .eu{font-family:var(--ff-m);font-size:.64rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--larre);display:block;margin-bottom:5px}
+    .disc h3{font-size:1.2rem;font-weight:900;margin-bottom:7px}
+    .disc p{color:var(--granito);font-size:.9rem;line-height:1.5;font-weight:500}
+    /* CIFRAS / STATS BAND */
+    .statband{background:var(--pizarra);color:var(--caliza)}
+    .statband .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:60px 32px}
+    .stat{text-align:center}
+    .stat .n{font-weight:900;font-size:clamp(2.3rem,5vw,3.4rem);letter-spacing:-.03em;line-height:1;color:var(--brasa)}
+    .stat .t{font-family:var(--ff-m);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(246,243,236,.6);margin-top:8px}
+    /* TIMETABLE */
+    .tt-days{display:flex;gap:8px;flex-wrap:wrap;margin-top:42px}
+    .tt-day{font-family:var(--ff-m);font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:10px 16px;border:1.5px solid var(--bruma);border-radius:50px;background:var(--caliza);color:var(--granito);cursor:pointer;transition:all .2s}
+    .tt-day:hover{border-color:var(--brasa);color:var(--pizarra)}
+    .tt-day.on{background:var(--brasa);border-color:var(--brasa);color:#fff}
+    .tt-panel{margin-top:22px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .tt-row{display:flex;align-items:center;gap:14px;background:var(--caliza);border:1px solid var(--bruma);border-radius:12px;padding:13px 18px;transition:border-color .2s}
+    .tt-row:hover{border-color:var(--brasa)}
+    .tt-row .tm{font-weight:900;font-size:1.05rem;letter-spacing:-.01em;min-width:52px;color:var(--pizarra)}
+    .tt-row .cl{font-weight:700;color:var(--pizarra);font-size:.95rem}
+    .tt-note{margin-top:18px;font-family:var(--ff-m);font-size:.76rem;color:var(--granito);letter-spacing:.04em}
+    .tt-note a{color:var(--brasa);font-weight:700}
+    /* STEPS */
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:50px}
+    .step{position:relative;background:var(--caliza);border:1px solid var(--bruma);border-radius:18px;padding:30px 26px}
+    .step .num{font-family:var(--ff-d);font-weight:900;font-size:2.4rem;color:var(--brasa);line-height:1;letter-spacing:-.03em}
+    .step h3{font-size:1.25rem;font-weight:900;margin:12px 0 8px}
+    .step p{color:var(--granito);font-size:.92rem;line-height:1.55;font-weight:500}
+    .step::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--bruma);font-size:1.4rem;font-weight:700;z-index:2}
+    .step:last-child::after{display:none}
+    .steps-cta{margin-top:36px;text-align:center}
+    @media(max-width:900px){
+      .disc-grid{grid-template-columns:1fr 1fr}
+      .statband .wrap{grid-template-columns:1fr 1fr;gap:34px 16px}
+      .steps{grid-template-columns:1fr}
+      .step::after{content:"↓";right:50%;top:auto;bottom:-17px;transform:translateX(50%)}
+    }
+    @media(max-width:600px){
+      .disc-grid{grid-template-columns:1fr}
+      .tt-panel{grid-template-columns:1fr}
+    }
     .rev-up{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
     .rev-up.in{opacity:1;transform:none}
 
@@ -412,6 +458,7 @@
       <div class="nav-right">
         <div class="nav-links">
           <a href="#que-es" class="nl" data-i18n="nav.train">Entrenamiento</a>
+          <a href="#disciplinas" class="nl" data-i18n="nav.classes">Clases</a>
           <a href="#horarios" class="nl" data-i18n="nav.sched">Horarios</a>
           <a href="#tarifas" class="nl" data-i18n="nav.prices">Tarifas</a>
           <a href="#coaches" class="nl" data-i18n="nav.coaches">Coaches</a>
@@ -429,6 +476,7 @@
 
   <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú">
     <a href="#que-es" onclick="closeMobile()" data-i18n="nav.train">Entrenamiento</a>
+    <a href="#disciplinas" onclick="closeMobile()" data-i18n="nav.classes">Clases</a>
     <a href="#horarios" onclick="closeMobile()" data-i18n="nav.sched">Horarios</a>
     <a href="#tarifas" onclick="closeMobile()" data-i18n="nav.prices">Tarifas</a>
     <a href="#coaches" onclick="closeMobile()" data-i18n="nav.coaches">Coaches</a>
@@ -532,35 +580,49 @@
     </div>
   </section>
 
+  <!-- DISCIPLINAS -->
+  <section class="pad" id="disciplinas">
+    <div class="wrap">
+      <span class="sec-index rev-up" data-i18n="disc.idx">03 — Klaseak · Disciplinas</span>
+      <h2 class="title rev-up" data-i18n="disc.title">Una clase para <em>cada objetivo</em></h2>
+      <p class="lead rev-up" data-i18n="disc.lead">CrossFit, halterofilia, Hyrox, endurance y más. Todo guiado y escalable a tu nivel.</p>
+      <div class="disc-grid">
+        <div class="disc rev-up"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><span class="eu">Eguneroko · Todos</span><h3>WOD</h3><p data-i18n="disc.d1">El entrenamiento del día: gimnasia, cardio y fuerza combinados. Cada día distinto.</p></div>
+        <div class="disc rev-up"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 20h18L13.5 6l-3.5 6-2-3z"/></svg></div><span class="eu">Hasiberriak · Inicio</span><h3>Oinarriak</h3><p data-i18n="disc.d2">Los fundamentos para empezar. Técnica y movimientos base, sin agobios.</p></div>
+        <div class="disc rev-up"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10"/></svg></div><span class="eu">Indarra · Técnica</span><h3>Halterofilia</h3><p data-i18n="disc.d3">Arrancada y dos tiempos. Fuerza, potencia y técnica olímpica bien guiada.</p></div>
+        <div class="disc rev-up"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></div><span class="eu">Lehiakorra · Híbrido</span><h3>Hyrox</h3><p data-i18n="disc.d4">Resistencia híbrida: correr + estaciones funcionales. Prepárate para competir.</p></div>
+        <div class="disc rev-up"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 6 4-14 2 8h6"/></svg></div><span class="eu">Aerobikoa · Fondo</span><h3>Endurance</h3><p data-i18n="disc.d5">Capacidad cardiovascular y aguante para rendir más y recuperar mejor.</p></div>
+        <div class="disc rev-up"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V6z"/></svg></div><span class="eu">Indarra · Fuerza</span><h3>Total Strength</h3><p data-i18n="disc.d6">Fuerza estructurada para ganar músculo, solidez y prevenir lesiones.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CIFRAS -->
+  <section class="statband">
+    <div class="wrap">
+      <div class="stat rev-up"><div class="n"><span data-count="8" data-suffix="+">8+</span></div><div class="t" data-i18n="st.l1">Años de experiencia</div></div>
+      <div class="stat rev-up"><div class="n"><span data-count="46" data-suffix="+">46+</span></div><div class="t" data-i18n="st.l2">Miembros activos</div></div>
+      <div class="stat rev-up"><div class="n"><span data-count="6">6</span></div><div class="t" data-i18n="st.l3">Disciplinas</div></div>
+      <div class="stat rev-up"><div class="n">4.9★</div><div class="t" data-i18n="st.l4">Valoración en Google</div></div>
+    </div>
+  </section>
+
   <!-- HORARIOS -->
   <section class="pad" id="horarios">
     <div class="wrap">
-      <span class="sec-index rev-up" data-i18n="h.idx">03 — Ordutegia · Horarios</span>
-      <div class="split" style="align-items:start">
-        <div>
-          <h2 class="title rev-up" data-i18n="h.title">Entrena cuando<br><em>quieras</em></h2>
-          <p class="lead rev-up" data-i18n="h.lead">De lunes a sábado, mañanas y tardes. Encuentra el hueco que encaje con tu vida. Plazas limitadas por clase.</p>
-          <p class="mono rev-up" style="margin-top:22px;color:var(--pizarra)">L–V 6:30–21:15 · LARUNBATA 9:00–12:00</p>
-        </div>
-        <div>
-          <div class="sched">
-            <div class="day rev-up"><div class="dn" data-i18n="d.mon">Lun</div><div class="hr">6:30–21:15</div></div>
-            <div class="day rev-up"><div class="dn" data-i18n="d.tue">Mar</div><div class="hr">6:30–21:15</div></div>
-            <div class="day rev-up"><div class="dn" data-i18n="d.wed">Mié</div><div class="hr">6:30–21:15</div></div>
-            <div class="day rev-up"><div class="dn" data-i18n="d.thu">Jue</div><div class="hr">6:30–21:15</div></div>
-            <div class="day rev-up"><div class="dn" data-i18n="d.fri">Vie</div><div class="hr">6:30–21:15</div></div>
-            <div class="day rev-up"><div class="dn" data-i18n="d.sat">Sáb</div><div class="hr">9:00–12:00</div></div>
-          </div>
-          <p class="sched-note rev-up" data-i18n="h.note">Reserva tu plaza en WodBuster · Domingo cerrado</p>
-        </div>
-      </div>
+      <span class="sec-index rev-up" data-i18n="h.idx">04 — Ordutegia · Horarios</span>
+      <h2 class="title rev-up" data-i18n="h.title">Entrena cuando<br><em>quieras</em></h2>
+      <p class="lead rev-up" data-i18n="h.lead">De lunes a sábado, mañanas y tardes. Encuentra el hueco que encaje con tu vida. Plazas limitadas por clase.</p>
+      <div class="tt-days rev-up" id="ttDays"></div>
+      <div class="tt-panel rev-up" id="ttPanel"></div>
+      <p class="tt-note rev-up"><span data-i18n="h.note2">Horario orientativo · L–V 6:30–21:15 · Sáb 9:00–12:00 · Domingo cerrado.</span> <a href="https://anboto.wodbuster.com" target="_blank" rel="noopener" data-i18n="h.book">Reserva tu plaza en WodBuster →</a></p>
     </div>
   </section>
 
   <!-- TARIFAS -->
   <section class="pad dark on-dark" id="tarifas">
     <div class="wrap">
-      <span class="sec-index rev-up" data-i18n="t.idx">04 — Tarifak · Tarifas</span>
+      <span class="sec-index rev-up" data-i18n="t.idx">05 — Tarifak · Tarifas</span>
       <h2 class="title rev-up" data-i18n="t.title">Elige tu plan <em>mensual</em></h2>
       <p class="lead rev-up" data-i18n="t.lead">Todas las actividades incluidas. Precio claro, sin compromiso de permanencia.</p>
       <div class="price-grid">
@@ -633,7 +695,7 @@
   <!-- COACHES -->
   <section class="pad" id="coaches">
     <div class="wrap">
-      <span class="sec-index rev-up" data-i18n="c.idx">05 — Entrenatzaileak · Equipo</span>
+      <span class="sec-index rev-up" data-i18n="c.idx">06 — Entrenatzaileak · Equipo</span>
       <h2 class="title rev-up" data-i18n="c.title">Tus <em>coaches</em></h2>
       <p class="lead rev-up" data-i18n="c.lead">Siempre hay un coach pendiente de ti. Te guían, te corrigen y te motivan en cada WOD.</p>
       <div class="coach-grid">
@@ -648,7 +710,7 @@
   <!-- OPINIONES -->
   <section class="pad" id="opiniones" style="background:var(--caliza2)">
     <div class="wrap">
-      <span class="sec-index rev-up" data-i18n="o.idx">06 — Iritziak · Opiniones</span>
+      <span class="sec-index rev-up" data-i18n="o.idx">07 — Iritziak · Opiniones</span>
       <h2 class="title rev-up" data-i18n="o.title">Lo que dice<br><em>nuestra gente</em></h2>
       <p class="lead rev-up" data-i18n="o.lead">Valorados con 4.9 / 5 en Google.</p>
       <div class="rev-grid">
@@ -663,7 +725,7 @@
   <!-- FAQ -->
   <section class="pad" id="faq">
     <div class="wrap">
-      <span class="sec-index rev-up" data-i18n="fq.idx">07 — Galderak · FAQ</span>
+      <span class="sec-index rev-up" data-i18n="fq.idx">08 — Galderak · FAQ</span>
       <h2 class="title rev-up" data-i18n="fq.title">Preguntas <em>frecuentes</em></h2>
       <p class="lead rev-up" data-i18n="fq.lead">Si tienes más dudas, chatea con nuestro asistente 24h.</p>
       <div class="faq-wrap">
@@ -677,12 +739,27 @@
     </div>
   </section>
 
+  <!-- TU PRIMERA SEMANA -->
+  <section class="pad" id="empezar" style="background:var(--caliza2)">
+    <div class="wrap">
+      <span class="sec-index rev-up" data-i18n="step.idx">09 — Hasi · Tu primera semana</span>
+      <h2 class="title rev-up" data-i18n="step.title">Empezar es <em>fácil</em></h2>
+      <p class="lead rev-up" data-i18n="step.lead">Sin experiencia, sin compromiso. En tres pasos estás dentro.</p>
+      <div class="steps">
+        <div class="step rev-up"><div class="num">01</div><h3 data-i18n="step.h1">Reserva tu clase gratis</h3><p data-i18n="step.p1">Rellena el formulario o escríbenos por WhatsApp. Te respondemos enseguida.</p></div>
+        <div class="step rev-up"><div class="num">02</div><h3 data-i18n="step.h2">Ven y prueba</h3><p data-i18n="step.p2">Te recibimos, te explicamos todo y entrenas tu primer WOD a tu ritmo.</p></div>
+        <div class="step rev-up"><div class="num">03</div><h3 data-i18n="step.h3">Elige tu plan</h3><p data-i18n="step.p3">Si te gusta (te gustará), eliges tarifa. Sin compromiso de permanencia.</p></div>
+      </div>
+      <div class="steps-cta rev-up"><a href="#apuntarse" class="btn btn-primary"><span data-i18n="cta.book">Reserva tu clase gratis</span> <span class="arr">→</span></a></div>
+    </div>
+  </section>
+
   <!-- SIGNUP -->
   <section class="pad dark on-dark" id="apuntarse">
     <div class="wrap">
       <div class="signup-grid">
         <div>
-          <span class="sec-index rev-up" data-i18n="s.idx">08 — Izena eman · Apúntate</span>
+          <span class="sec-index rev-up" data-i18n="s.idx">10 — Izena eman · Apúntate</span>
           <h2 class="title rev-up" style="color:var(--caliza)" data-i18n="s.title">Tu <em>clase gratis</em><br>te espera</h2>
           <p class="lead rev-up" data-i18n="s.lead">Ven como estás, sin compromiso y sin experiencia necesaria. Prueba y decide — te prometemos que te va a gustar.</p>
           <div class="perks">
@@ -743,7 +820,7 @@
   <!-- INSTAGRAM -->
   <section class="pad">
     <div class="wrap" style="text-align:center">
-      <span class="sec-index rev-up" data-i18n="ig.idx">09 — @anbotofitness · Instagram</span>
+      <span class="sec-index rev-up" data-i18n="ig.idx">11 — @anbotofitness · Instagram</span>
       <h2 class="title rev-up" style="margin-bottom:8px" data-i18n="ig.title">Buen rollo<br><em>en el feed</em></h2>
       <p class="lead rev-up" style="margin-inline:auto" data-i18n="ig.lead">Entrenamientos, comunidad y momentos reales del box.</p>
       <div class="ig-grid">
@@ -797,6 +874,23 @@
       'hero.l1':['Ven como estás.','Zatoz zauden bezala.'],'hero.l2':['Sube a tu ritmo.','Igo zure erritmoan.'],
       'hero.card':['Box de entrenamiento funcional en Iurreta. Comunidad de verdad, coaches certificados y primera clase gratis.','Iurretako entrenamendu funtzionaleko boxa. Benetako komunitatea, coach ziurtatuak eta lehen klasea doan.'],
       'hero.more':['Saber más','Gehiago jakin'],'hero.ig':['Cómo es el box','Nolakoa den boxa'],
+      'nav.classes':['Clases','Klaseak'],
+      'disc.idx':['03 — Klaseak · Disciplinas','03 — Klaseak · Diziplinak'],'disc.title':['Una clase para <em>cada objetivo</em>','Klase bat helburu <em>bakoitzeko</em>'],
+      'disc.lead':['CrossFit, halterofilia, Hyrox, endurance y más. Todo guiado y escalable a tu nivel.','CrossFit, halterofilia, Hyrox, endurance eta gehiago. Dena gidatua eta zure mailara egokitua.'],
+      'disc.d1':['El entrenamiento del día: gimnasia, cardio y fuerza combinados. Cada día distinto.','Eguneko entrenamendua: gimnasia, kardioa eta indarra. Egunero desberdina.'],
+      'disc.d2':['Los fundamentos para empezar. Técnica y movimientos base, sin agobios.','Hasteko oinarriak. Teknika eta oinarrizko mugimenduak, presarik gabe.'],
+      'disc.d3':['Arrancada y dos tiempos. Fuerza, potencia y técnica olímpica bien guiada.','Inozioa eta bi denbora. Indarra, potentzia eta teknika olinpikoa, ondo gidatua.'],
+      'disc.d4':['Resistencia híbrida: correr + estaciones funcionales. Prepárate para competir.','Erresistentzia hibridoa: korrika + estazio funtzionalak. Prestatu lehiatzeko.'],
+      'disc.d5':['Capacidad cardiovascular y aguante para rendir más y recuperar mejor.','Ahalmen kardiobaskularra eta aguantea, gehiago errendatzeko eta hobeto berreskuratzeko.'],
+      'disc.d6':['Fuerza estructurada para ganar músculo, solidez y prevenir lesiones.','Indar egituratua, muskulua eta sendotasuna irabazteko eta lesioak saihesteko.'],
+      'st.l1':['Años de experiencia','Urteko esperientzia'],'st.l2':['Miembros activos','Kide aktiboak'],'st.l3':['Disciplinas','Diziplinak'],'st.l4':['Valoración en Google','Google-ko balorazioa'],
+      'step.idx':['09 — Hasi · Tu primera semana','09 — Hasi · Zure lehen astea'],'step.title':['Empezar es <em>fácil</em>','Hastea <em>erraza</em> da'],
+      'step.lead':['Sin experiencia, sin compromiso. En tres pasos estás dentro.','Esperientziarik eta konpromisorik gabe. Hiru urratsetan barruan zaude.'],
+      'step.h1':['Reserva tu clase gratis','Erreserbatu doako klasea'],'step.p1':['Rellena el formulario o escríbenos por WhatsApp. Te respondemos enseguida.','Bete formularioa edo idatzi WhatsApp bidez. Berehala erantzungo dizugu.'],
+      'step.h2':['Ven y prueba','Etorri eta probatu'],'step.p2':['Te recibimos, te explicamos todo y entrenas tu primer WOD a tu ritmo.','Hartuko zaitugu, dena azaldu eta zure lehen WODa egingo duzu zure erritmoan.'],
+      'step.h3':['Elige tu plan','Aukeratu zure plana'],'step.p3':['Si te gusta (te gustará), eliges tarifa. Sin compromiso de permanencia.','Gustatzen bazaizu (gustatuko zaizu), tarifa aukeratzen duzu. Iraunkortasun konpromisorik gabe.'],
+      'h.note2':['Horario orientativo · L–V 6:30–21:15 · Sáb 9:00–12:00 · Domingo cerrado.','Ordutegi orientagarria · A–O 6:30–21:15 · Lr 9:00–12:00 · Igandean itxita.'],
+      'h.book':['Reserva tu plaza en WodBuster →','Erreserbatu plaza WodBuster-en →'],
       'trust.google':['Google · 46 reseñas','Google · 46 iritzi'],'trust.members':['Miembros','Kideak'],'trust.freeword':['Gratis','Doan'],'trust.freelbl':['1ª clase','1. klasea'],
       'p.idx':['01 — Esentzia · Sobre nosotros','01 — Esentzia · Guri buruz'],
       'p.title':['No elegimos el nombre<br>de un monte <em>por azar</em>','Ez dugu mendi baten<br>izena <em>ausaz</em> aukeratu'],
@@ -810,11 +904,11 @@
       'f1.h':['WOD del día','Eguneko WODa'],'f1.p':['Workout of the Day. Cada día un entrenamiento distinto: gimnasia, halterofilia, cardio. Nunca te aburres.','Workout of the Day. Egunero entrenamendu desberdina: gimnasia, halterofilia, kardioa. Ez zara inoiz aspertzen.'],
       'f2.h':['Escalable','Egokigarria'],'f2.p':['Mismo WOD, distinta intensidad. Un principiante y un atleta lo hacen juntos, cada uno a su nivel.','WOD bera, intentsitate desberdina. Hasiberri batek eta atleta batek elkarrekin egiten dute, bakoitza bere mailan.'],
       'f3.h':['En grupo','Taldean'],'f3.p':['Entrenar en grupo empuja más que solo. Aquí el de al lado te anima a sacar ese último rep.','Taldean entrenatzeak bakarrik baino gehiago bultzatzen du. Hemen ondokoak azken errepikapena ateratzera animatzen zaitu.'],
-      'h.idx':['03 — Ordutegia · Horarios','03 — Ordutegia · Ordutegiak'],'h.title':['Entrena cuando<br><em>quieras</em>','Entrenatu <em>nahi</em><br>duzunean'],
+      'h.idx':['04 — Ordutegia · Horarios','04 — Ordutegia · Ordutegiak'],'h.title':['Entrena cuando<br><em>quieras</em>','Entrenatu <em>nahi</em><br>duzunean'],
       'h.lead':['De lunes a sábado, mañanas y tardes. Encuentra el hueco que encaje con tu vida. Plazas limitadas por clase.','Astelehenetik larunbatera, goizez eta arratsaldez. Aurkitu zure bizitzari egokitzen zaion tartea. Plaza mugatuak klaseko.'],
       'h.note':['Reserva tu plaza en WodBuster · Domingo cerrado','Erreserbatu zure plaza WodBuster-en · Igandean itxita'],
       'd.mon':['Lun','Al'],'d.tue':['Mar','Ar'],'d.wed':['Mié','Az'],'d.thu':['Jue','Og'],'d.fri':['Vie','Or'],'d.sat':['Sáb','Lr'],
-      't.idx':['04 — Tarifak · Tarifas','04 — Tarifak · Tarifak'],'t.title':['Elige tu plan <em>mensual</em>','Aukeratu zure <em>hileko</em> plana'],
+      't.idx':['05 — Tarifak · Tarifas','05 — Tarifak · Tarifak'],'t.title':['Elige tu plan <em>mensual</em>','Aukeratu zure <em>hileko</em> plana'],
       't.lead':['Todas las actividades incluidas. Precio claro, sin compromiso de permanencia.','Jarduera guztiak barne. Prezio argia, iraunkortasun konpromisorik gabe.'],
       't.n8':['8 Clases','8 Klase'],'t.n12':['12 Clases','12 Klase'],'t.n16':['16 Clases','16 Klase'],'t.nun':['Ilimitado','Mugagabea'],'t.month':['/mes','/hilean'],
       't.f8':['8 clases al mes','8 klase hilean'],'t.f12':['12 clases al mes','12 klase hilean'],'t.f16':['16 clases al mes','16 klase hilean'],
@@ -826,15 +920,15 @@
       't.trtl':['Doan · Sin compromiso','Doan · Konpromisorik gabe'],'t.trh':['Primera clase 100% gratis','Lehen klasea %100 doan'],
       't.trp':['Sin experiencia necesaria. Ven como estás, prueba y decide.','Esperientziarik behar ez. Zatoz zauden bezala, probatu eta erabaki.'],'t.trcta':['Reserva tu clase gratis →','Erreserbatu doako klasea →'],
       't.act':['Todas las tarifas incluyen: <b>Wod · Open Box · Total Strength · Haltero · Oinarriak · Endurance · Hyrox</b>','Tarifa guztiek barne hartzen dute: <b>Wod · Open Box · Total Strength · Haltero · Oinarriak · Endurance · Hyrox</b>'],
-      'c.idx':['05 — Entrenatzaileak · Equipo','05 — Entrenatzaileak · Taldea'],'c.title':['Tus <em>coaches</em>','Zure <em>entrenatzaileak</em>'],
+      'c.idx':['06 — Entrenatzaileak · Equipo','06 — Entrenatzaileak · Taldea'],'c.title':['Tus <em>coaches</em>','Zure <em>entrenatzaileak</em>'],
       'c.lead':['Siempre hay un coach pendiente de ti. Te guían, te corrigen y te motivan en cada WOD.','Beti dago coach bat zuri begira. Gidatu, zuzendu eta motibatu egiten zaituzte WOD bakoitzean.'],
       'c.r1':['Entrenador · Propietario','Entrenatzailea · Jabea'],'c.r2':['Entrenador','Entrenatzailea'],'c.r3':['Entrenadora','Entrenatzailea'],
       'c.p1':['El alma de Anboto. Lidera el box con pasión y se asegura de que cada atleta reciba la atención que necesita.','Anboto-ren arima. Boxa grinaz gidatzen du eta atleta bakoitzak behar duen arreta jasotzen duela ziurtatzen.'],
       'c.p2':['Ojo clínico para la técnica y una energía que contagia. Te va a sacar lo mejor en cada sesión.','Begi zorrotza teknikarako eta kutsatzen den energia. Onena aterako dizu saio bakoitzean.'],
       'c.p3':['Constancia y buen rollo. Te ayuda a progresar paso a paso, sin prisa pero sin pausa.','Iraunkortasuna eta giro ona. Urratsez urrats aurreratzen laguntzen dizu, presarik gabe baina etenik gabe.'],
       'c.p4':['Fuerza y cercanía a partes iguales. Con Izas siempre hay motivación para dar más de ti.','Indarra eta hurbiltasuna neurri berean. Izas-ekin beti dago motibazioa zeure onena emateko.'],
-      'o.idx':['06 — Iritziak · Opiniones','06 — Iritziak · Iritziak'],'o.title':['Lo que dice<br><em>nuestra gente</em>','Zer dioen <em>gure jendeak</em>'],'o.lead':['Valorados con 4.9 / 5 en Google.','4.9 / 5 balorazioa Google-n.'],
-      'fq.idx':['07 — Galderak · FAQ','07 — Galderak · Ohiko galderak'],'fq.title':['Preguntas <em>frecuentes</em>','Ohiko <em>galderak</em>'],
+      'o.idx':['07 — Iritziak · Opiniones','07 — Iritziak · Iritziak'],'o.title':['Lo que dice<br><em>nuestra gente</em>','Zer dioen <em>gure jendeak</em>'],'o.lead':['Valorados con 4.9 / 5 en Google.','4.9 / 5 balorazioa Google-n.'],
+      'fq.idx':['08 — Galderak · FAQ','08 — Galderak · Ohiko galderak'],'fq.title':['Preguntas <em>frecuentes</em>','Ohiko <em>galderak</em>'],
       'fq.lead':['Si tienes más dudas, chatea con nuestro asistente 24h.','Zalantza gehiago badituzu, hitz egin gure laguntzaile birtualarekin 24h.'],
       'fq.q1':['¿Necesito experiencia previa?','Aurretiko esperientzia behar dut?'],'fq.a1':['No, en absoluto. Empezarás aprendiendo los movimientos básicos adaptados a tu nivel. Todos hemos empezado desde cero.','Ez, inolaz ere. Mugimendu oinarrizkoak ikasten hasiko zara, zure mailara egokituta. Denok hasi gara zerotik.'],
       'fq.q2':['¿Qué es un WOD?','Zer da WOD bat?'],'fq.a2':['WOD significa Workout of the Day, el entrenamiento del día. Cada día es diferente y se adapta a tu nivel.','WOD-ek Workout of the Day esan nahi du, eguneko entrenamendua. Egunero desberdina da eta zure mailara egokitzen da.'],
@@ -842,14 +936,14 @@
       'fq.q4':['¿Dónde estáis exactamente?','Non zaudete zehazki?'],'fq.a4':['Estamos en el Polígono Ertzilla, P4, Iurreta. Muy cerca de la salida de la autopista A8 de Durango, fácil aparcamiento.','Ertzilla Poligonoan gaude, P4, Iurreta. Durangoko A8 autobidearen irteeratik oso gertu, aparkaleku erraza.'],
       'fq.q5':['¿Puedo ir a una clase de prueba?','Proba-klase batera joan naiteke?'],'fq.a5':['¡Claro! Contáctanos y te apuntamos a una clase de prueba para que veas cómo es el ambiente.','Noski! Jarri gurekin harremanetan eta proba-klase batean emango dizugu izena, giroa nolakoa den ikus dezazun.'],
       'fq.q6':['¿Qué ropa tengo que llevar?','Zein arropa eraman behar dut?'],'fq.a6':['Ropa cómoda de deporte y zapatillas. El material (cuerdas, bandas, pesas...) lo ponemos nosotros.','Kirol-arropa erosoa eta zapatilak. Materiala (sokak, bandak, pisuak...) guk jartzen dugu.'],
-      's.idx':['08 — Izena eman · Apúntate','08 — Izena eman · Eman izena'],'s.title':['Tu <em>clase gratis</em><br>te espera','Zure <em>doako klasea</em><br>zain duzu'],
+      's.idx':['10 — Izena eman · Apúntate','10 — Izena eman · Eman izena'],'s.title':['Tu <em>clase gratis</em><br>te espera','Zure <em>doako klasea</em><br>zain duzu'],
       's.lead':['Ven como estás, sin compromiso y sin experiencia necesaria. Prueba y decide — te prometemos que te va a gustar.','Zatoz zauden bezala, konpromisorik eta esperientziarik gabe. Probatu eta erabaki — gustatuko zaizula agintzen dizugu.'],
       's.k1':['Primera clase 100% gratuita','Lehen klasea %100 doan'],'s.k2':['Todo el material incluido','Material guztia barne'],'s.k3':['Coach pendiente de ti en cada clase','Coach bat zuri begira klase bakoitzean'],'s.k4':['Sin compromiso de permanencia','Iraunkortasun konpromisorik gabe'],
       's.cardh':['Quiero mi <em>clase gratis</em>','Nire <em>doako klasea</em> nahi dut'],'s.cardsub':['DOAN · Te contactamos enseguida','DOAN · Berehala harremanetan jarriko gara'],
       's.lname':['Nombre','Izena'],'s.phname':['Tu nombre','Zure izena'],'s.lphone':['Teléfono','Telefonoa'],'s.lemail':['Email','Emaila'],'s.lexp':['Experiencia','Esperientzia'],
       's.o1':['Sin experiencia','Esperientziarik gabe'],'s.o2':['Algo de experiencia','Esperientzia pixka bat'],'s.o3':['Vengo de otro box','Beste box batetik nator'],'s.submit':['Quiero mi clase gratis','Nire doako klasea nahi dut'],
       'cta.sub':['Ven a probar sin compromiso. Te esperamos en el box, a un paso de la A8.','Zatoz probatzera konpromisorik gabe. Boxean zain zaitugu, A8tik gertu.'],'cta.wa':['Escríbenos por WhatsApp','Idatzi WhatsApp bidez'],
-      'ig.idx':['09 — @anbotofitness · Instagram','09 — @anbotofitness · Instagram'],'ig.title':['Buen rollo<br><em>en el feed</em>','Giro ona<br><em>feed-ean</em>'],
+      'ig.idx':['11 — @anbotofitness · Instagram','11 — @anbotofitness · Instagram'],'ig.title':['Buen rollo<br><em>en el feed</em>','Giro ona<br><em>feed-ean</em>'],
       'ig.lead':['Entrenamientos, comunidad y momentos reales del box.','Entrenamenduak, komunitatea eta boxeko benetako uneak.'],'ig.cta':['Ver @anbotofitness','Ikusi @anbotofitness'],
       'foot.dir':['Cómo llegar','Nola iritsi'],
       'form.sending':['Enviando...','Bidaltzen...'],'form.ok':['¡Perfecto! En breve nos ponemos en contacto contigo. Eskerrik asko.','Primeran! Laster jarriko gara zurekin harremanetan. Eskerrik asko.'],'form.err':['Algo ha fallado, escríbenos por WhatsApp','Zerbait gaizki joan da, idatzi WhatsApp bidez']
@@ -945,6 +1039,34 @@
         else if(idx <= 0){ idx = 0; dir = 1; }
         slides[idx].classList.add('show');
       }, 4200);
+    })();
+
+    // ---------- Horario interactivo ----------
+    (function(){
+      const days = [['mon','d.mon'],['tue','d.tue'],['wed','d.wed'],['thu','d.thu'],['fri','d.fri'],['sat','d.sat']];
+      const SCHED = {
+        mon:[['06:30','WOD'],['09:30','Open Box'],['13:30','WOD'],['17:30','Oinarriak'],['18:30','WOD'],['19:30','Halterofilia'],['20:30','WOD']],
+        tue:[['06:30','WOD'],['09:30','Open Box'],['13:30','WOD'],['17:30','WOD'],['18:30','Hyrox'],['19:30','WOD'],['20:30','Endurance']],
+        wed:[['06:30','WOD'],['09:30','Open Box'],['13:30','WOD'],['17:30','Oinarriak'],['18:30','WOD'],['19:30','Total Strength'],['20:30','WOD']],
+        thu:[['06:30','WOD'],['09:30','Open Box'],['13:30','WOD'],['17:30','WOD'],['18:30','Halterofilia'],['19:30','WOD'],['20:30','Hyrox']],
+        fri:[['06:30','WOD'],['09:30','Open Box'],['13:30','WOD'],['17:30','Oinarriak'],['18:30','WOD'],['19:30','Endurance'],['20:30','WOD']],
+        sat:[['09:00','WOD'],['10:00','Hyrox'],['11:00','Open Box']]
+      };
+      const daysEl = document.getElementById('ttDays'), panel = document.getElementById('ttPanel');
+      if(!daysEl || !panel) return;
+      daysEl.innerHTML = days.map((d,i) => '<button class="tt-day' + (i===0?' on':'') + '" data-d="' + d[0] + '" data-i18n="' + d[1] + '">' + d[0] + '</button>').join('');
+      function render(key){
+        panel.innerHTML = (SCHED[key]||[]).map(s => '<div class="tt-row"><span class="tm">' + s[0] + '</span><span class="cl">' + s[1] + '</span></div>').join('');
+      }
+      daysEl.addEventListener('click', e => {
+        const b = e.target.closest('.tt-day'); if(!b) return;
+        daysEl.querySelectorAll('.tt-day').forEach(x => x.classList.remove('on'));
+        b.classList.add('on'); render(b.dataset.d);
+      });
+      const todayKey = ['mon','mon','tue','wed','thu','fri','sat'][new Date().getDay()];
+      daysEl.querySelectorAll('.tt-day').forEach(x => x.classList.toggle('on', x.dataset.d === todayKey));
+      render(todayKey);
+      if(typeof setLang === 'function') setLang(currentLang());
     })();
 
     // ---------- Signup form (API contract unchanged) ----------
