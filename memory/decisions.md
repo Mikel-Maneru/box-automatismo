@@ -60,7 +60,11 @@
 - Efectos react-bits (contención, brand-mapped): **ShinyText** (shimmer en 4 CTA brasa), **Magnet** (CTA hero, solo puntero fino), **fondo de curvas de nivel/altitud** en `#apuntarse`. Todos con `prefers-reduced-motion` y mobile-first.
 - Scripts: `npm run dev` = concurrently Express+Vite (Vite proxya /api,/fotos,/widget a :3003); `npm run build` = vite-react-ssg → public; `npm start` = Express sirve el build. Original conservado como `public/index.legacy.html`.
 - Verificado en navegador 375/768/1440: 0 errores consola, 0 overflow horizontal, toggle ES/EU, horario interactivo + día de hoy, FAQ acordeón, widget, prerender con 12 secciones + JSON-LD. Commits por fase en `feat/react-vite-migration` (aún NO mergeado a main).
-- PENDIENTE: preview/deploy en Vercel (requiere Vercel CLI + adaptar `/api` Express a funciones serverless); fotos reales del nuevo centro; validar visualmente efectos WebGL más pesados (Threads/Waves/Particles) cuando el panel del navegador esté visible.
+- PENDIENTE: fotos reales del nuevo centro; validar visualmente efectos WebGL más pesados (Threads/Waves/Particles) cuando el panel del navegador esté visible.
+- DEPLOY (2026-08-15): preview desplegado y verificado → https://box-automatismo-jzawrzxs9-mikel-manerus-projects.vercel.app (público; SSO protection del proyecto DESACTIVADA a petición del usuario). Producción (`anbotofitness.com`) intacta. Para salir a producción: `vercel --prod`.
+  - **Gotcha Vercel**: el proyecto es **Framework Preset = `express`** → Vercel envuelve `src/index.js` como UNA función que sirve TODO (estático `public/` + `/api` vía Express). NO usa los `api/*.js` sueltos ni hace build de Vite. El landing compilado debe estar en `public/` (commiteado). NO poner un script `build` en package.json raíz (Vercel lo auto-ejecuta y rompe): se renombró a `web:build`.
+  - **Fix de arranque**: `src/lib/supabase.js` ahora es lazy (Proxy) y `src/routes/chat.js` guarda el `new Anthropic` — así la función arranca sin todas las env (los previews no heredan las env de production; por eso crasheaba con "SUPABASE_URL obligatorias"). El formulario en PREVIEW no guarda (env solo en production); en producción funciona.
+  - Deploy vía `vercel` CLI con token de cuenta (`--scope=team_Ui7yFZ02hiIaqHBTalIHAOQP`); la integración Git↔Vercel está inactiva desde el 12-may (no auto-despliega en push).
 
 ## Key technical constraints
 - `dotenv` MUST use `{ override: true }`
