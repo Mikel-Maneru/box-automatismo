@@ -1,9 +1,0 @@
-- generic [ref=e2]:
-  - generic [ref=e3]:
-    - img [ref=e4]
-    - heading "Anboto SC" [level=1] [ref=e6]
-    - paragraph [ref=e7]: ↑ 1.331 M · Clase gratis
-  - generic [ref=e9]:
-    - paragraph [ref=e10]: Enlace no valido.
-    - link "Escribenos por WhatsApp" [ref=e11] [cursor=pointer]:
-      - /url: https://wa.me/34688661924
