@@ -17,6 +17,20 @@ export function Marquee() {
   );
 }
 
+/* ---------- Banda de foto a gran tamaño ---------- */
+export function PhotoBand() {
+  return (
+    <section className="photoband" aria-label="Comunidad Anboto SC">
+      <img src="/fotos/684166869_18141850504507230_4228607507298611888_n.jpeg" alt="Entrenando en Anboto SC" loading="lazy" />
+      <div className="pb-scrim" aria-hidden="true" />
+      <div className="pb-inner">
+        <span className="eyebrow">Komunitatea</span>
+        <p className="pb-claim rev-up">La cima se conquista <em>en grupo</em>.</p>
+      </div>
+    </section>
+  );
+}
+
 /* ---------- 01 · Sobre nosotros (listas editoriales) ---------- */
 const PILARES = [
   { n: '01', eu: 'p1.eu', h: 'p1.h', p: 'p1.p' },
@@ -59,7 +73,6 @@ export function QueEs() {
       <div className="wrap">
         <T as="span" className="sec-index rev-up" k="q.idx" />
         <T as="h2" className="title rev-up" k="q.title" />
-        <T as="p" className="lead rev-up" k="q.lead" />
         <div className="elist">
           {FEATS.map((it) => (
             <div className="ei rev-up" key={it.n}>
@@ -83,7 +96,6 @@ export function Disciplinas() {
       <div className="wrap">
         <T as="span" className="sec-index rev-up" k="disc.idx" />
         <T as="h2" className="title rev-up" k="disc.title" />
-        <T as="p" className="lead rev-up" k="disc.lead" />
         <div className="elist">
           {DISCIPLINAS.map((d) => (
             <div className="ei cls rev-up" key={d.name}>
@@ -163,7 +175,6 @@ export function Coaches() {
       <div className="wrap">
         <T as="span" className="sec-index rev-up" k="c.idx" />
         <T as="h2" className="title rev-up" k="c.title" />
-        <T as="p" className="lead rev-up" k="c.lead" />
         <div className="coach-grid">
           {COACHES.map((c) => (
             <div className="coach rev-up" key={c.name}>
@@ -282,7 +293,6 @@ export function Instagram() {
       <div className="wrap" style={{ textAlign: 'center' }}>
         <T as="span" className="sec-index rev-up" k="ig.idx" />
         <T as="h2" className="title rev-up" style={{ marginBottom: 8 }} k="ig.title" />
-        <T as="p" className="lead rev-up" style={{ marginInline: 'auto' }} k="ig.lead" />
         <div className="ig-grid">
           {IG_PHOTOS.map((src, i) => (
             <a href={INSTAGRAM_URL} target="_blank" rel="noopener" className="ig" key={i}>

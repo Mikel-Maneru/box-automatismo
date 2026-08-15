@@ -44,16 +44,6 @@ export default function Hero() {
           <T as="a" href="#que-es" className="btn btn-line" k="cta.whatis" />
         </div>
       </div>
-      <div className="hero-card">
-        <div className="t">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 22h18L12 3z" /></svg> ANBOTO SC
-        </div>
-        <T as="p" k="hero.card" />
-        <div className="cb">
-          <T as="a" className="b1" href="#apuntarse" k="cta.book" />
-          <T as="a" className="b2" href="#que-es" k="hero.more" />
-        </div>
-      </div>
       <a className="hero-ig" href={INSTAGRAM_URL} target="_blank" rel="noopener">
         <span className="pl"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg></span>
         <T as="span" k="hero.ig" />
