@@ -53,6 +53,15 @@
 - Corregido número WhatsApp del CTA: era `34688816982`, correcto `34688661924`.
 - NOTA: los archivos del manual (.pdf/.html) y artefactos de dev quedaron sin trackear en el repo; no commitear. La 1ª vez el usuario adjuntó por error el manual de **Bidener**.
 
+## 2026-08-15: Migración de la landing a React + Vite (rama feat/react-vite-migration)
+- Decisión del usuario: migrar `public/index.html` a app **React + Vite** para usar **react-bits** directamente (por encima de "portar efectos a vanilla"). Base = web actual; contenido y funcionalidad intactos; fotos actuales como placeholders del nuevo centro (obras en marcha).
+- App en `web/` (Vite + React JSX + CSS, sin Tailwind). Prerender estático con **vite-react-ssg**: `<head>` SEO + 2 JSON-LD estáticos en `web/index.html`, cuerpo prerenderizado → SEO intacto. Build a `../public` con `emptyOutDir:false` (no borra fotos/widget/reservar). Express (`src/index.js`) sigue sirviendo `public/` + `/api/*` + `/widget` + `/fotos` + `/reservar` sin cambios.
+- Paridad 1:1: piel CSS **verbatim** (`web/src/styles/global.css`), i18n EU/ES completo (`web/src/i18n/dict.js` + `LangContext` + `<T>`), datos en `web/src/data/site.js` (SCHED, disciplinas, coaches, reseñas, tarifas, **HERO_SLIDES/IG_PHOTOS = puntos de intercambio de foto**), un componente por sección, formulario con contrato `POST /api/signup` intacto (honeypot incl.), ChatWidget carga `/widget/widget.js`.
+- Efectos react-bits (contención, brand-mapped): **ShinyText** (shimmer en 4 CTA brasa), **Magnet** (CTA hero, solo puntero fino), **fondo de curvas de nivel/altitud** en `#apuntarse`. Todos con `prefers-reduced-motion` y mobile-first.
+- Scripts: `npm run dev` = concurrently Express+Vite (Vite proxya /api,/fotos,/widget a :3003); `npm run build` = vite-react-ssg → public; `npm start` = Express sirve el build. Original conservado como `public/index.legacy.html`.
+- Verificado en navegador 375/768/1440: 0 errores consola, 0 overflow horizontal, toggle ES/EU, horario interactivo + día de hoy, FAQ acordeón, widget, prerender con 12 secciones + JSON-LD. Commits por fase en `feat/react-vite-migration` (aún NO mergeado a main).
+- PENDIENTE: preview/deploy en Vercel (requiere Vercel CLI + adaptar `/api` Express a funciones serverless); fotos reales del nuevo centro; validar visualmente efectos WebGL más pesados (Threads/Waves/Particles) cuando el panel del navegador esté visible.
+
 ## Key technical constraints
 - `dotenv` MUST use `{ override: true }`
 - Anthropic client MUST set `baseURL: 'https://api.anthropic.com'`
