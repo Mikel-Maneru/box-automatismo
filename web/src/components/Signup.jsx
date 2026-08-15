@@ -49,6 +49,7 @@ export default function Signup() {
 
   return (
     <section className="pad dark on-dark arch" id="apuntarse">
+      <div className="fx-altitude" aria-hidden="true" />
       <div className="wrap">
         <div className="signup-grid">
           <div>
@@ -92,7 +93,7 @@ export default function Signup() {
               </div>
               <input type="text" name="website" style={{ display: 'none' }} tabIndex={-1}
                 autoComplete="off" value={form.website} onChange={set('website')} />
-              <button type="submit" className="form-btn" id="signupBtn" disabled={submitting}>
+              <button type="submit" className="form-btn cta-shine" id="signupBtn" disabled={submitting}>
                 {submitting ? t('form.sending') : t('s.submit')}
               </button>
               {msg && (

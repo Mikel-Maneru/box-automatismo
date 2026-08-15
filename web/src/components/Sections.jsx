@@ -227,7 +227,7 @@ export function Empezar() {
           ))}
         </div>
         <div className="steps-cta rev-up">
-          <a href="#apuntarse" className="btn btn-primary"><T as="span" k="cta.book" /> <span className="arr">→</span></a>
+          <a href="#apuntarse" className="btn btn-primary cta-shine"><T as="span" k="cta.book" /> <span className="arr">→</span></a>
         </div>
       </div>
     </section>
@@ -243,7 +243,7 @@ export function CtaContacto() {
           <div className="gora">GORA <em>ANBOTO!</em></div>
           <T as="p" className="cta-sub" k="cta.sub" />
           <div className="cta-btns">
-            <a href={WHATSAPP_URL} className="btn btn-primary" target="_blank" rel="noopener">
+            <a href={WHATSAPP_URL} className="btn btn-primary cta-shine" target="_blank" rel="noopener">
               <WhatsApp size={18} /> <T as="span" k="cta.wa" />
             </a>
             <a href="mailto:anbotocf@gmail.com" className="btn btn-line">anbotocf@gmail.com</a>

@@ -1,11 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { T } from '../i18n/LangContext.jsx';
+import { useMagnet } from '../hooks/useMagnet.js';
 import { HERO_SLIDES, INSTAGRAM_URL } from '../data/site.js';
 
 // Hero inmersivo a sangre. Slideshow "boomerang" (ping-pong) que recrea el loop de
 // fotos del sitio original. Respeta prefers-reduced-motion (queda en la 1ª foto).
 export default function Hero() {
   const [active, setActive] = useState(0);
+  const ctaRef = useRef(null);
+  useMagnet(ctaRef);
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
@@ -35,7 +38,7 @@ export default function Hero() {
         </h1>
         <T as="p" className="hero-desc" k="hero.desc" />
         <div className="hero-btns">
-          <a href="#apuntarse" className="btn btn-primary">
+          <a ref={ctaRef} href="#apuntarse" className="btn btn-primary cta-shine">
             <T as="span" k="cta.book" /> <span className="arr">→</span>
           </a>
           <T as="a" href="#que-es" className="btn btn-line" k="cta.whatis" />
