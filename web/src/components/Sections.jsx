@@ -73,16 +73,26 @@ export function QueEs() {
       <div className="wrap">
         <T as="span" className="sec-index rev-up" k="q.idx" />
         <T as="h2" className="title rev-up" k="q.title" />
-        <div className="elist">
-          {FEATS.map((it) => (
-            <div className="ei rev-up" key={it.n}>
-              <div className="mk"><span className="tri"></span>{it.n}</div>
-              <div className="bd">
-                <T as="h3" k={it.h} />
-                <T as="p" k={it.p} />
-              </div>
-            </div>
-          ))}
+        <div className="bento">
+          <div className="bento-tile b-lg rev-up">
+            <span className="bt-eyebrow">Eguneroko WODa</span>
+            <T as="h3" k="f1.h" />
+            <T as="p" k="f1.p" />
+          </div>
+          <div className="bento-tile b-photo rev-up" aria-hidden="true"
+            style={{ backgroundImage: "url('/fotos/681663370_18141850495507230_842418771480859784_n.jpeg')" }} />
+          <div className="bento-tile rev-up">
+            <T as="h3" k="f2.h" />
+            <T as="p" k="f2.p" />
+          </div>
+          <div className="bento-tile rev-up">
+            <T as="h3" k="f3.h" />
+            <T as="p" k="f3.p" />
+          </div>
+          <div className="bento-tile b-stat rev-up">
+            <div className="bt-num">4.9<span>★</span></div>
+            <span className="bt-lbl">Google · 46 reseñas</span>
+          </div>
         </div>
       </div>
     </section>
@@ -201,7 +211,7 @@ export function Opiniones() {
         <div className="rev-grid">
           {REVIEWS.map((r, i) => (
             <div className="rev rev-up" key={i}>
-              <div className="stars">★★★★★</div>
+              <div className="stars">{'★★★★★'.split('').map((s, i) => <i key={i}>{s}</i>)}</div>
               <p>{r.text}</p>
               <div className="who">
                 <div className="av">{r.av}</div>

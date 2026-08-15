@@ -16,6 +16,7 @@ function Site() {
   useScrollFx();
   return (
     <>
+      <div className="bg-blobs" aria-hidden="true"><span /><span /><span /></div>
       <AltitudeThread />
       <Nav />
       <Hero />
