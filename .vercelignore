@@ -1,0 +1,17 @@
+# Nunca subir secretos ni pesados
+.env
+.env.local
+.env.*.local
+node_modules
+web/node_modules
+
+# git / dev / material que no despliega
+.git
+.claude
+.playwright-mcp
+memory
+Manual de Marca*.html
+Manual de Marca*.pdf
+AnbotoManual.pdf
+scrollbar-check.png
+premium-redesign-COMO-USAR.md

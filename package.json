@@ -9,7 +9,7 @@
     "server:dev": "nodemon src/index.js",
     "web:dev": "npm --prefix web run dev",
     "web:install": "npm --prefix web install",
-    "build": "npm --prefix web run build"
+    "web:build": "npm --prefix web run build"
   },
   "engines": {
     "node": ">=20.0.0"
