@@ -545,3 +545,57 @@ header.hero,section,footer{position:relative;z-index:1}
 .tt-note,.tt-note a,.plan .pp .per,.day .dn,.rev .src,.sched-note,.plan .tri-list li{color:var(--bruma)}
 .tt-note a{color:var(--brasa)}
 .rev .av{background:var(--brasa);color:#1B1A18}
+
+/* ============================================================================
+   HERO ASIMÉTRICO "ALTÍMETRO" (cabecera de autor, no genérica)
+   ============================================================================ */
+.hero{text-align:left}
+.hero .slide{filter:grayscale(.4) contrast(1.06) brightness(.6)}        /* duotono oscuro, no sepia cálido */
+.hero .h-scrim{background:linear-gradient(180deg,rgba(20,19,18,.6),rgba(20,19,18,.35) 32%,rgba(20,19,18,.92)),radial-gradient(85% 70% at 28% 32%,transparent,rgba(20,19,18,.55))}
+.hero .h-grid{position:relative;z-index:5;max-width:var(--maxw);margin:0 auto;width:100%;padding:clamp(122px,20vh,196px) 32px clamp(60px,10vh,90px);display:grid;grid-template-columns:1.25fr .8fr;gap:clamp(30px,5vw,64px);align-items:center}
+.hero .h-lead{text-align:left}
+.hero .eyebrow{color:var(--brasa);text-shadow:0 2px 10px rgba(0,0,0,.5)}
+.hero h1{font-size:clamp(2.6rem,6.6vw,5.9rem);color:var(--caliza);text-shadow:0 4px 32px rgba(0,0,0,.6);line-height:.95;margin-top:16px}
+.hero h1 .br{color:var(--brasa)}
+.hero-desc{margin:22px 0 0;max-width:460px;text-align:left;font-size:1.1rem;color:rgba(246,243,236,.86);line-height:1.55;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+.hero-desc b{color:#fff}
+.hero-btns{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;justify-content:flex-start}
+
+/* Palabra kinética */
+.h-kinetic{display:flex;align-items:baseline;gap:12px;margin-top:16px}
+.h-kinetic .hk-label{font-family:var(--ff-m);font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--bruma)}
+.hk-rot{position:relative;display:inline-block;overflow:hidden;height:1.25em}
+.hk-word{display:inline-block;font-family:var(--ff-d);font-weight:900;font-size:clamp(1.3rem,2.6vw,2rem);letter-spacing:-.02em;color:var(--brasa);text-shadow:0 2px 16px rgba(225,108,52,.55);animation:hkIn .5s cubic-bezier(.2,.9,.2,1)}
+@keyframes hkIn{from{opacity:0;transform:translateY(.7em)}to{opacity:1;transform:none}}
+
+/* Panel altímetro (instrumento glass) */
+.altimeter{background:rgba(18,17,16,.55);border:1px solid var(--hair);border-radius:22px;padding:26px 26px 22px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 26px 74px -30px rgba(0,0,0,.85),0 0 40px -20px rgba(225,108,52,.25)}
+.alt-head{display:flex;justify-content:space-between;align-items:center;font-family:var(--ff-m);font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--bruma)}
+.alt-live{color:var(--brasa);display:inline-flex;align-items:center;gap:7px}
+.alt-live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--brasa);box-shadow:0 0 10px var(--brasa);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.alt-big{font-family:var(--ff-d);font-weight:900;font-size:clamp(2.6rem,5vw,3.6rem);color:var(--caliza);letter-spacing:-.03em;line-height:1;margin:14px 0 18px}
+.alt-big span{font-size:.48em;color:var(--brasa);margin-left:5px}
+.alt-rows{display:flex;flex-direction:column;gap:11px;border-top:1px solid var(--hair);padding-top:16px}
+.alt-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.alt-row span{font-family:var(--ff-m);color:var(--txt-3);letter-spacing:.06em;text-transform:uppercase;font-size:.64rem}
+.alt-row b{color:var(--caliza);font-weight:700;font-family:var(--ff-m);font-size:.76rem}
+.alt-cta{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:18px;background:var(--brasa);color:#fff;font-weight:800;padding:13px;border-radius:12px;font-size:.95rem;box-shadow:0 8px 26px rgba(225,108,52,.42);transition:background .2s,transform .2s}
+.alt-cta:hover{background:var(--brasa-d);transform:translateY(-2px)}
+.alt-cta .arr{transition:transform .2s}.alt-cta:hover .arr{transform:translateX(3px)}
+
+@media(max-width:920px){
+  .hero .h-grid{grid-template-columns:1fr;gap:28px;text-align:center}
+  .hero .h-lead{text-align:center}
+  .hero-desc{margin-inline:auto;text-align:center}
+  .hero-btns{justify-content:center}
+  .h-kinetic{justify-content:center}
+  .altimeter{max-width:420px;margin:0 auto;width:100%}
+}
+@media(max-width:600px){
+  .hero .h-grid{padding:106px 20px 44px}
+  .hero-btns{flex-direction:column;align-items:stretch}
+  .hero-btns .btn-primary{width:100%}
+  .hero-btns .btn-line{align-self:center;padding:13px 26px}
+}
+@media(prefers-reduced-motion:reduce){.hk-word{animation:none}.alt-live::before{animation:none}}
