@@ -1,0 +1,29 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "anboto-api",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "server:dev"],
+      "port": 3003
+    },
+    {
+      "name": "anboto-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "web:dev"],
+      "port": 5173
+    },
+    {
+      "name": "Anboto",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "3001", "--directory", "public"],
+      "port": 3001
+    },
+    {
+      "name": "Bidener",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "3000"],
+      "port": 3000
+    }
+  ]
+}

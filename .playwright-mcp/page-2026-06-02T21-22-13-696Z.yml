@@ -1,0 +1,573 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]:
+      - link "Anboto Strength & Conditioning" [ref=e4] [cursor=pointer]:
+        - /url: "#top"
+        - img [ref=e5]
+        - generic [ref=e7]:
+          - generic [ref=e8]: ANBOTO
+          - generic [ref=e9]: SC · Strength & Cond.
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - link "Entrenamiento" [ref=e12] [cursor=pointer]:
+            - /url: "#que-es"
+          - link "Clases" [ref=e13] [cursor=pointer]:
+            - /url: "#disciplinas"
+          - link "Horarios" [ref=e14] [cursor=pointer]:
+            - /url: "#horarios"
+          - link "Tarifas" [ref=e15] [cursor=pointer]:
+            - /url: "#tarifas"
+          - link "Coaches" [ref=e16] [cursor=pointer]:
+            - /url: "#coaches"
+          - link "FAQ" [ref=e17] [cursor=pointer]:
+            - /url: "#faq"
+          - link "Prueba gratis" [ref=e18] [cursor=pointer]:
+            - /url: "#apuntarse"
+        - group "Idioma / Hizkuntza" [ref=e19]:
+          - button "Castellano" [pressed] [ref=e20] [cursor=pointer]: ES
+          - button "Euskara" [ref=e21] [cursor=pointer]: EU
+  - dialog "Menú":
+    - link "Entrenamiento":
+      - /url: "#que-es"
+    - link "Clases":
+      - /url: "#disciplinas"
+    - link "Horarios":
+      - /url: "#horarios"
+    - link "Tarifas":
+      - /url: "#tarifas"
+    - link "Coaches":
+      - /url: "#coaches"
+    - link "Opiniones":
+      - /url: "#opiniones"
+    - link "FAQ":
+      - /url: "#faq"
+    - link "Reserva tu clase gratis":
+      - /url: "#apuntarse"
+    - generic: GORA ANBOTO! · ↑ 1.331 M
+  - generic:
+    - generic: BASE
+    - generic:
+      - generic: ↑ 0 M
+    - generic: CIMA 1.331 M
+  - banner [ref=e22]:
+    - generic [ref=e29]:
+      - generic [ref=e30]: ↑ 1.331 M · Iurreta, Bizkaia
+      - heading "Ven como estás. Sube a tu ritmo." [level=1] [ref=e31]
+      - paragraph [ref=e32]: Box de entrenamiento funcional con buen ambiente y cercanía — CrossFit, halterofilia, Hyrox y endurance, para todos los niveles. Tu primera clase es gratis.
+      - generic [ref=e33]:
+        - link "Reserva tu clase gratis →" [ref=e34] [cursor=pointer]:
+          - /url: "#apuntarse"
+          - generic [ref=e35]: Reserva tu clase gratis
+          - generic [ref=e36]: →
+        - link "¿Qué es Anboto?" [ref=e37] [cursor=pointer]:
+          - /url: "#que-es"
+    - generic [ref=e38]:
+      - generic [ref=e39]:
+        - img [ref=e40]
+        - text: ANBOTO SC
+      - paragraph [ref=e42]: Box de entrenamiento funcional en Iurreta. Comunidad de verdad, coaches certificados y primera clase gratis.
+      - generic [ref=e43]:
+        - link "Reserva tu clase gratis" [ref=e44] [cursor=pointer]:
+          - /url: "#apuntarse"
+        - link "Saber más" [ref=e45] [cursor=pointer]:
+          - /url: "#que-es"
+    - link "Cómo es el box" [ref=e46] [cursor=pointer]:
+      - /url: https://www.instagram.com/anbotofitness/
+      - img [ref=e48]
+      - generic [ref=e50]: Cómo es el box
+  - generic [ref=e52]:
+    - generic [ref=e53]: WOD
+    - generic [ref=e54]: Oinarriak
+    - generic [ref=e55]: Indarra
+    - generic [ref=e56]: Open Box
+    - generic [ref=e57]: Total Strength
+    - generic [ref=e58]: Haltero
+    - generic [ref=e59]: Endurance
+    - generic [ref=e60]: Hyrox
+    - generic [ref=e61]: WOD
+    - generic [ref=e62]: Oinarriak
+    - generic [ref=e63]: Indarra
+    - generic [ref=e64]: Open Box
+    - generic [ref=e65]: Total Strength
+    - generic [ref=e66]: Haltero
+    - generic [ref=e67]: Endurance
+    - generic [ref=e68]: Hyrox
+  - generic [ref=e70]:
+    - generic [ref=e71]: 01 — Esentzia · Sobre nosotros
+    - heading "No elegimos el nombre de un monte por azar" [level=2] [ref=e72]:
+      - text: No elegimos el nombre
+      - text: de un monte
+      - emphasis [ref=e73]: por azar
+    - paragraph [ref=e74]: "Anboto es la montaña de Durangaldea: 1.331 metros de roca que se ven desde todo el valle. Entrenar es escalar — cada quien sube a su ritmo, pero la cima se conquista en grupo."
+    - generic [ref=e75]:
+      - generic [ref=e76]:
+        - generic [ref=e77]: "01"
+        - generic [ref=e79]:
+          - generic [ref=e80]: Harria · Fuerza
+          - heading "La roca" [level=3] [ref=e81]
+          - paragraph [ref=e82]: Sólidos, exigentes, sin atajos. Transmitimos esfuerzo real y constancia en cada WOD.
+      - generic [ref=e83]:
+        - generic [ref=e84]: "02"
+        - generic [ref=e86]:
+          - generic [ref=e87]: Komunitatea · Cercanía
+          - heading "La comunidad" [level=3] [ref=e88]
+          - paragraph [ref=e89]: Aquí te conocen por tu nombre. Cálidos, familiares, de barrio. Un box grande con alma de pueblo.
+      - generic [ref=e90]:
+        - generic [ref=e91]: "03"
+        - generic [ref=e93]:
+          - generic [ref=e94]: Helmuga · Progreso
+          - heading "La cima" [level=3] [ref=e95]
+          - paragraph [ref=e96]: Escalable para todos. Del primer día al primer Hyrox, cada paso cuenta y se celebra en grupo.
+  - generic [ref=e98]:
+    - generic [ref=e99]: 02 — Zer da Anboto · Qué es
+    - heading "Más que un box, una comunidad" [level=2] [ref=e100]:
+      - text: Más que un box,
+      - text: una
+      - emphasis [ref=e101]: comunidad
+    - paragraph [ref=e102]: "Constantemente variado, funcional y a tu intensidad. Pero tranqui: todo se adapta a tu nivel, con un coach pendiente de ti en cada clase."
+    - generic [ref=e103]:
+      - generic [ref=e104]:
+        - generic [ref=e105]: "01"
+        - generic [ref=e107]:
+          - heading "WOD del día" [level=3] [ref=e108]
+          - paragraph [ref=e109]: "Workout of the Day. Cada día un entrenamiento distinto: gimnasia, halterofilia, cardio. Nunca te aburres."
+      - generic [ref=e110]:
+        - generic [ref=e111]: "02"
+        - generic [ref=e113]:
+          - heading "Escalable" [level=3] [ref=e114]
+          - paragraph [ref=e115]: Mismo WOD, distinta intensidad. Un principiante y un atleta lo hacen juntos, cada uno a su nivel.
+      - generic [ref=e116]:
+        - generic [ref=e117]: "03"
+        - generic [ref=e119]:
+          - heading "En grupo" [level=3] [ref=e120]
+          - paragraph [ref=e121]: Entrenar en grupo empuja más que solo. Aquí el de al lado te anima a sacar ese último rep.
+  - generic [ref=e123]:
+    - generic [ref=e124]: 03 — Klaseak · Disciplinas
+    - heading "Una clase para cada objetivo" [level=2] [ref=e125]:
+      - text: Una clase para
+      - emphasis [ref=e126]: cada objetivo
+    - paragraph [ref=e127]: CrossFit, halterofilia, Hyrox, endurance y más. Todo guiado y escalable a tu nivel.
+    - generic [ref=e128]:
+      - generic [ref=e132]:
+        - generic [ref=e133]:
+          - generic [ref=e134]: Eguneroko · Todos
+          - heading "WOD" [level=3] [ref=e135]
+        - paragraph [ref=e136]: "El entrenamiento del día: gimnasia, cardio y fuerza combinados. Cada día distinto."
+      - generic [ref=e140]:
+        - generic [ref=e141]:
+          - generic [ref=e142]: Hasiberriak · Inicio
+          - heading "Oinarriak" [level=3] [ref=e143]
+        - paragraph [ref=e144]: Los fundamentos para empezar. Técnica y movimientos base, sin agobios.
+      - generic [ref=e148]:
+        - generic [ref=e149]:
+          - generic [ref=e150]: Indarra · Técnica
+          - heading "Halterofilia" [level=3] [ref=e151]
+        - paragraph [ref=e152]: Arrancada y dos tiempos. Fuerza, potencia y técnica olímpica bien guiada.
+      - generic [ref=e156]:
+        - generic [ref=e157]:
+          - generic [ref=e158]: Lehiakorra · Híbrido
+          - heading "Hyrox" [level=3] [ref=e159]
+        - paragraph [ref=e160]: "Resistencia híbrida: correr + estaciones funcionales. Prepárate para competir."
+      - generic [ref=e164]:
+        - generic [ref=e165]:
+          - generic [ref=e166]: Aerobikoa · Fondo
+          - heading "Endurance" [level=3] [ref=e167]
+        - paragraph [ref=e168]: Capacidad cardiovascular y aguante para rendir más y recuperar mejor.
+      - generic [ref=e172]:
+        - generic [ref=e173]:
+          - generic [ref=e174]: Indarra · Fuerza
+          - heading "Total Strength" [level=3] [ref=e175]
+        - paragraph [ref=e176]: Fuerza estructurada para ganar músculo, solidez y prevenir lesiones.
+  - generic [ref=e178]:
+    - generic [ref=e179]:
+      - generic [ref=e180]: 8+
+      - generic [ref=e181]: Años de experiencia
+    - generic [ref=e182]:
+      - generic [ref=e183]: 46+
+      - generic [ref=e184]: Miembros activos
+    - generic [ref=e185]:
+      - generic [ref=e186]: "6"
+      - generic [ref=e187]: Disciplinas
+    - generic [ref=e188]:
+      - generic [ref=e189]: 4.9★
+      - generic [ref=e190]: Valoración en Google
+  - generic [ref=e192]:
+    - generic [ref=e193]: 04 — Ordutegia · Horarios
+    - heading "Entrena cuando quieras" [level=2] [ref=e194]:
+      - text: Entrena cuando
+      - emphasis [ref=e195]: quieras
+    - paragraph [ref=e196]: De lunes a sábado, mañanas y tardes. Encuentra el hueco que encaje con tu vida. Plazas limitadas por clase.
+    - generic [ref=e197]:
+      - button "Lun" [ref=e198] [cursor=pointer]
+      - button "Mar" [ref=e199] [cursor=pointer]
+      - button "Mié" [ref=e200] [cursor=pointer]
+      - button "Jue" [ref=e201] [cursor=pointer]
+      - button "Vie" [ref=e202] [cursor=pointer]
+      - button "Sáb" [ref=e203] [cursor=pointer]
+    - generic [ref=e204]:
+      - generic [ref=e205]:
+        - generic [ref=e206]: 06:30
+        - generic [ref=e207]: WOD
+      - generic [ref=e208]:
+        - generic [ref=e209]: 09:30
+        - generic [ref=e210]: Open Box
+      - generic [ref=e211]:
+        - generic [ref=e212]: 13:30
+        - generic [ref=e213]: WOD
+      - generic [ref=e214]:
+        - generic [ref=e215]: 17:30
+        - generic [ref=e216]: WOD
+      - generic [ref=e217]:
+        - generic [ref=e218]: 18:30
+        - generic [ref=e219]: Hyrox
+      - generic [ref=e220]:
+        - generic [ref=e221]: 19:30
+        - generic [ref=e222]: WOD
+      - generic [ref=e223]:
+        - generic [ref=e224]: 20:30
+        - generic [ref=e225]: Endurance
+    - paragraph [ref=e226]:
+      - text: Horario orientativo · L–V 6:30–21:15 · Sáb 9:00–12:00 · Domingo cerrado.
+      - link "Reserva tu plaza en WodBuster →" [ref=e227] [cursor=pointer]:
+        - /url: https://anboto.wodbuster.com
+  - generic [ref=e229]:
+    - generic [ref=e230]: 05 — Tarifak · Tarifas
+    - heading "Elige tu plan mensual" [level=2] [ref=e231]:
+      - text: Elige tu plan
+      - emphasis [ref=e232]: mensual
+    - paragraph [ref=e233]: Todas las actividades incluidas. Precio claro, sin compromiso de permanencia.
+    - generic [ref=e234]:
+      - generic [ref=e235]:
+        - generic [ref=e236]: 8 Clases
+        - generic [ref=e237]:
+          - generic [ref=e238]: "60"
+          - generic [ref=e239]: €
+          - generic [ref=e240]: /mes
+        - list [ref=e241]:
+          - listitem [ref=e242]: 8 clases al mes
+          - listitem [ref=e243]: Wod, Open Box, Total Strength
+          - listitem [ref=e244]: Haltero, Oinarriak, Endurance, Hyrox
+          - listitem [ref=e245]: Coach en cada clase
+        - link "Empieza gratis" [ref=e246] [cursor=pointer]:
+          - /url: "#apuntarse"
+      - generic [ref=e247]:
+        - generic [ref=e248]: 12 Clases
+        - generic [ref=e249]:
+          - generic [ref=e250]: "70"
+          - generic [ref=e251]: €
+          - generic [ref=e252]: /mes
+        - list [ref=e253]:
+          - listitem [ref=e254]: 12 clases al mes
+          - listitem [ref=e255]: Wod, Open Box, Total Strength
+          - listitem [ref=e256]: Haltero, Oinarriak, Endurance, Hyrox
+          - listitem [ref=e257]: Coach en cada clase
+        - link "Empieza gratis" [ref=e258] [cursor=pointer]:
+          - /url: "#apuntarse"
+      - generic [ref=e259]:
+        - generic [ref=e260]: 16 Clases
+        - generic [ref=e261]:
+          - generic [ref=e262]: "80"
+          - generic [ref=e263]: €
+          - generic [ref=e264]: /mes
+        - list [ref=e265]:
+          - listitem [ref=e266]: 16 clases al mes
+          - listitem [ref=e267]: Wod, Open Box, Total Strength
+          - listitem [ref=e268]: Haltero, Oinarriak, Endurance, Hyrox
+          - listitem [ref=e269]: Coach en cada clase
+        - link "Empieza gratis" [ref=e270] [cursor=pointer]:
+          - /url: "#apuntarse"
+      - generic [ref=e271]:
+        - generic [ref=e272]: Popular
+        - generic [ref=e273]: Ilimitado
+        - generic [ref=e274]:
+          - generic [ref=e275]: "95"
+          - generic [ref=e276]: €
+          - generic [ref=e277]: /mes
+        - list [ref=e278]:
+          - listitem [ref=e279]: Clases ilimitadas
+          - listitem [ref=e280]: Todas las actividades
+          - listitem [ref=e281]: Plan semanal por WhatsApp
+          - listitem [ref=e282]: Coach en cada clase
+          - listitem [ref=e283]: Máxima flexibilidad
+        - link "Empieza gratis" [ref=e284] [cursor=pointer]:
+          - /url: "#apuntarse"
+    - generic [ref=e285]:
+      - generic [ref=e286]:
+        - paragraph [ref=e287]: Bonos puntuales
+        - generic [ref=e288]:
+          - generic [ref=e289]:
+            - generic [ref=e290]: 5 sesiones
+            - generic [ref=e291]: 60 €
+            - generic [ref=e292]: Ideal para quienes vienen de forma esporádica.
+          - generic [ref=e293]:
+            - generic [ref=e294]: 10 sesiones
+            - generic [ref=e295]: 100 €
+            - generic [ref=e296]: Mejor precio por sesión, sin compromiso mensual.
+      - generic [ref=e297]:
+        - generic [ref=e298]: Doan · Sin compromiso
+        - strong [ref=e299]: Primera clase 100% gratis
+        - paragraph [ref=e300]: Sin experiencia necesaria. Ven como estás, prueba y decide.
+        - link "Reserva tu clase gratis →" [ref=e301] [cursor=pointer]:
+          - /url: "#apuntarse"
+    - paragraph [ref=e302]: "Todas las tarifas incluyen: Wod · Open Box · Total Strength · Haltero · Oinarriak · Endurance · Hyrox"
+  - generic [ref=e304]:
+    - generic [ref=e305]: 06 — Entrenatzaileak · Equipo
+    - heading "Tus coaches" [level=2] [ref=e306]:
+      - text: Tus
+      - emphasis [ref=e307]: coaches
+    - paragraph [ref=e308]: Siempre hay un coach pendiente de ti. Te guían, te corrigen y te motivan en cada WOD.
+    - generic [ref=e309]:
+      - generic [ref=e310]:
+        - generic [ref=e311]:
+          - generic [ref=e312]: XO
+          - img [ref=e314]
+        - heading "Xabi Osa" [level=3] [ref=e316]
+        - generic [ref=e317]: Entrenador · Propietario
+        - paragraph [ref=e318]: El alma de Anboto. Lidera el box con pasión y se asegura de que cada atleta reciba la atención que necesita.
+      - generic [ref=e319]:
+        - generic [ref=e320]:
+          - generic [ref=e321]: MB
+          - img [ref=e323]
+        - heading "Mikel Blanco" [level=3] [ref=e325]
+        - generic [ref=e326]: Entrenador
+        - paragraph [ref=e327]: Ojo clínico para la técnica y una energía que contagia. Te va a sacar lo mejor en cada sesión.
+      - generic [ref=e328]:
+        - generic [ref=e329]:
+          - generic [ref=e330]: IS
+          - img [ref=e332]
+        - heading "Illan Setien" [level=3] [ref=e334]
+        - generic [ref=e335]: Entrenador
+        - paragraph [ref=e336]: Constancia y buen rollo. Te ayuda a progresar paso a paso, sin prisa pero sin pausa.
+      - generic [ref=e337]:
+        - generic [ref=e338]:
+          - generic [ref=e339]: IG
+          - img [ref=e341]
+        - heading "Izas Gastañaga" [level=3] [ref=e343]
+        - generic [ref=e344]: Entrenadora
+        - paragraph [ref=e345]: Fuerza y cercanía a partes iguales. Con Izas siempre hay motivación para dar más de ti.
+  - generic [ref=e347]:
+    - generic [ref=e348]: 07 — Iritziak · Opiniones
+    - heading "Lo que dice nuestra gente" [level=2] [ref=e349]:
+      - text: Lo que dice
+      - emphasis [ref=e350]: nuestra gente
+    - paragraph [ref=e351]: Valorados con 4.9 / 5 en Google.
+    - generic [ref=e352]:
+      - generic [ref=e353]:
+        - generic [ref=e354]: ★★★★★
+        - paragraph [ref=e355]: Gran familia de entrenamiento, grandes coaches. Box grande y fácil acceso, muy cerca de la salida de autopista A8 Durango.
+        - generic [ref=e356]:
+          - generic [ref=e357]: K
+          - generic [ref=e358]:
+            - generic [ref=e359]: KapI kasper
+            - generic [ref=e360]: Local Guide
+      - generic [ref=e361]:
+        - generic [ref=e362]: ★★★★★
+        - paragraph [ref=e363]: Box al lado de Durango, muy buen ambiente y acogida. En mi caso solo estuve de paso dos días y me sentí como en casa. Eskerrik asko!
+        - generic [ref=e364]:
+          - generic [ref=e365]: C
+          - generic [ref=e366]:
+            - generic [ref=e367]: Claudia Diaz
+            - generic [ref=e368]: Local Guide
+      - generic [ref=e369]:
+        - generic [ref=e370]: ★★★★★
+        - paragraph [ref=e371]: Muy buen sitio para entrenar. Muy buen ambiente, buenos entrenadores y material de primera. Un lujo.
+        - generic [ref=e372]:
+          - generic [ref=e373]: I
+          - generic [ref=e374]:
+            - generic [ref=e375]: Iñigo Perez
+            - generic [ref=e376]: Google
+      - generic [ref=e377]:
+        - generic [ref=e378]: ★★★★★
+        - paragraph [ref=e379]: He estado como en casa, gracias Xabi por toda tu amabilidad. Nos vemos en el box!
+        - generic [ref=e380]:
+          - generic [ref=e381]: K
+          - generic [ref=e382]:
+            - generic [ref=e383]: Kike Largo
+            - generic [ref=e384]: Local Guide
+  - generic [ref=e386]:
+    - generic [ref=e387]: 08 — Galderak · FAQ
+    - heading "Preguntas frecuentes" [level=2] [ref=e388]:
+      - text: Preguntas
+      - emphasis [ref=e389]: frecuentes
+    - paragraph [ref=e390]: Si tienes más dudas, chatea con nuestro asistente 24h.
+    - generic [ref=e391]:
+      - generic [ref=e392]:
+        - button "¿Necesito experiencia previa?" [ref=e393] [cursor=pointer]:
+          - generic [ref=e394]: ¿Necesito experiencia previa?
+        - paragraph [ref=e396]: No, en absoluto. Empezarás aprendiendo los movimientos básicos adaptados a tu nivel. Todos hemos empezado desde cero.
+      - generic [ref=e397]:
+        - button "¿Qué es un WOD?" [ref=e398] [cursor=pointer]:
+          - generic [ref=e399]: ¿Qué es un WOD?
+        - paragraph [ref=e401]: WOD significa Workout of the Day, el entrenamiento del día. Cada día es diferente y se adapta a tu nivel.
+      - generic [ref=e402]:
+        - button "¿Cómo puedo apuntarme?" [ref=e403] [cursor=pointer]:
+          - generic [ref=e404]: ¿Cómo puedo apuntarme?
+        - paragraph [ref=e406]: Escríbenos por WhatsApp o a anbotocf@gmail.com y te explicamos todo.
+      - generic [ref=e407]:
+        - button "¿Dónde estáis exactamente?" [ref=e408] [cursor=pointer]:
+          - generic [ref=e409]: ¿Dónde estáis exactamente?
+        - paragraph [ref=e411]: Estamos en el Polígono Ertzilla, P4, Iurreta. Muy cerca de la salida de la autopista A8 de Durango, fácil aparcamiento.
+      - generic [ref=e412]:
+        - button "¿Puedo ir a una clase de prueba?" [ref=e413] [cursor=pointer]:
+          - generic [ref=e414]: ¿Puedo ir a una clase de prueba?
+        - paragraph [ref=e416]: ¡Claro! Contáctanos y te apuntamos a una clase de prueba para que veas cómo es el ambiente.
+      - generic [ref=e417]:
+        - button "¿Qué ropa tengo que llevar?" [ref=e418] [cursor=pointer]:
+          - generic [ref=e419]: ¿Qué ropa tengo que llevar?
+        - paragraph [ref=e421]: Ropa cómoda de deporte y zapatillas. El material (cuerdas, bandas, pesas...) lo ponemos nosotros.
+  - generic [ref=e423]:
+    - generic [ref=e424]: 09 — Hasi · Tu primera semana
+    - heading "Empezar es fácil" [level=2] [ref=e425]:
+      - text: Empezar es
+      - emphasis [ref=e426]: fácil
+    - paragraph [ref=e427]: Sin experiencia, sin compromiso. En tres pasos estás dentro.
+    - generic [ref=e428]:
+      - generic [ref=e429]:
+        - generic [ref=e430]: "01"
+        - heading "Reserva tu clase gratis" [level=3] [ref=e431]
+        - paragraph [ref=e432]: Rellena el formulario o escríbenos por WhatsApp. Te respondemos enseguida.
+        - text: →
+      - generic [ref=e433]:
+        - generic [ref=e434]: "02"
+        - heading "Ven y prueba" [level=3] [ref=e435]
+        - paragraph [ref=e436]: Te recibimos, te explicamos todo y entrenas tu primer WOD a tu ritmo.
+        - text: →
+      - generic [ref=e437]:
+        - generic [ref=e438]: "03"
+        - heading "Elige tu plan" [level=3] [ref=e439]
+        - paragraph [ref=e440]: Si te gusta (te gustará), eliges tarifa. Sin compromiso de permanencia.
+    - link "Reserva tu clase gratis →" [ref=e442] [cursor=pointer]:
+      - /url: "#apuntarse"
+      - generic [ref=e443]: Reserva tu clase gratis
+      - generic [ref=e444]: →
+  - generic [ref=e447]:
+    - generic [ref=e448]:
+      - generic [ref=e449]: 10 — Izena eman · Apúntate
+      - heading "Tu clase gratis te espera" [level=2] [ref=e450]:
+        - text: Tu
+        - emphasis [ref=e451]: clase gratis
+        - text: te espera
+      - paragraph [ref=e452]: Ven como estás, sin compromiso y sin experiencia necesaria. Prueba y decide — te prometemos que te va a gustar.
+      - generic [ref=e453]:
+        - generic [ref=e454]:
+          - img [ref=e456]
+          - generic [ref=e458]: Primera clase 100% gratuita
+        - generic [ref=e459]:
+          - img [ref=e461]
+          - generic [ref=e463]: Todo el material incluido
+        - generic [ref=e464]:
+          - img [ref=e466]
+          - generic [ref=e468]: Coach pendiente de ti en cada clase
+        - generic [ref=e469]:
+          - img [ref=e471]
+          - generic [ref=e473]: Sin compromiso de permanencia
+    - generic [ref=e474]:
+      - heading "Quiero mi clase gratis" [level=3] [ref=e475]:
+        - text: Quiero mi
+        - emphasis [ref=e476]: clase gratis
+      - generic [ref=e477]: DOAN · Te contactamos enseguida
+      - generic [ref=e478]:
+        - generic [ref=e479]:
+          - generic [ref=e480]: Nombre
+          - textbox "Nombre" [ref=e481]:
+            - /placeholder: Tu nombre
+        - generic [ref=e482]:
+          - generic [ref=e483]: Teléfono
+          - textbox "Teléfono" [ref=e484]:
+            - /placeholder: 612 345 678
+        - generic [ref=e485]:
+          - generic [ref=e486]: Email
+          - textbox "Email" [ref=e487]:
+            - /placeholder: tu@email.com
+        - generic [ref=e488]:
+          - generic [ref=e489]: Experiencia
+          - combobox "Experiencia" [ref=e490] [cursor=pointer]:
+            - option "Sin experiencia" [selected]
+            - option "Algo de experiencia"
+            - option "Vengo de otro box"
+        - button "Quiero mi clase gratis" [ref=e491] [cursor=pointer]
+  - generic [ref=e494]:
+    - generic [ref=e495]:
+      - text: GORA
+      - emphasis [ref=e496]: ANBOTO!
+    - paragraph [ref=e497]: Ven a probar sin compromiso. Te esperamos en el box, a un paso de la A8.
+    - generic [ref=e498]:
+      - link "Escríbenos por WhatsApp" [ref=e499] [cursor=pointer]:
+        - /url: https://wa.me/34688661924?text=Hola%2C%20me%20gustar%C3%ADa%20apuntarme%20a%20una%20clase%20gratis%20en%20Anboto%20SC
+        - img [ref=e500]
+        - generic [ref=e502]: Escríbenos por WhatsApp
+      - link "anbotocf@gmail.com" [ref=e503] [cursor=pointer]:
+        - /url: mailto:anbotocf@gmail.com
+    - generic [ref=e504]:
+      - generic [ref=e505]:
+        - img [ref=e506]
+        - text: Polígono Ertzilla, P4 · 48215 Iurreta
+      - generic [ref=e509]:
+        - img [ref=e510]
+        - link "688 661 924" [ref=e512] [cursor=pointer]:
+          - /url: tel:+34688661924
+      - generic [ref=e513]:
+        - img [ref=e514]
+        - link "anbotocf@gmail.com" [ref=e517] [cursor=pointer]:
+          - /url: mailto:anbotocf@gmail.com
+  - iframe [ref=e521]
+  - generic [ref=e523]:
+    - generic [ref=e524]: 11 — @anbotofitness · Instagram
+    - heading "Buen rollo en el feed" [level=2] [ref=e525]:
+      - text: Buen rollo
+      - emphasis [ref=e526]: en el feed
+    - paragraph [ref=e527]: Entrenamientos, comunidad y momentos reales del box.
+    - generic [ref=e528]:
+      - link "Anboto SC" [ref=e529] [cursor=pointer]:
+        - /url: https://www.instagram.com/anbotofitness/
+        - img "Anboto SC" [ref=e530]
+      - link "Anboto SC" [ref=e531] [cursor=pointer]:
+        - /url: https://www.instagram.com/anbotofitness/
+        - img "Anboto SC" [ref=e532]
+      - link "Anboto SC" [ref=e533] [cursor=pointer]:
+        - /url: https://www.instagram.com/anbotofitness/
+        - img "Anboto SC" [ref=e534]
+      - link "Anboto SC" [ref=e535] [cursor=pointer]:
+        - /url: https://www.instagram.com/anbotofitness/
+        - img "Anboto SC" [ref=e536]
+      - link "Anboto SC" [ref=e537] [cursor=pointer]:
+        - /url: https://www.instagram.com/anbotofitness/
+        - img "Anboto SC" [ref=e538]
+      - link "Anboto SC" [ref=e539] [cursor=pointer]:
+        - /url: https://www.instagram.com/anbotofitness/
+        - img "Anboto SC" [ref=e540]
+      - link "Anboto SC" [ref=e541] [cursor=pointer]:
+        - /url: https://www.instagram.com/anbotofitness/
+        - img "Anboto SC" [ref=e542]
+      - link "Anboto SC" [ref=e543] [cursor=pointer]:
+        - /url: https://www.instagram.com/anbotofitness/
+        - img "Anboto SC" [ref=e544]
+    - link "Ver @anbotofitness" [ref=e545] [cursor=pointer]:
+      - /url: https://www.instagram.com/anbotofitness/
+      - img [ref=e546]
+      - generic [ref=e550]: Ver @anbotofitness
+  - contentinfo [ref=e551]:
+    - generic:
+      - img
+    - generic [ref=e552]:
+      - generic [ref=e553]:
+        - link "ANBOTO Strength & Conditioning" [ref=e554] [cursor=pointer]:
+          - /url: "#top"
+          - img [ref=e555]
+          - generic [ref=e557]:
+            - generic [ref=e558]: ANBOTO
+            - generic [ref=e559]: Strength & Conditioning
+        - generic [ref=e560]:
+          - link "Instagram" [ref=e561] [cursor=pointer]:
+            - /url: https://www.instagram.com/anbotofitness/
+          - link "Cómo llegar" [ref=e562] [cursor=pointer]:
+            - /url: https://maps.google.com/?q=Poligono+Ertzilla+P4+Iurreta+Bizkaia
+          - link "Email" [ref=e563] [cursor=pointer]:
+            - /url: mailto:anbotocf@gmail.com
+          - link "688 661 924" [ref=e564] [cursor=pointer]:
+            - /url: tel:+34688661924
+      - generic [ref=e565]:
+        - generic [ref=e566]: © 2025 Anboto Strength & Conditioning · Polígono Ertzilla, P4, 48215 Iurreta, Bizkaia
+        - generic [ref=e567]: GORA ANBOTO! · ↑ 1.331 M
+  - button "Abrir chat" [ref=e568] [cursor=pointer]:
+    - img [ref=e569]

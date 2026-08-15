@@ -1,0 +1,37 @@
+- generic [active] [ref=e1]:
+  - tablist "Variante de hero" [ref=e2]:
+    - generic [ref=e3]: Hero
+    - button "1 · Kinético" [ref=e4] [cursor=pointer]
+    - button "2 · Arco reveal" [ref=e5] [cursor=pointer]
+    - button "3 · Inmersivo" [ref=e6] [cursor=pointer]
+  - generic [ref=e7]:
+    - navigation [ref=e8]:
+      - link "ANBOTO SC" [ref=e9] [cursor=pointer]:
+        - /url: "#"
+        - img [ref=e10]
+        - generic [ref=e12]:
+          - generic [ref=e13]: ANBOTO
+          - generic [ref=e14]: SC
+      - generic [ref=e15]:
+        - button "ES" [ref=e16] [cursor=pointer]
+        - button "EU" [ref=e17] [cursor=pointer]
+    - generic [ref=e18]:
+      - generic [ref=e19]:
+        - generic [ref=e20]: ↑ 1.331 M · Iurreta, Bizkaia
+        - heading "HOY TOCA" [level=1] [ref=e21]:
+          - text: HOY TOCA
+          - generic [ref=e22]:
+            - generic [ref=e23]: WOD.
+            - generic [ref=e24]: HALTERO.
+            - generic [ref=e25]: HYROX.
+            - generic [ref=e26]: ENDURANCE.
+            - generic [ref=e27]: INDARRA.
+        - paragraph [ref=e28]: Box de entrenamiento funcional con buen ambiente — CrossFit, halterofilia, Hyrox y endurance. Tu primera clase es gratis.
+        - generic [ref=e29]:
+          - link "Reserva tu clase gratis →" [ref=e30] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=e31]: Reserva tu clase gratis
+            - generic [ref=e32]: →
+          - link "¿Qué es Anboto?" [ref=e33] [cursor=pointer]:
+            - /url: "#"
+      - img "Entrenamiento en Anboto SC" [ref=e35]

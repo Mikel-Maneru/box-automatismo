@@ -16,3 +16,10 @@ UsersMikelDesktopProyectosbox-automatismowodbuster_page.html
 .roo/
 .trae/
 .windsurf/
+web/node_modules/
+
+# Build artefactos internos de Vite/SSG (no necesarios para servir)
+public/.vite/
+public/static-loader-data-manifest*.json
+web/.vite-react-ssg-temp/
+web/dist/
