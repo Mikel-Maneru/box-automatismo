@@ -48,7 +48,7 @@ export default function Nav() {
             <Pico size={26} />
             <span className="lk">
               <span className="lk-main">ANBOTO</span>
-              <span className="lk-sub lk-x">SC · Iurreta</span>
+              <span className="lk-sub lk-x">Strength &amp; Conditioning</span>
             </span>
           </a>
           <div className="nav-right">

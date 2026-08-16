@@ -71,6 +71,12 @@
   - **Fix de arranque**: `src/lib/supabase.js` ahora es lazy (Proxy) y `src/routes/chat.js` guarda el `new Anthropic` — así la función arranca sin todas las env (los previews no heredan las env de production; por eso crasheaba con "SUPABASE_URL obligatorias"). El formulario en PREVIEW no guarda (env solo en production); en producción funciona.
   - Deploy vía `vercel` CLI con token de cuenta (`--scope=team_Ui7yFZ02hiIaqHBTalIHAOQP`); la integración Git↔Vercel está inactiva desde el 12-may (no auto-despliega en push).
 
+## 2026-08-16: Paleta y logo REALES del manual (medidos del PDF a alta resolución)
+- El código antiguo (index.legacy) usaba un naranja BRILLANTE `#E16C34` y verde `#3E8B5C` que NO son del manual. El manual "Negro, Madera y Piedra" es TERROSO.
+- **Paleta oficial (medida por píxel del `AnbotoManual.pdf`)**: Pizarra `#0E0C0A` (usamos `#14110E` en UI), Granito `#777069`, Niebla/Bruma `#D1C8C1`, Caliza `#F4EDE2`, **Madera cálida `#A7693B`** (ACENTO/CTA — terracota terrosa, NO naranja chillón), **Cuero `#703D26`** (marrón), **Salvia `#59704D`** (verde apagado, NO verde brillante).
+- **Logo**: isotipo = **pico de montaña facetado** (hombros + ranura de base), NO un triángulo plano. Trazado aproximado en `web/src/components/icons.jsx` (Pico). PENDIENTE: pedir al usuario el SVG/PNG original del logo para pixel-perfect (el PDF está aplanado).
+- El manual es de estética CÁLIDA (fondos crema), pero el sitio se hizo OSCURO-premium por elección del usuario. Tensión a vigilar: si pide "aplicar el manual" puede referirse a ir más cálido, no solo a los hex.
+
 ## Key technical constraints
 - `dotenv` MUST use `{ override: true }`
 - Anthropic client MUST set `baseURL: 'https://api.anthropic.com'`

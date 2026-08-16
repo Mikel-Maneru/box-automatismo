@@ -1,10 +1,9 @@
 // SVGs de marca portados del sitio original.
 
-// Isotipo Anboto: pico de montaña con hombros facetados + ranura de base.
-// (Trazado a partir del manual; para pixel-perfect, mejor el SVG original del logo.)
+// Isotipo Anboto OFICIAL (vector del brand kit, anboto-isotipo-current.svg).
 export const Pico = ({ size = 30, style }) => (
-  <svg className="pico" viewBox="0 0 100 100" aria-hidden="true" style={{ width: size, height: size, ...style }}>
-    <path fill="currentColor" fillRule="evenodd" d="M50 9 L58 28 L52 31 L90 89 H10 L48 31 L42 28 Z M31 70 H69 V78 H31 Z" />
+  <svg className="pico" viewBox="0 0 702 665" aria-hidden="true" style={{ width: size, height: size, ...style }}>
+    <path fill="currentColor" fillRule="evenodd" d="M333.5,10.0L369.5,92.0L389.5,111.0L411.5,175.0L446.5,198.0L476.5,282.0L528.5,323.0L551.5,398.0L586.5,428.0L605.5,478.0L632.5,509.0L653.5,563.0L693.0,655.5L620.0,655.5L617.0,653.5L471.0,525.5L339.0,412.5L142.0,582.5L60.0,655.5L8.5,655.0L101.5,473.0L127.5,437.0L153.5,362.0L192.5,330.0L227.5,236.0L255.5,208.0ZM337.5,454.0L340.0,453.5L344.0,456.5L378.0,487.5L571.5,655.0L107.0,655.5L127.0,636.5Z" />
   </svg>
 );
 
