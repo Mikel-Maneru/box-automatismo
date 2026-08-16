@@ -563,11 +563,11 @@ header.hero,section,footer{position:relative;z-index:1}
 .hero-btns{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;justify-content:flex-start}
 
 /* Palabra kinética */
-.h-kinetic{display:flex;align-items:baseline;gap:12px;margin-top:16px}
+.h-kinetic{display:flex;align-items:baseline;gap:12px;margin-top:14px;flex-wrap:wrap}
 .h-kinetic .hk-label{font-family:var(--ff-m);font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--bruma)}
-.hk-rot{position:relative;display:inline-block;overflow:hidden;height:1.25em}
-.hk-word{display:inline-block;font-family:var(--ff-d);font-weight:900;font-size:clamp(1.3rem,2.6vw,2rem);letter-spacing:-.02em;color:var(--brasa);text-shadow:0 2px 16px rgba(169,120,79,.55);animation:hkIn .5s cubic-bezier(.2,.9,.2,1)}
-@keyframes hkIn{from{opacity:0;transform:translateY(.7em)}to{opacity:1;transform:none}}
+.hk-rot{position:relative;display:inline-block;font-family:var(--ff-d);font-weight:900;font-size:clamp(1.3rem,2.6vw,2rem);line-height:1.1;min-width:6ch}
+.hk-word{display:inline-block;color:var(--brasa);letter-spacing:-.02em;text-shadow:0 2px 16px rgba(169,120,79,.5);animation:hkIn .5s cubic-bezier(.2,.85,.3,1)}
+@keyframes hkIn{from{opacity:0;transform:translateY(.35em)}to{opacity:1;transform:none}}
 
 /* Panel altímetro (instrumento glass) */
 .altimeter{background:rgba(18,17,16,.55);border:1px solid var(--hair);border-radius:22px;padding:26px 26px 22px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 26px 74px -30px rgba(0,0,0,.85),0 0 40px -20px rgba(169,120,79,.25)}
