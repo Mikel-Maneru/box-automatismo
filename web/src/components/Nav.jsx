@@ -43,12 +43,12 @@ export default function Nav() {
   return (
     <>
       <nav id="nav" className={`${scrolled ? 'scrolled' : ''} ${open ? 'menu-open' : ''}`.trim()}>
-        <div className="wrap">
+        <div className="nav-pill">
           <a href="#top" className="logo">
-            <Pico size={30} />
+            <Pico size={26} />
             <span className="lk">
               <span className="lk-main">ANBOTO</span>
-              <span className="lk-sub lk-x">Strength &amp; Conditioning</span>
+              <span className="lk-sub lk-x">SC · ↑1.331M</span>
             </span>
           </a>
           <div className="nav-right">
