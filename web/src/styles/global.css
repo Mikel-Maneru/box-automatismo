@@ -661,3 +661,92 @@ nav:not(.scrolled) .logo{text-shadow:none}
 .urgency-note{margin-top:20px;font-family:var(--ff-m);font-size:.8rem;color:var(--bruma);letter-spacing:.03em;display:flex;align-items:center;gap:8px}
 .urgency-note::before{content:"";flex-shrink:0;width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:9px solid var(--brasa)}
 @media(prefers-reduced-motion:reduce){.urgency-badge::before{animation:none}}
+
+/* ============================================================================
+   TEMA CLARO / CÁLIDO DEL MANUAL (travertino + madera) — override del oscuro
+   ============================================================================ */
+:root{
+  --panel:rgba(255,255,255,.62);
+  --hair:rgba(20,18,15,.12);
+  --hair-glow:rgba(169,120,79,.55);
+  --txt-2:#5b544b;
+  --txt-3:#8a8074;
+}
+body{background:var(--caliza)!important;color:var(--pizarra)!important}
+body::after{opacity:.028}
+
+/* Blobs cálidos y muy sutiles sobre crema */
+.bg-blobs{opacity:.6}
+.bg-blobs span:nth-child(1){background:radial-gradient(circle,rgba(169,120,79,.16),transparent 68%)!important}
+.bg-blobs span:nth-child(2){background:radial-gradient(circle,rgba(95,107,77,.06),transparent 72%)!important}
+.bg-blobs span:nth-child(3){background:radial-gradient(circle,rgba(169,120,79,.10),transparent 70%)!important}
+
+/* Secciones oscuras = islas pizarra (ritmo editorial cálido) */
+.dark{background:var(--pizarra)!important;color:var(--caliza)}
+.dark::before{opacity:.05}
+.statband,.marquee{background:var(--pizarra)!important}
+#opiniones{background:var(--caliza2)!important}
+#contacto{background:#100F0D!important}
+#apuntarse{background:radial-gradient(120% 85% at 82% -10%,rgba(169,120,79,.22),transparent 55%),var(--pizarra)!important}
+
+/* Texto sobre claro; sobre las islas oscuras se mantiene claro */
+h1,h2,h3{color:var(--pizarra)}
+.lead{color:var(--txt-2)!important}
+.mono,.sec-index{color:var(--granito)!important}
+.sec-index::after{background:var(--hair)!important}
+.ei p,.disc p,.coach p,.step p,.bono .d,.faq-a p,.tri-list li{color:var(--txt-2)!important}
+.dark h2,.dark h3{color:var(--caliza)}
+.dark .lead{color:rgba(239,230,216,.72)!important}
+.dark .mono,.dark .sec-index{color:var(--bruma)!important}
+.dark .tri-list li,.dark .perk{color:rgba(239,230,216,.82)!important}
+
+/* Tarjetas claras (travertino translúcido) */
+.disc,.coach,.rev,.bono,.step,.tt-row,.day,.plan,.bento-tile,.mec-panel{
+  background:rgba(255,255,255,.62)!important;border:1px solid var(--hair)!important;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.disc:hover,.coach:hover,.rev:hover,.step:hover,.plan:hover,.tt-row:hover,.day:hover,.bento-tile:hover{
+  border-color:var(--hair-glow)!important;box-shadow:0 18px 46px -26px rgba(20,18,15,.35),0 0 30px -14px rgba(169,120,79,.28)!important}
+.plan{color:var(--pizarra)!important}
+.plan .pn,.bono .s,.tt-day,.plan .pp .per,.day .dn,.rev .src{color:var(--granito)!important}
+.plan .tri-list li{color:var(--txt-2)!important}
+.plan .pbtn{color:var(--pizarra);border-color:var(--pizarra)}
+.plan .pbtn:hover{background:var(--pizarra);color:var(--caliza)}
+.plan.pop{background:linear-gradient(180deg,rgba(169,120,79,.12),rgba(255,255,255,.62) 42%)!important;border-color:var(--hair-glow)!important}
+.rev p,.day .hr,.tt-row .tm,.tt-row .cl,.bento-tile h3,.mec-panel h3{color:var(--pizarra)!important}
+.bento-tile p,.mec-panel p{color:var(--txt-2)!important}
+.tt-day{background:rgba(255,255,255,.62)!important;border-color:var(--hair)!important}
+.faq{border-bottom-color:var(--hair)!important}
+.coach-ph{background:var(--pizarra);border-color:var(--hair)}
+.rev .av{background:var(--brasa);color:#fff}
+.bt-lbl,.alt-row span{color:var(--granito)!important}
+
+/* Bento tile foto y stat */
+.b-stat .bt-num{color:var(--brasa)}
+
+/* Nav pastilla: clara sobre el contenido, oscura sobre el hero (foto) */
+.nav-pill{background:rgba(244,237,225,.72)!important;border-color:var(--hair)!important;box-shadow:0 12px 40px -22px rgba(20,18,15,.3)!important}
+nav.scrolled .nav-pill{background:rgba(244,237,225,.92)!important;border-color:var(--hair-glow)!important}
+.logo{color:var(--pizarra)}
+.nav-links a.nl{color:var(--granito)!important}
+.nav-links a.nl:hover{color:var(--pizarra)!important}
+nav .lang{border-color:var(--hair)!important}
+nav .lang button{color:var(--granito)}
+nav .lang button.active{color:#fff}
+/* Sobre el hero (no scrolled) la pastilla va oscura para leerse sobre la foto */
+nav:not(.scrolled) .nav-pill{background:rgba(18,17,15,.42)!important;border-color:rgba(239,230,216,.14)!important}
+nav:not(.scrolled) .logo{color:var(--caliza)}
+nav:not(.scrolled) .nav-links a.nl{color:var(--bruma)!important}
+nav:not(.scrolled) .nav-links a.nl:hover{color:#fff!important}
+nav:not(.scrolled) .lang button{color:var(--bruma)}
+
+/* Mecanismo tabs claro */
+.mec-tab{color:var(--granito)!important;border-left-color:var(--hair)!important}
+.mec-tab .mec-n{color:var(--txt-3)!important}
+.mec-tab:hover{background:rgba(255,255,255,.5)!important;color:var(--pizarra)!important}
+.mec-tab.on{background:rgba(255,255,255,.62)!important;color:var(--pizarra)!important;border-left-color:var(--brasa)!important}
+.mec-tab.on .mec-n{color:var(--brasa)!important}
+.mec-eu{color:var(--larre-d)!important}
+
+/* Hero: sigue oscuro (foto), pero el scrim un pelín más cálido */
+.hero .h-scrim{background:linear-gradient(180deg,rgba(20,18,15,.5),rgba(20,18,15,.28) 30%,rgba(20,18,15,.9)),radial-gradient(85% 70% at 28% 32%,transparent,rgba(20,18,15,.5))}
+:focus-visible{outline-color:var(--brasa)}
