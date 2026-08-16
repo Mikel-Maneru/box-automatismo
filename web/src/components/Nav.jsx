@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLang, T } from '../i18n/LangContext.jsx';
 import { Pico } from './icons.jsx';
+import { WHATSAPP_URL } from '../data/site.js';
 
 const NAV_LINKS = [
   ['#que-es', 'nav.train'],
@@ -75,11 +76,30 @@ export default function Nav() {
         </div>
       </nav>
 
-      <div className={`mobile-menu ${open ? 'open' : ''}`.trim()} id="mobileMenu" role="dialog" aria-label="Menú">
-        {MOBILE_LINKS.map(([href, k]) => (
-          <T key={k} as="a" href={href} k={k} onClick={closeMobile} />
-        ))}
-        <T as="a" href="#apuntarse" className="cta" k="cta.book" onClick={closeMobile} />
+      <div className={`mobile-menu ${open ? 'open' : ''}`.trim()} id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menú">
+        <div className="mm-bg" aria-hidden="true"><Pico size={460} /></div>
+        <span className="mm-eyebrow">Nabigazioa · Menú</span>
+        <div className="mm-nav">
+          {MOBILE_LINKS.map(([href, k], i) => (
+            <a key={k} href={href} className="mm-link" style={{ '--i': i }} onClick={closeMobile}>
+              <span className="mm-n">{String(i + 1).padStart(2, '0')}</span>
+              <span className="mm-node" aria-hidden="true"></span>
+              <T as="span" className="mm-txt" k={k} />
+            </a>
+          ))}
+        </div>
+        <div className="mm-foot">
+          <a href="#apuntarse" className="mm-cta cta-shine" onClick={closeMobile}>
+            <T as="span" k="cta.book" /> <span className="arr">→</span>
+          </a>
+          <div className="mm-contact">
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener">WhatsApp</a>
+            <span>·</span>
+            <a href="tel:+34688661924">688 661 924</a>
+            <span>·</span>
+            <span>Iurreta</span>
+          </div>
+        </div>
       </div>
     </>
   );

@@ -101,11 +101,37 @@ nav .logo .lk-sub{color:var(--brasa)}
 .hamburger.open span:nth-child(2){opacity:0}
 .hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 
-.mobile-menu{position:fixed;inset:0;z-index:199;background:var(--pizarra);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:24px;opacity:0;pointer-events:none;transition:opacity .3s;padding:20px}
-.mobile-menu.open{opacity:1;pointer-events:all}
-.mobile-menu a{font-family:var(--ff-d);font-weight:800;font-size:1.5rem;color:var(--caliza);text-transform:uppercase;letter-spacing:-.01em}
-.mobile-menu a.cta{color:var(--brasa)}
-.mobile-menu .mm-foot{font-family:var(--ff-m);font-size:.72rem;color:var(--granito);letter-spacing:.14em;position:absolute;bottom:34px}
+/* MENÚ MÓVIL · índice editorial "sendero de ascenso" (identidad Anboto) */
+.mobile-menu{position:fixed;inset:0;z-index:199;overflow:hidden;
+  background:radial-gradient(130% 80% at 50% -12%,rgba(169,120,79,.18),transparent 55%),var(--pizarra);
+  display:flex;flex-direction:column;justify-content:center;padding:104px 30px 40px;
+  opacity:0;pointer-events:none;clip-path:inset(0 0 100% 0);transition:opacity .35s ease}
+.mobile-menu.open{opacity:1;pointer-events:all;clip-path:inset(0 0 0 0);transition:opacity .35s ease,clip-path .5s cubic-bezier(.2,.8,.2,1)}
+.mm-bg{position:absolute;right:-26%;top:50%;transform:translateY(-50%);width:min(92vw,460px);color:rgba(239,230,216,.05);pointer-events:none}
+.mm-bg svg{width:100%;height:auto}
+.mm-eyebrow{font-family:var(--ff-m);font-size:.7rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--brasa);margin-bottom:20px}
+.mm-nav{position:relative;display:flex;flex-direction:column}
+.mm-nav::before{content:"";position:absolute;left:15px;top:14px;bottom:14px;width:1.5px;background:linear-gradient(180deg,transparent,rgba(169,120,79,.55),transparent)}
+.mobile-menu a{font-family:var(--ff-d);color:var(--caliza);text-transform:none}
+.mm-link{position:relative;display:flex;align-items:center;gap:16px;padding:13px 0 13px 42px;
+  opacity:0;transform:translateX(-16px);
+  transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1),color .2s}
+.mobile-menu.open .mm-link{opacity:1;transform:none;transition-delay:calc(var(--i)*55ms + 160ms)}
+.mm-n{font-family:var(--ff-m);font-size:.7rem;font-weight:700;color:var(--granito);width:2.2ch;flex-shrink:0}
+.mm-node{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:0;height:0;
+  border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:11px solid var(--granito);
+  transition:border-bottom-color .2s,transform .25s}
+.mm-txt{font-family:var(--ff-d);font-weight:800;font-size:clamp(1.7rem,8vw,2.5rem);letter-spacing:-.02em;line-height:1}
+.mm-link:hover,.mm-link:active,.mm-link:focus-visible{color:var(--brasa)}
+.mm-link:hover .mm-node,.mm-link:active .mm-node,.mm-link:focus-visible .mm-node{border-bottom-color:var(--brasa);transform:translateY(-50%) scale(1.25)}
+.mm-foot{margin-top:32px;display:flex;flex-direction:column;gap:16px;opacity:0;transition:opacity .5s ease;transition-delay:.55s}
+.mobile-menu.open .mm-foot{opacity:1}
+.mm-cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;background:var(--brasa);color:#fff!important;
+  font-family:var(--ff-d);font-weight:800;font-size:1.05rem;padding:16px;border-radius:14px;
+  box-shadow:0 10px 30px -8px rgba(169,120,79,.55)}
+.mm-cta .arr{transition:transform .2s}.mm-cta:active .arr{transform:translateX(3px)}
+.mm-contact{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-family:var(--ff-m);font-size:.74rem;color:var(--bruma);letter-spacing:.04em}
+.mm-contact a{color:var(--bruma)}.mm-contact a:active{color:var(--brasa)}
 
 /* HERO · inmersivo a sangre (fondo boomerang con fotos) */
 .hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--pizarra);color:var(--caliza);text-align:center}
