@@ -50,7 +50,7 @@ export default function Hero() {
 
       <div className="h-grid">
         <div className="h-lead">
-          <span className="eyebrow">↑ 1.331 M · Iurreta, Bizkaia</span>
+          <span className="eyebrow">CrossFit · Hyrox · Iurreta</span>
           <h1><T as="span" k="hero.l1" /> <T as="span" className="br" k="hero.l2" /></h1>
           <div className="h-kinetic">
             <span className="hk-label">Entrena</span> <KineticWord />
@@ -63,17 +63,6 @@ export default function Hero() {
             <T as="a" href="#que-es" className="btn btn-line" k="cta.whatis" />
           </div>
         </div>
-
-        <aside className="altimeter">
-          <div className="alt-head"><span>Altimetroa</span><span className="alt-live">Hoy</span></div>
-          <div className="alt-big">↑ 1.331<span>M</span></div>
-          <div className="alt-rows">
-            <div className="alt-row"><span>Koordenatuak</span><b>43.1681°N · 2.6335°W</b></div>
-            <div className="alt-row"><span>Google</span><b>4.9 ★ · 46</b></div>
-            <div className="alt-row"><span>Diziplinak</span><b>7 · todos los niveles</b></div>
-          </div>
-          <a href="#apuntarse" className="alt-cta cta-shine">1ª clase gratis <span className="arr">→</span></a>
-        </aside>
       </div>
     </header>
   );

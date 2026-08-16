@@ -342,7 +342,7 @@ export function Footer() {
         </div>
         <div className="foot-bottom">
           <span>© 2025 Anboto Strength &amp; Conditioning · Polígono Ertzilla, P4, 48215 Iurreta, Bizkaia</span>
-          <span className="gora">GORA ANBOTO! · ↑ 1.331 M</span>
+          <span className="gora">GORA ANBOTO!</span>
         </div>
       </div>
     </footer>

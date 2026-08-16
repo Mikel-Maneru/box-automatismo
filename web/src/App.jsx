@@ -1,8 +1,8 @@
 import { LangProvider } from './i18n/LangContext.jsx';
 import { useScrollFx } from './hooks/useScrollFx.js';
 import Nav from './components/Nav.jsx';
-import AltitudeThread from './components/AltitudeThread.jsx';
 import Hero from './components/Hero.jsx';
+import Mecanismo from './components/Mecanismo.jsx';
 import Horarios from './components/Horarios.jsx';
 import Faq from './components/Faq.jsx';
 import Signup from './components/Signup.jsx';
@@ -17,13 +17,13 @@ function Site() {
   return (
     <>
       <div className="bg-blobs" aria-hidden="true"><span /><span /><span /></div>
-      <AltitudeThread />
       <Nav />
       <Hero />
       <Marquee />
       <QueEs />
       <PhotoBand />
       <Disciplinas />
+      <Mecanismo />
       <StatBand />
       <Horarios />
       <Tarifas />
