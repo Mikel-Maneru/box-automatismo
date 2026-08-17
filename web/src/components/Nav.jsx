@@ -78,7 +78,7 @@ export default function Nav() {
 
       <div className={`mobile-menu ${open ? 'open' : ''}`.trim()} id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menú">
         <div className="mm-bg" aria-hidden="true"><Pico size={460} /></div>
-        <span className="mm-eyebrow">Nabigazioa · Menú</span>
+        <T as="span" className="mm-eyebrow" k="menu.word" />
         <div className="mm-nav">
           {MOBILE_LINKS.map(([href, k], i) => (
             <a key={k} href={href} className="mm-link" style={{ '--i': i }} onClick={closeMobile}>

@@ -24,8 +24,8 @@ export function PhotoBand() {
       <img src="/fotos/684166869_18141850504507230_4228607507298611888_n.jpeg" alt="Entrenando en Anboto SC" loading="lazy" />
       <div className="pb-scrim" aria-hidden="true" />
       <div className="pb-inner">
-        <span className="eyebrow">Komunitatea</span>
-        <p className="pb-claim rev-up">La cima se conquista <em>en grupo</em>.</p>
+        <T as="span" className="eyebrow" k="pb.eyebrow" />
+        <T as="p" className="pb-claim rev-up" k="pb.claim" />
       </div>
     </section>
   );
@@ -75,7 +75,7 @@ export function QueEs() {
         <T as="h2" className="title rev-up" k="q.title" />
         <div className="bento">
           <div className="bento-tile b-lg rev-up">
-            <span className="bt-eyebrow">Eguneroko WODa</span>
+            <T as="span" className="bt-eyebrow" k="q.wod" />
             <T as="h3" k="f1.h" />
             <T as="p" k="f1.p" />
           </div>
@@ -91,7 +91,7 @@ export function QueEs() {
           </div>
           <div className="bento-tile b-stat rev-up">
             <div className="bt-num">4.9<span>★</span></div>
-            <span className="bt-lbl">Google · 46 reseñas</span>
+            <T as="span" className="bt-lbl" k="q.grev" />
           </div>
         </div>
       </div>
@@ -111,7 +111,7 @@ export function Disciplinas() {
             <div className="ei cls rev-up" key={d.name}>
               <div className="mk"><span className="tri"></span></div>
               <div className="bd">
-                <div className="nm"><span className="eu">{d.eu}</span><h3>{d.name}</h3></div>
+                <div className="nm"><h3>{d.name}</h3></div>
                 <T as="p" k={d.dk} />
               </div>
             </div>

@@ -53,7 +53,7 @@ export default function Hero() {
           <span className="eyebrow">CrossFit · Hyrox · Iurreta</span>
           <h1><T as="span" k="hero.l1" /> <T as="span" className="br" k="hero.l2" /></h1>
           <div className="h-kinetic">
-            <span className="hk-label">Entrena</span> <KineticWord />
+            <T as="span" className="hk-label" k="hero.kin" /> <KineticWord />
           </div>
           <T as="p" className="hero-desc" k="hero.desc" />
           <div className="hero-btns">

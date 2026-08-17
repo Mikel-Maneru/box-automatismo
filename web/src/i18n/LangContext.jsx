@@ -15,7 +15,13 @@ export function LangProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    try { if (localStorage.getItem('anboto_lang') === 'eu') setLangState('eu'); } catch {}
+    try {
+      const saved = localStorage.getItem('anboto_lang');
+      if (saved === 'eu' || saved === 'es') { setLangState(saved); return; }
+    } catch { /* localStorage no disponible */ }
+    // Sin preferencia guardada: idioma del navegador (euskera -> eu, resto -> castellano).
+    const langs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || ''];
+    if (langs.some((l) => l && l.toLowerCase().startsWith('eu'))) setLangState('eu');
   }, []);
 
   useEffect(() => {

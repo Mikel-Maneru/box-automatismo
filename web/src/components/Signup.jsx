@@ -53,7 +53,7 @@ export default function Signup() {
       <div className="wrap">
         <div className="signup-grid">
           <div>
-            <span className="urgency-badge rev-up">Oferta · 1ª clase gratis</span>
+            <T as="span" className="urgency-badge rev-up" k="s.badge" />
             <T as="span" className="sec-index rev-up" k="s.idx" />
             <T as="h2" className="title rev-up" style={{ color: 'var(--caliza)' }} k="s.title" />
             <T as="p" className="lead rev-up" k="s.lead" />
@@ -64,7 +64,7 @@ export default function Signup() {
                 </div>
               ))}
             </div>
-            <p className="urgency-note">Plazas limitadas por clase — reserva la tuya hoy, sin compromiso.</p>
+            <T as="p" className="urgency-note" k="s.note" />
           </div>
           <div className="signup-card rev-up">
             <T as="h3" k="s.cardh" />
