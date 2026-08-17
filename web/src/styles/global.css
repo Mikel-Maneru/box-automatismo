@@ -44,7 +44,7 @@ section{position:relative}
 .dark::before{content:"";position:absolute;right:-30px;bottom:-44px;width:min(42vw,400px);aspect-ratio:1;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 702 665'%3E%3Cpath fill='%23EFE6D8' fill-rule='evenodd' d='M333.5,10L369.5,92L389.5,111L411.5,175L446.5,198L476.5,282L528.5,323L551.5,398L586.5,428L605.5,478L632.5,509L653.5,563L693,655.5L620,655.5L617,653.5L471,525.5L339,412.5L142,582.5L60,655.5L8.5,655L101.5,473L127.5,437L153.5,362L192.5,330L227.5,236L255.5,208ZM337.5,454L340,453.5L344,456.5L378,487.5L571.5,655L107,655.5L127,636.5Z'/%3E%3C/svg%3E") no-repeat center/contain;opacity:.05;pointer-events:none;z-index:0}
 .dark .wrap{position:relative;z-index:1}
 /* grano sutil: textura de papel/piedra (anti-plantilla) */
-body::after{content:"";position:fixed;inset:0;z-index:400;pointer-events:none;opacity:.05;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+body::after{content:"";position:fixed;inset:0;z-index:400;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 /* curvas de nivel (mapa topográfico) en la sección del monte */
 #sobre-nosotros{background:repeating-radial-gradient(circle at 88% 16%,transparent 0 46px,rgba(110,105,96,.05) 46px 47px)}
 .dark .mono,.dark .sec-index{color:var(--bruma)}
@@ -70,12 +70,12 @@ h2.title em{font-style:normal;color:var(--brasa)}
 
 .arco{border-radius:var(--arc) var(--arc) 10px 10px;overflow:hidden;position:relative;background:var(--caliza2)}
 .arco img{width:100%;height:100%;object-fit:cover;filter:sepia(.16) saturate(1.06) contrast(.96) brightness(1.03)}
-.arco::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(169,120,79,.06),rgba(27,26,24,.14));mix-blend-mode:multiply;pointer-events:none}
+.arco::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(169,120,79,.06),rgba(27,26,24,.14));pointer-events:none}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;transition:background .3s,box-shadow .3s,padding .3s;padding:20px 0}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
-nav.scrolled{background:rgba(27,26,24,.96);backdrop-filter:blur(14px);box-shadow:0 2px 24px rgba(27,26,24,.18);padding:11px 0}
+nav.scrolled{background:rgba(27,26,24,.96);box-shadow:0 2px 24px rgba(27,26,24,.18);padding:11px 0}
 .logo{display:flex;align-items:center;gap:10px}
 .logo .pico{width:30px;height:30px}
 .logo .lk{display:flex;flex-direction:column;line-height:1}
@@ -489,7 +489,7 @@ header.hero,section,footer{position:relative;z-index:1}
 .dark{background:transparent}
 .dark::before{opacity:.06}
 .statband{background:transparent}
-.marquee{background:rgba(20,19,18,.5);backdrop-filter:blur(8px)}
+.marquee{background:rgba(20,19,18,.9)}
 
 /* Texto legible sobre oscuro (WCAG AA) */
 .lead{color:var(--txt-2)}
@@ -500,7 +500,7 @@ header.hero,section,footer{position:relative;z-index:1}
 /* --- Sistema GLASS para tarjetas --- */
 .disc,.coach,.rev,.bono,.step,.tt-row,.day,.plan{
   background:var(--panel)!important;border:1px solid var(--hair)!important;
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  
 }
 .disc:hover,.coach:hover,.rev:hover,.step:hover,.plan:hover,.tt-row:hover,.day:hover{
   border-color:var(--hair-glow)!important;
@@ -549,7 +549,7 @@ header.hero,section,footer{position:relative;z-index:1}
 
 /* --- BENTO GRID (Skill 3.3) --- */
 .bento{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:46px;grid-auto-rows:minmax(158px,auto)}
-.bento-tile{background:var(--panel);border:1px solid var(--hair);border-radius:22px;padding:30px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);position:relative;overflow:hidden;transition:border-color .25s,box-shadow .25s,transform .25s;display:flex;flex-direction:column}
+.bento-tile{background:var(--panel);border:1px solid var(--hair);border-radius:22px;padding:30px;position:relative;overflow:hidden;transition:border-color .25s,box-shadow .25s,transform .25s;display:flex;flex-direction:column}
 .bento-tile:hover{border-color:var(--hair-glow);box-shadow:0 18px 50px -22px rgba(0,0,0,.65),0 0 34px -8px rgba(169,120,79,.32);transform:translateY(-3px)}
 .bento-tile h3{font-size:1.4rem;font-weight:900;margin-bottom:8px;color:var(--caliza)}
 .bento-tile p{color:var(--txt-2);font-size:.96rem;line-height:1.5;font-weight:500}
@@ -664,7 +664,7 @@ nav:not(.scrolled) .logo{text-shadow:none}
 .mec-tab:hover{background:var(--panel);color:var(--caliza)}
 .mec-tab.on{background:var(--panel);border-left-color:var(--brasa);color:var(--caliza);box-shadow:0 0 34px -14px rgba(169,120,79,.5)}
 .mec-tab.on .mec-n{color:var(--brasa)}
-.mec-panel{background:var(--panel);border:1px solid var(--hair);border-radius:22px;padding:clamp(26px,4vw,40px);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:mecIn .4s cubic-bezier(.2,.7,.2,1)}
+.mec-panel{background:var(--panel);border:1px solid var(--hair);border-radius:22px;padding:clamp(26px,4vw,40px);animation:mecIn .4s cubic-bezier(.2,.7,.2,1)}
 @keyframes mecIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .mec-eu{font-family:var(--ff-m);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--larre);display:block;margin-bottom:12px}
 .mec-panel h3{font-size:clamp(1.7rem,3vw,2.6rem);font-weight:900;margin-bottom:14px;color:var(--caliza);letter-spacing:-.02em}
