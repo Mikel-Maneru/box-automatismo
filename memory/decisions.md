@@ -77,12 +77,25 @@
 - **Logo**: isotipo = **pico de montaña facetado** (hombros + ranura de base), NO un triángulo plano. Trazado aproximado en `web/src/components/icons.jsx` (Pico). PENDIENTE: pedir al usuario el SVG/PNG original del logo para pixel-perfect (el PDF está aplanado).
 - El manual es de estética CÁLIDA (fondos crema), pero el sitio se hizo OSCURO-premium por elección del usuario. Tensión a vigilar: si pide "aplicar el manual" puede referirse a ir más cálido, no solo a los hex.
 
-## 2026-08-18: Dominio anbotosc.com configurado (DNS propagación en progreso)
-- Nameservers cambiados a Vercel (ns1/2/3/4.vercel-dns-3.com) en IONOS
-- BASE_URL en .env actualizado a https://anbotosc.com
-- Vercel domain verification completado
-- **Estado**: DNS propagando (24-48h típico)
-- **Próximo paso**: cuando resuelva globalmente, ejecutar `deploy-anbotosc.sh` para deploy final
+## 2026-08-18: Dominio anbotosc.com EN PRODUCCION (y por que fallo antes)
+- **ERROR INICIAL**: se apuntaron los nameservers de IONOS a `ns1-4.vercel-dns-3.com`. Vercel tenia
+  el dominio como "Third Party" y NUNCA creo la zona → esos NS respondian REFUSED → SERVFAIL global.
+  **No era propagacion**: no habria funcionado nunca. Se perdieron ~5h esperando en balde.
+- **REGLA**: los nameservers `vercel-dns*.com` SOLO valen si Vercel gestiona el DNS del dominio
+  (`vercel dns ls` devuelve registros). Si `vercel domains inspect` muestra "Intended Nameservers"
+  VACIO, la via de nameservers NO esta disponible → hay que usar registros A/CNAME.
+- **CONFIGURACION BUENA (la actual)**: NS de IONOS + `A @ 76.76.21.21` + `CNAME www cname.vercel-dns.com`,
+  `www.anbotosc.com` añadido al proyecto Vercel con redirect 308 al apex.
+- El certificado TLS NO se emite solo: hubo que forzarlo con `vercel certs issue`.
+- Verificado: https://anbotosc.com 200 OK, www redirige 308, Vercel `verified:true misconfigured:false`.
+- Diagnostico rapido de este fallo: SERVFAIL (no NXDOMAIN) + "Query refused" al preguntar al NS.
+- `anbotofitness.com` esta CADUCADO (NXDOMAIN).
+
+## 2026-08-18: vercel.json — no inventar claves `services`
+- Alguien (sesion anterior) metio en `vercel.json` un rewrite con `"destination": {"type":"service"}`
+  y un bloque top-level `"services"`. **Ninguna de las dos es sintaxis valida de Vercel**
+  (`destination` debe ser un string). Habria roto el deploy. Revertido a la version commiteada.
+- El proyecto es Framework Preset = `express`: NO necesita bloque de servicios.
 
 ## 2026-08-18: Rediseño de chat widget + favicon theme-aware
 - **Widget**: "burbuja pico" personalizada con paleta Anboto (madera #A7693B, cuero #703D26, caliza #F4EDE2)

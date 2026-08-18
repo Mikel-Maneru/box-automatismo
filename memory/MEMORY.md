@@ -9,10 +9,10 @@
 | Item | Status | Notes |
 |------|--------|-------|
 | **Active branch** | `feat/react-vite-migration` | React+Vite landing, deployed to Vercel preview |
-| **Phase 1** | ✅ COMPLETE | Domain configured, widget redesigned, favicon theme-aware |
+| **Phase 1** | ✅ COMPLETE | Domain LIVE, widget redesigned, favicon theme-aware |
 | **Phase 2** | 🔵 BLOCKED | Awaiting answers to 4 clarification questions |
-| **DNS** | ⏳ PROPAGATING | anbotosc.com nameservers set, waiting for global resolution (24-48h) |
-| **Next action** | 1) Answer phase 2 Q's, 2) Wait for DNS, 3) Run `deploy-anbotosc.sh` |
+| **Dominio** | ✅ **https://anbotosc.com EN PRODUCCIÓN** | A 76.76.21.21 en IONOS + cert emitido. El fallo NO era propagación — ver `project_status.md` |
+| **Next action** | Responder las 4 preguntas de phase 2 |
 
 ---
 

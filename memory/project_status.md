@@ -7,12 +7,48 @@
 
 ## Phase 1 — Completed ✅ (2026-08-18)
 
-### 1.1 Domain Setup: anbotosc.com
-- **Nameservers**: Configured in IONOS → ns1/2/3/4.vercel-dns-3.com
-- **Vercel**: Domain verified and connected to project `box-automatismo`
-- **DNS Status**: PROPAGATING (24-48h typical, some regions resolving, others not yet)
-- **BASE_URL**: Updated to `https://anbotosc.com` in `.env`
-- **Deployment Script**: Created `deploy-anbotosc.sh` (waits for DNS + runs `vercel --prod`)
+### 1.1 Domain Setup: anbotosc.com — ✅ LIVE (resuelto 2026-08-18 23:5x)
+
+**EL FALLO Y SU CAUSA (importante, no repetir):**
+Se pusieron en IONOS los nameservers `ns1-4.vercel-dns-3.com`. Eso estuvo MAL:
+Vercel tenía el dominio como *Registrar: Third Party / Nameservers: Third Party* y **nunca creó
+la zona DNS**. Esos nameservers solo sirven dominios cuyo DNS gestiona Vercel. Al no existir la
+zona respondían **REFUSED** → los resolvers devolvían **SERVFAIL** → el dominio no resolvía para
+nadie. **NO era propagación DNS: nunca habría funcionado por sí solo.**
+
+Señales para diagnosticar esto rápido la próxima vez:
+- `nslookup dominio 8.8.8.8` → "Server failed" (SERVFAIL), **no** NXDOMAIN
+- `nslookup dominio ns1.vercel-dns-3.com` → "Query refused"
+- `vercel dns ls dominio` → "No records found"
+- `vercel domains inspect dominio` → "Intended Nameservers" **vacío** + nameservers marcados ☓
+
+**LA SOLUCIÓN APLICADA (configuración actual, la buena):**
+1. IONOS → dominio → pestaña **Servidores DNS** → **"Restaurar el servidor de nombres"**
+   (vuelve a los NS de IONOS: `ns1020.ui-dns.com`, `ns1119.ui-dns.biz`, `ns1029.ui-dns.de`,
+   `ns1025.ui-dns.org`). La delegación en el registro `.com` se actualizó en minutos, no en 48h.
+2. IONOS → pestaña **DNS** → editar registro `A @` → **`76.76.21.21`**
+   (IONOS desactiva solo su `A` de parking, su `AAAA` y el TXT `_dep_ws_mutex` — correcto:
+   ese `AAAA` habría roto a los visitantes por IPv6)
+3. IONOS → **Añadir registro** → `CNAME` · `www` · **`cname.vercel-dns.com`**
+4. Añadido `www.anbotosc.com` al proyecto de Vercel con redirect 308 al apex
+   (sin añadirlo al proyecto, Vercel no lo sirve aunque el CNAME exista)
+5. El certificado TLS **no se emitió solo** → forzado con:
+   `vercel certs issue anbotosc.com www.anbotosc.com`
+
+**Estado verificado:**
+- `https://anbotosc.com` → 200 OK, la landing carga entera
+- `https://www.anbotosc.com` → 308 → `https://anbotosc.com`
+- Vercel API: `"verified": true`, `"misconfigured": false`, `"configuredBy": "A"`
+- **BASE_URL** en `.env` = `https://anbotosc.com`
+- Los registros de Mail de IONOS (MX, SPF, DKIM, DMARC, autodiscover) se dejaron intactos
+
+**Cavea temporal:** Cloudflare (`1.1.1.1`) siguió devolviendo SERVFAIL un rato porque tenía
+cacheada la delegación vieja (EDE: *"205.251.199.60 returned REFUSED"* = ns4.vercel-dns-3.com).
+Es solo caché de NS (TTL hasta 48h) y se cura solo. Afecta a Chrome si tiene DNS seguro con
+Cloudflare. Google (8.8.8.8), Quad9 y el resolver del ISP resolvían bien desde el primer momento.
+
+**Nota:** `deploy-anbotosc.sh` ya no hace falta para esto. `anbotofitness.com` está **caducado**
+(NXDOMAIN).
 
 ### 1.2 Chat Widget Redesign
 - **File**: `public/widget/widget.js`
