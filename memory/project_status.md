@@ -77,7 +77,7 @@ está registrado. Ver CLAUDE.md para el detalle de dónde sí sobrevive el nombr
   - ⚠️ These are secrets and should never be in memory files. Keep in `.env` only (gitignored)
   - Rotate if any are exposed
 
-## Email propio: send.anbotosc.com en Resend (2026-08-19) — DNS ✅, SES ⏳
+## Email propio: send.anbotosc.com en Resend (2026-08-19) — ✅ VERIFIED
 
 **Por qué un subdominio y no `anbotosc.com` a secas:** si algún envío quema la reputación,
 se quema la del subdominio y no la del correo normal del box. Es lo que recomienda Resend.
@@ -104,12 +104,16 @@ conviene borrarlo para que nadie lo confunda.
 - Los registros de correo del box en IONOS (MX `@` a mx00/mx01.ionos.es, SPF `@`, DKIM, DMARC)
   quedaron **intactos**: los de Resend cuelgan de `send.*`, no del apex.
 - Verificado por DNS contra `ns1020.ui-dns.com`: los tres resuelven correctamente.
-- Estado en Resend: **DNS verified ✅**, "Verifying domain" (paso de Amazon SES) en curso.
+- **Estado en Resend: `Verified` ✅** (Domain added 00:15 → DNS verified 00:21 → Domain verified
+  00:24, el 2026-08-19). Tardó 9 minutos en total, no las "horas" que avisaba el aviso.
 
-**PENDIENTE cuando el estado pase a Verified:**
+**PENDIENTE (el dominio ya está listo para enviar):**
 1. Poner en Vercel (production): `MAIL_FROM=Anboto SC <hola@send.anbotosc.com>`
 2. Redesplegar y enviar un alta de prueba, comprobando que llega a anbotocf@gmail.com
-3. Borrar el dominio sobrante `send.anboto.sc` en Resend
+3. Borrar el dominio sobrante `send.anboto.sc` en Resend (lo decide Mikel, no se borra solo)
+4. La `RESEND_API_KEY` del `.env` es **solo de envío** (`restricted_api_key`): sirve para mandar
+   correo pero NO para leer dominios por API. Si hace falta inspeccionar dominios, hay que
+   generar otra key con permisos de lectura o mirarlo en el panel.
 
 ---
 

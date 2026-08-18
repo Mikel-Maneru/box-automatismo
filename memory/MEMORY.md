@@ -1,18 +1,28 @@
 # Memory Index — Anboto Project
 
-**READ THIS FIRST** al comenzar cada sesión en este proyecto. Actualizado: 2026-08-18.
+**READ THIS FIRST** al comenzar cada sesión en este proyecto. Actualizado: **2026-08-19**.
 
 ---
 
-## 📋 Quick Status (2026-08-18)
+## 📋 Quick Status (2026-08-19)
 
 | Item | Status | Notes |
 |------|--------|-------|
-| **Active branch** | `feat/react-vite-migration` | React+Vite landing, deployed to Vercel preview |
-| **Phase 1** | ✅ COMPLETE | Domain LIVE, widget redesigned, favicon theme-aware |
-| **Phase 2** | ✅ IMPLEMENTADA, ⚠️ **SIN DESPLEGAR** | Hecha en el otro ordenador (5 commits). Producción sirve aún el bundle viejo |
-| **Dominio** | ✅ **https://anbotosc.com EN PRODUCCIÓN** | A 76.76.21.21 en IONOS + cert emitido. El fallo NO era propagación — ver `project_status.md` |
-| **Next action** | Responder las 4 preguntas de phase 2 |
+| **Rama activa** | `feat/react-vite-migration` | Aún NO mergeada a `main` |
+| **Dominio** | ✅ **https://anbotosc.com EN PRODUCCIÓN** | `A 76.76.21.21` en IONOS + cert TLS. `www` redirige 308 |
+| **Fase 1** | ✅ COMPLETA | Dominio, widget con marca, favicon según tema |
+| **Fase 2** | ✅ COMPLETA Y DESPLEGADA | Clases por objetivo, formulario guiado, `/reservar` en React. Verificado en vivo |
+| **Email propio** | ✅ `send.anbotosc.com` **Verified** en Resend | Listo para enviar. Falta `MAIL_FROM` en Vercel |
+| **WhatsApp** | ❌ Eliminado (`017f05c`) | ⚠️ **En git pero SIN desplegar** |
+| **Próxima acción** | Un solo `vercel --prod` que saque la eliminación de WhatsApp + `MAIL_FROM`, y luego alta de prueba |
+
+### ⚠️ Dos trampas que ya nos costaron horas — no repetir
+
+1. **Nameservers de Vercel sin zona.** Poner `ns*.vercel-dns-*.com` en el registrador NO funciona
+   si Vercel no gestiona el DNS: responden REFUSED → SERVFAIL global y no se arregla esperando.
+   Señal: SERVFAIL (no NXDOMAIN) + "Intended Nameservers" vacío. Solución: registros A/CNAME.
+2. **Nombre de dominio mal partido.** En Resend se creó `send.anboto.sc` en vez de
+   `send.anbotosc.com`. Leer el nombre carácter a carácter antes de tocar el DNS.
 
 ---
 
@@ -128,25 +138,44 @@ npm start               # Express serving public/ (production mode)
 npm run server:dev      # Express only (no Vite)
 npm run web:dev         # Vite only (no Express)
 npm run web:install     # Install web/ dependencies separately
-vercel --prod           # Deploy to production (when DNS resolves)
-nslookup anbotosc.com   # Check if domain resolved yet
+vercel --prod           # Desplegar a producción (MANUAL, el push no despliega)
 ```
+
+Comprobar que un deploy salió de verdad (no fiarse del "ready"):
+
+```bash
+curl -s https://anbotosc.com | grep -o 'app-[A-Za-z0-9_-]*\.js'
+```
+
+Ese hash debe coincidir con el de `public/assets/`. Si no coincide, producción está atrasada.
 
 ---
 
 ## 🔗 External Links & Accounts
 
-- **Vercel Project**: box-automatismo (team_Ui7yFZ02hiIaqHBTalIHAOQP)
+- **Vercel Project**: box-automatismo (`team_Ui7yFZ02hiIaqHBTalIHAOQP`). Deploy MANUAL:
+  la integración Git↔Vercel está inactiva desde el 12-may, hacer push NO despliega.
 - **Supabase**: tgbpgxakctedvlyepppu.supabase.co
-- **WodBuster**: anboto.wodbuster.com (manual login, Mikel's credentials)
-- **Domain registrar**: IONOS (manerugilmikel@gmail.com)
-- **Email service**: Resend (RESEND_API_KEY)
-- ~~WhatsApp API: Kapso~~ — **eliminado el 2026-08-19**, los avisos van solo por email (Resend)
+- **WodBuster**: anboto.wodbuster.com (login manual con credenciales de Mikel, CAPTCHA)
+- **Registrador**: IONOS — cuenta **anbotocf@gmail.com** (¡no la personal de Mikel!)
+- **Email**: Resend, cuenta `anbotocf`. Dominio de envío `send.anbotosc.com` (eu-west-1) ✅
+  - La `RESEND_API_KEY` del `.env` es **solo de envío**: no sirve para leer dominios por API
+- ~~WhatsApp API: Kapso~~ — **eliminado el 2026-08-19**, los avisos van solo por email
 
 ---
 
-## 🎓 This Session's Key Insight
+## 🎓 Lo aprendido en la sesión del 18–19 de agosto
 
-**Phase 1 is done, Phase 2 is blocked on user decisions.** The code exploration shows everything already exists (WodBuster API integrated, landing structure clear, widget architecture understood). Once you answer the 4 clarification questions, implementation is straightforward file modifications.
+**El patrón que se repitió dos veces: dar por buena una configuración sin verificarla.**
+Primero con los nameservers (se esperaron 5 horas a una "propagación" que nunca iba a llegar,
+porque los NS respondían REFUSED) y después con el nombre del dominio de Resend
+(`send.anboto.sc` en vez de `send.anbotosc.com`).
 
-Don't proceed with code until Phase 2 questions are answered.
+En ambos casos **30 segundos de comprobación** habrían ahorrado horas:
+- `nslookup dominio 8.8.8.8` → SERVFAIL ≠ NXDOMAIN ≠ respuesta buena, cada uno dice algo distinto
+- Preguntar **directamente al nameserver autoritativo** antes de culpar a la propagación
+- Leer el nombre del dominio carácter a carácter antes de crear registros DNS a su alrededor
+
+Y una regla de trabajo: **verificar el resultado, no el paso**. Que IONOS diga "guardado" o que
+Vercel diga "deploy ready" no prueba nada; lo que prueba es `curl` devolviendo 200 y el bundle
+servido coincidiendo con el del repo.

@@ -92,6 +92,20 @@
 - `anbotosc.com` es el dominio DEFINITIVO y esta registrado. `anbotofitness.com` no existe en el
   registro `.com` (NXDOMAIN) y no se recupera; el SEO ya lo da por zanjado. Tema cerrado.
 
+## 2026-08-19: Dominio de envio propio send.anbotosc.com (Resend) — VERIFIED
+- Se envia desde un SUBDOMINIO, no desde el apex: si un envio quema la reputacion, se quema la
+  del subdominio y no la del correo normal del box. Es lo que recomienda Resend.
+- Region **Ireland (eu-west-1)**: el box esta en España, mejor latencia y datos en la UE.
+- 3 registros en IONOS bajo `anbotosc.com` (host corto, IONOS añade el dominio solo):
+  `TXT resend._domainkey.send`, `MX send.send` (prio 10) y `TXT send.send` (SPF).
+- NO se añade el MX de "Enable Receiving": es para RECIBIR correo, no hace falta.
+- Los registros de correo del box (MX/SPF/DKIM/DMARC en `@`) quedan intactos: Resend cuelga
+  de `send.*`, no del apex. Por eso no hay conflicto.
+- **TRAMPA**: el dominio se creo primero como `send.anboto.sc` (`anbotosc.com` partido mal).
+  Con ese nombre los registros no habrian verificado jamas. Leer el nombre caracter a caracter.
+- Verificado en 9 minutos (00:15 alta → 00:21 DNS verified → 00:24 Domain verified).
+- PENDIENTE: `MAIL_FROM=Anboto SC <hola@send.anbotosc.com>` en Vercel + envio de prueba.
+
 ## 2026-08-18: vercel.json — no inventar claves `services`
 - Alguien (sesion anterior) metio en `vercel.json` un rewrite con `"destination": {"type":"service"}`
   y un bloque top-level `"services"`. **Ninguna de las dos es sintaxis valida de Vercel**
