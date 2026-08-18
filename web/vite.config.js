@@ -6,7 +6,8 @@ import react from '@vitejs/plugin-react';
 // reservar.html ni index.legacy.html. Express (src/index.js) sirve ese public/.
 const PROXY_TARGET = 'http://localhost:3003';
 const proxy = Object.fromEntries(
-  ['/api', '/fotos', '/widget', '/reservar', '/health'].map((p) => [
+  // '/reservar' ya NO se proxya: es una ruta React del propio Vite (pages/Reservar.jsx).
+  ['/api', '/fotos', '/widget', '/health'].map((p) => [
     p,
     { target: PROXY_TARGET, changeOrigin: true },
   ])

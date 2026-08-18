@@ -106,5 +106,26 @@ export const I18N = {
   's.lhow':['¿Cómo nos conociste?','Nola ezagutu gaituzu?'],'s.howph':['Elige una opción','Aukeratu aukera bat'],
   's.rec':['Te recomendamos empezar por','Hemendik hastea gomendatzen dizugu'],
   'cc.ig':['Instagram','Instagram'],'cc.google':['Google','Google'],'cc.amigo':['Un amigo','Lagun batek'],
-  'cc.paso':['Pasaba por delante','Aurretik pasatzen'],'cc.otro':['Otro','Beste bat']
+  'cc.paso':['Pasaba por delante','Aurretik pasatzen'],'cc.otro':['Otro','Beste bat'],
+  // --- Página /reservar (enlace con token, llega por email) ---
+  'rsv.hi':['Hola','Kaixo'],
+  'rsv.title':['Elige tu <em>clase gratuita</em>','Aukeratu zure <em>doako klasea</em>'],
+  'rsv.sub':['Elige el día y la hora que mejor te vengan.','Aukeratu ondoen datorkizun eguna eta ordua.'],
+  'rsv.fecha':['Fecha','Eguna'],'rsv.hora':['Hora','Ordua'],
+  'rsv.cargando':['Cargando horarios...','Ordutegiak kargatzen...'],
+  'rsv.nodisp':['No hay clases este día. Prueba con otro.','Egun honetan ez dago klaserik. Probatu beste bat.'],
+  'rsv.aviso':['Las reservas de este día se abren 1-2 días antes. Este es el horario habitual.','Egun honetako erreserbak 1-2 egun lehenago irekitzen dira. Hau da ohiko ordutegia.'],
+  'rsv.completa':['Completa','Beteta'],'rsv.plaza':['plaza','plaza'],'rsv.plazas':['plazas','plaza'],
+  'rsv.sindisp':['Plazas por confirmar','Plazak zehazteke'],
+  'rsv.rec':['Recomendado','Gomendatua'],
+  'rsv.reservar':['Reservar clase','Erreserbatu klasea'],'rsv.reservando':['Reservando...','Erreserbatzen...'],
+  'rsv.okTitle':['¡Tu clase está reservada!','Zure klasea erreserbatuta dago!'],
+  'rsv.yaTitle':['Ya tienes tu clase reservada','Dagoeneko baduzu klasea erreserbatuta'],
+  'rsv.okBody':['Llega 5 minutos antes y dile tu nombre al coach. ¡Te esperamos!','Iritsi 5 minutu lehenago eta esan zure izena coachari. Zain zaitugu!'],
+  'rsv.errLink':['Enlace no válido.','Esteka baliogabea.'],
+  'rsv.errExp':['Este enlace ha caducado.','Esteka hau iraungi da.'],
+  'rsv.errNo':['Enlace no encontrado.','Ez da esteka aurkitu.'],
+  'rsv.errConn':['Error de conexión. Inténtalo de nuevo.','Konexio errorea. Saiatu berriro.'],
+  'rsv.errGen':['No se ha podido reservar la clase.','Ezin izan da klasea erreserbatu.'],
+  'rsv.wa':['Escríbenos por WhatsApp','Idatzi WhatsApp bidez']
 };

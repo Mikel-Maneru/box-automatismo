@@ -88,8 +88,10 @@ router.post('/book', async (req, res) => {
       try {
         const [year, month, day] = date.split('-').map(Number);
         const dateObj = new Date(year, month - 1, day);
-        const wbClasses = await wodbuster.getClassAvailability(dateObj);
-        const match = wbClasses.find(c => c.time === classTime + ':00' && c.name === className);
+        const wb = await wodbuster.getClassAvailability(dateObj);
+        // getClassAvailability devuelve {classes, realData}: iterar el objeto lanzaba
+        // "wbClasses.find is not a function" y esta rama nunca resolvia la clase.
+        const match = (wb.classes || []).find(c => c.time === classTime + ':00' && c.name === className);
         bookingClassId = match?.id;
       } catch (err) {
         if (err instanceof wodbuster.WodbusterAuthError) {
