@@ -9,7 +9,7 @@ if (process.env.RESEND_API_KEY) {
 
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3003';
 
-async function createSignup({ nombre, telefono, email, nivel, origen }) {
+async function createSignup({ nombre, telefono, email, nivel, objetivo, comoConocio, origen }) {
   // Get box_id for Anboto
   const { data: box } = await supabase
     .from('boxes')
@@ -28,6 +28,8 @@ async function createSignup({ nombre, telefono, email, nivel, origen }) {
       telefono: telefono || null,
       email: email || null,
       nivel: nivel || null,
+      objetivo: objetivo || null,
+      como_conocio: comoConocio || null,
       origen: origen || 'formulario'
     })
     .select()
@@ -50,6 +52,8 @@ async function createSignup({ nombre, telefono, email, nivel, origen }) {
           <p><strong>Teléfono:</strong> ${telefono || 'No indicado'}</p>
           <p><strong>Email:</strong> ${email || 'No indicado'}</p>
           <p><strong>Nivel:</strong> ${nivel || 'No indicado'}</p>
+          <p><strong>Objetivo:</strong> ${objetivo || 'No indicado'}</p>
+          <p><strong>Cómo nos conoció:</strong> ${comoConocio || 'No indicado'}</p>
           <p><strong>Origen:</strong> ${origen}</p>
           <p><strong>Fecha:</strong> ${fecha}</p>
           <hr>
@@ -68,7 +72,7 @@ async function createSignup({ nombre, telefono, email, nivel, origen }) {
 
   // Send WhatsApp notification
   try {
-    await sendNewSignupNotification(nombre, telefono, email, nivel, origen);
+    await sendNewSignupNotification(nombre, telefono, email, nivel, origen, objetivo, comoConocio);
   } catch (err) {
     console.error('Error enviando WhatsApp de notificacion:', err.message || err);
   }

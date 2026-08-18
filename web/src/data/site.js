@@ -45,6 +45,36 @@ export const DISCIPLINAS = [
   { eu: 'Indarra · Fuerza',    name: 'Total Strength',  dk: 'disc.d6' },
 ];
 
+// Objetivos (5). Única fuente de verdad: la sección de clases filtra con esto y el
+// formulario recomienda con esto, así web y alta nunca se contradicen.
+// `clases` referencia DISCIPLINAS[].name; el primero es la puerta de entrada recomendada.
+export const OBJETIVOS = [
+  { id: 'salud',       k: 'obj.salud', dk: 'obj.salud.d', clases: ['WOD', 'Oinarriak', 'Endurance'] },
+  { id: 'rendimiento', k: 'obj.rend',  dk: 'obj.rend.d',  clases: ['Hyrox', 'WOD', 'Endurance'] },
+  { id: 'musculacion', k: 'obj.musc',  dk: 'obj.musc.d',  clases: ['Total Strength', 'Halterofilia'] },
+  { id: 'grasa',       k: 'obj.grasa', dk: 'obj.grasa.d', clases: ['WOD', 'Endurance', 'Hyrox'] },
+  { id: 'empezar',     k: 'obj.emp',   dk: 'obj.emp.d',   clases: ['Oinarriak', 'WOD'] },
+];
+
+// Valores que viajan al backend (castellano fijo, como `nivel`): el backend valida
+// contra esta misma lista. Ver VALID_OBJETIVOS en src/routes/signup.js.
+export const OBJETIVO_VALUES = {
+  salud: 'Salud y bienestar',
+  rendimiento: 'Rendimiento',
+  musculacion: 'Musculación',
+  grasa: 'Perder grasa',
+  empezar: 'Empezar de cero',
+};
+
+// Canales de captación para "¿Cómo nos conociste?" (value fijo ES, label traducida).
+export const CANALES = [
+  { id: 'instagram', value: 'Instagram',          k: 'cc.ig' },
+  { id: 'google',    value: 'Google',             k: 'cc.google' },
+  { id: 'amigo',     value: 'Un amigo',           k: 'cc.amigo' },
+  { id: 'paso',      value: 'Pasaba por delante', k: 'cc.paso' },
+  { id: 'otro',      value: 'Otro',               k: 'cc.otro' },
+];
+
 // Coaches (4).
 export const COACHES = [
   { ini: 'XO', name: 'Xabi Osa',        rk: 'c.r1', pk: 'c.p1' },

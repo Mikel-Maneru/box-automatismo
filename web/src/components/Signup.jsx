@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLang, T } from '../i18n/LangContext.jsx';
 import { Check } from './icons.jsx';
+import { OBJETIVOS, OBJETIVO_VALUES, CANALES } from '../data/site.js';
 
 const PERKS = ['s.k1', 's.k2', 's.k3', 's.k4'];
 
@@ -8,7 +9,13 @@ const PERKS = ['s.k1', 's.k2', 's.k3', 's.k4'];
 // POST /api/signup { nombre, telefono, email, nivel, origen:'formulario', website(honeypot) }.
 export default function Signup() {
   const { t } = useLang();
-  const [form, setForm] = useState({ nombre: '', telefono: '', email: '', nivel: 'Sin experiencia', website: '' });
+  // `objetivo` guarda el id (salud, rendimiento…) para poder recomendar clases; al enviar
+  // se traduce a su valor en castellano, que es lo que valida el backend.
+  const [form, setForm] = useState({
+    nombre: '', telefono: '', email: '', nivel: 'Sin experiencia',
+    objetivo: '', comoConocio: '', website: '',
+  });
+  const recomendadas = OBJETIVOS.find((o) => o.id === form.objetivo)?.clases || [];
   const [submitting, setSubmitting] = useState(false);
   const [msg, setMsg] = useState(null); // { type:'success'|'error', text }
 
@@ -29,6 +36,8 @@ export default function Signup() {
           telefono: form.telefono.trim(),
           email: form.email.trim(),
           nivel: form.nivel,
+          objetivo: form.objetivo ? OBJETIVO_VALUES[form.objetivo] : '',
+          comoConocio: form.comoConocio,
           origen: 'formulario',
           website: form.website,
         }),
@@ -36,7 +45,10 @@ export default function Signup() {
       const data = await res.json();
       if (res.ok) {
         setMsg({ type: 'success', text: t('form.ok') });
-        setForm({ nombre: '', telefono: '', email: '', nivel: 'Sin experiencia', website: '' });
+        setForm({
+          nombre: '', telefono: '', email: '', nivel: 'Sin experiencia',
+          objetivo: '', comoConocio: '', website: '',
+        });
       } else {
         setMsg({ type: 'error', text: data.error || t('form.err') });
       }
@@ -91,6 +103,32 @@ export default function Signup() {
                   <option value="Sin experiencia">{t('s.o1')}</option>
                   <option value="Algo de experiencia">{t('s.o2')}</option>
                   <option value="Vengo de otro box">{t('s.o3')}</option>
+                </select>
+              </div>
+              <div className="fg">
+                <label htmlFor="signup-objetivo">{t('s.lobj')}</label>
+                <select id="signup-objetivo" value={form.objetivo} onChange={set('objetivo')}>
+                  <option value="">{t('s.objph')}</option>
+                  {OBJETIVOS.map((o) => (
+                    <option key={o.id} value={o.id}>{t(o.k)}</option>
+                  ))}
+                </select>
+              </div>
+              {recomendadas.length > 0 && (
+                <div className="rec">
+                  <span className="rec-h">{t('s.rec')}</span>
+                  <ul className="tri-list">
+                    {recomendadas.map((n) => <li key={n}>{n}</li>)}
+                  </ul>
+                </div>
+              )}
+              <div className="fg">
+                <label htmlFor="signup-como">{t('s.lhow')}</label>
+                <select id="signup-como" value={form.comoConocio} onChange={set('comoConocio')}>
+                  <option value="">{t('s.howph')}</option>
+                  {CANALES.map((c) => (
+                    <option key={c.id} value={c.value}>{t(c.k)}</option>
+                  ))}
                 </select>
               </div>
               <input type="text" name="website" style={{ display: 'none' }} tabIndex={-1}

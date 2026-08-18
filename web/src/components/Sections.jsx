@@ -1,7 +1,8 @@
-import { T } from '../i18n/LangContext.jsx';
+import { useState } from 'react';
+import { useLang, T } from '../i18n/LangContext.jsx';
 import { Pico, PkMark, WhatsApp, Pin, Phone, Mail, InstagramIcon } from './icons.jsx';
 import {
-  DISCIPLINAS, COACHES, REVIEWS, PLANS, IG_PHOTOS,
+  DISCIPLINAS, OBJETIVOS, COACHES, REVIEWS, PLANS, IG_PHOTOS,
   WHATSAPP_URL, INSTAGRAM_URL,
 } from '../data/site.js';
 
@@ -99,19 +100,51 @@ export function QueEs() {
   );
 }
 
-/* ---------- 03 · Disciplinas ---------- */
+/* ---------- 03 · Una clase para cada objetivo ---------- */
 export function Disciplinas() {
+  const { t } = useLang();
+  const [obj, setObj] = useState(null);
+  // El reveal (.rev-up -> .in) lo aplica un observer que solo corre al montar y deja de
+  // observar cada tarjeta al revelarla. Una tarjeta que entra en pantalla al filtrar ya
+  // no recibiría .in y se quedaría invisible; en cuanto el usuario toca el selector,
+  // damos por hecho que la sección está a la vista y las mostramos.
+  const [tocado, setTocado] = useState(false);
+  const activo = OBJETIVOS.find((o) => o.id === obj) || null;
+
+  const elegir = (id) => { setObj(id); setTocado(true); };
+
+  // Las 6 disciplinas se quedan SIEMPRE montadas y se ocultan con [hidden]: el reveal
+  // (.rev-up -> .in) lo aplica un IntersectionObserver que solo corre al montar, así que
+  // un nodo creado al filtrar nunca recibiría .in y quedaría invisible para siempre.
+  const visible = (name) => !activo || activo.clases.includes(name);
+  const entrada = activo ? activo.clases[0] : null; // puerta de entrada recomendada
+
   return (
     <section className="pad" id="disciplinas">
       <div className="wrap">
         <T as="span" className="sec-index rev-up" k="disc.idx" />
         <T as="h2" className="title rev-up" k="disc.title" />
+        <T as="p" className="lead rev-up" k="disc.lead" />
+
+        <div className="tt-days rev-up" role="group" aria-label={t('obj.pick')}>
+          <button type="button" className={`tt-day ${!activo ? 'on' : ''}`.trim()}
+            aria-pressed={!activo} onClick={() => elegir(null)}>{t('obj.all')}</button>
+          {OBJETIVOS.map((o) => (
+            <button key={o.id} type="button" className={`tt-day ${obj === o.id ? 'on' : ''}`.trim()}
+              aria-pressed={obj === o.id} onClick={() => elegir(o.id)}>{t(o.k)}</button>
+          ))}
+        </div>
+        {activo && <T as="p" className="tt-note" k={activo.dk} />}
+
         <div className="elist">
           {DISCIPLINAS.map((d) => (
-            <div className="ei cls rev-up" key={d.name}>
+            <div className={`ei cls rev-up ${tocado ? 'in' : ''}`.trim()} key={d.name} hidden={!visible(d.name)}>
               <div className="mk"><span className="tri"></span></div>
               <div className="bd">
-                <div className="nm"><h3>{d.name}</h3></div>
+                <div className="nm">
+                  <h3>{d.name}</h3>
+                  {d.name === entrada && <T as="span" className="eu" k="obj.start" />}
+                </div>
                 <T as="p" k={d.dk} />
               </div>
             </div>

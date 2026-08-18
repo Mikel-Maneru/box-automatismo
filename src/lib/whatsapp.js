@@ -45,9 +45,9 @@ async function sendWhatsApp(message) {
   }
 }
 
-async function sendNewSignupNotification(nombre, telefono, email, nivel, origen) {
+async function sendNewSignupNotification(nombre, telefono, email, nivel, origen, objetivo, comoConocio) {
   return sendWhatsApp(
-    `Nueva inscripcion: ${nombre} | Tlf: ${telefono || '-'} | Email: ${email || '-'} | Nivel: ${nivel || '-'} | Origen: ${origen}`
+    `Nueva inscripcion: ${nombre} | Tlf: ${telefono || '-'} | Email: ${email || '-'} | Nivel: ${nivel || '-'} | Objetivo: ${objetivo || '-'} | Nos conocio por: ${comoConocio || '-'} | Origen: ${origen}`
   );
 }
 

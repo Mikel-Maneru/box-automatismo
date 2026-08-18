@@ -144,6 +144,8 @@ CREATE TABLE signups (
   telefono TEXT,
   email TEXT,
   nivel TEXT,
+  objetivo TEXT,
+  como_conocio TEXT,
   origen TEXT DEFAULT 'formulario',
   followup_sent BOOLEAN DEFAULT false,
   followup_sent_at TIMESTAMPTZ,
