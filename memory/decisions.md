@@ -77,6 +77,32 @@
 - **Logo**: isotipo = **pico de montaña facetado** (hombros + ranura de base), NO un triángulo plano. Trazado aproximado en `web/src/components/icons.jsx` (Pico). PENDIENTE: pedir al usuario el SVG/PNG original del logo para pixel-perfect (el PDF está aplanado).
 - El manual es de estética CÁLIDA (fondos crema), pero el sitio se hizo OSCURO-premium por elección del usuario. Tensión a vigilar: si pide "aplicar el manual" puede referirse a ir más cálido, no solo a los hex.
 
+## 2026-08-18: Dominio anbotosc.com configurado (DNS propagación en progreso)
+- Nameservers cambiados a Vercel (ns1/2/3/4.vercel-dns-3.com) en IONOS
+- BASE_URL en .env actualizado a https://anbotosc.com
+- Vercel domain verification completado
+- **Estado**: DNS propagando (24-48h típico)
+- **Próximo paso**: cuando resuelva globalmente, ejecutar `deploy-anbotosc.sh` para deploy final
+
+## 2026-08-18: Rediseño de chat widget + favicon theme-aware
+- **Widget**: "burbuja pico" personalizada con paleta Anboto (madera #A7693B, cuero #703D26, caliza #F4EDE2)
+  - Archivo: `public/widget/widget.js` líneas 47-61
+  - Paleta: pizarra #14110E, granito #777069, bruma #D1C8C1, caliza #F4EDE2, madera #A7693B, cuero #703D26
+- **Favicon**: Theme-aware (pico en negro light theme, caliza dark theme)
+  - Archivos: `web/index.html` y `public/reservar.html`
+  - Implementación: SVG data URI + CSS media query + JavaScript matchMedia
+- **Seguridad**: Vercel token rotado tras exposición accidental
+
+## 2026-08-18: Phase 2 iniciada — Reorganización de clases por objetivo (EN PLANNING)
+- **Requisitos cliente**: 
+  1. Clases por objetivos (salud, rendimiento, musculación, pérdida de grasa, principiante)
+  2. Formulario mejorado: "¿Cómo te enteraste?" + "¿Objetivo?"
+  3. App de clase gratuita con recomendaciones por objetivo
+  4. API WodBuster para disponibilidad real
+  5. Chat widget con token del cliente (no personal)
+- **Exploración**: WodBuster API existe (`src/lib/wodbuster.js`), landing data en `web/src/data/site.js`, Signup.jsx, widget architecture en `public/widget/widget.js`
+- **PENDIENTE**: Responder 4 preguntas de clarificación para finalizar plan (mapeo clases, token chat, ubicación app, campos formulario)
+
 ## Key technical constraints
 - `dotenv` MUST use `{ override: true }`
 - Anthropic client MUST set `baseURL: 'https://api.anthropic.com'`
