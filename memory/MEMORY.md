@@ -141,7 +141,7 @@ nslookup anbotosc.com   # Check if domain resolved yet
 - **WodBuster**: anboto.wodbuster.com (manual login, Mikel's credentials)
 - **Domain registrar**: IONOS (manerugilmikel@gmail.com)
 - **Email service**: Resend (RESEND_API_KEY)
-- **WhatsApp API**: Kapso (KAPSO_*)
+- ~~WhatsApp API: Kapso~~ — **eliminado el 2026-08-19**, los avisos van solo por email (Resend)
 
 ---
 

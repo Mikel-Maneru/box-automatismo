@@ -37,15 +37,15 @@ Por orden de gravedad:
 - `SUPABASE_SERVICE_KEY` — se salta el RLS, acceso total a la BD (hay 16 inscripciones con
   nombres, telefonos y emails de personas reales). El JWT caduca en 2036.
 - `VERCEL_TOKEN` — permite desplegar y administrar el proyecto.
-- `ANTHROPIC_API_KEY` (se resuelve solo con el punto 1), `RESEND_API_KEY`, `KAPSO_API_KEY`,
-  `TWILIO_AUTH_TOKEN`, `GMAIL_APP_PASSWORD`.
+- `ANTHROPIC_API_KEY` (se resuelve solo con el punto 1), `RESEND_API_KEY`,
+  `TWILIO_AUTH_TOKEN`, `GMAIL_APP_PASSWORD`. (Las `KAPSO_*` ya no aplican: WhatsApp eliminado.)
 - `WODBUSTER_PASSWORD` — **no es una clave de API, es la contrasena personal de Mikel**.
   Si la reutiliza en otros sitios, cambiarla tambien alli.
 
-## 3. A quien deben llegar los avisos de altas
-Ahora mismo van a Mikel: `NOTIFY_EMAIL` = manerugilmikel@gmail.com y
-`KAPSO_WHATSAPP_TO` = +34 688 816 982. Decidir si pasan a Xabi o a una cuenta del box.
-Es el cambio mas barato de todos: dos variables.
+## 3. A quien deben llegar los avisos de altas — ✅ RESUELTO
+Ya van a la cuenta del box: **anbotocf@gmail.com** (commit `47d060b`, 2026-08-18).
+Las notificaciones por WhatsApp se eliminaron por completo el 2026-08-19 (`017f05c`),
+asi que ahora el unico canal de aviso es el email via Resend.
 
 ## 4. Cuenta de WodBuster
 El sistema entra con el usuario y la contrasena PERSONALES de Mikel, y con una cookie
@@ -69,7 +69,10 @@ fallo y de la configuracion buena en `project_status.md` y `decisions.md`.
 - IONOS: NS propios de IONOS + `A @ 76.76.21.21` + `CNAME www cname.vercel-dns.com`
 - Vercel: `anbotosc.com` + `www.anbotosc.com` (308 al apex), certificado emitido a mano
 - Los registros de correo de IONOS quedaron intactos
-- OJO: `anbotofitness.com` esta CADUCADO (NXDOMAIN). Decidir con Xabi si se recupera o se deja.
+- `anbotosc.com` es el dominio definitivo y esta registrado a vuestro nombre. **Cerrado, no hay
+  nada que decidir aqui.** `anbotofitness.com` no existe en el registro `.com` (NXDOMAIN) y NO se
+  va a recuperar; el SEO ya apunta a `anbotosc.com` como canonico. La marca "Anboto Fitness" solo
+  sobrevive en el slug de Supabase `anboto-fitness` y en el Instagram `@anbotofitness` (ver CLAUDE.md).
 
 ## 8. Logo en alta
 Sigue pendiente (ya anotado el 2026-08-16): conseguir el SVG o PNG original del isotipo. El

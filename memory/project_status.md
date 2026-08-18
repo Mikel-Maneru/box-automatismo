@@ -47,8 +47,9 @@ cacheada la delegación vieja (EDE: *"205.251.199.60 returned REFUSED"* = ns4.ve
 Es solo caché de NS (TTL hasta 48h) y se cura solo. Afecta a Chrome si tiene DNS seguro con
 Cloudflare. Google (8.8.8.8), Quad9 y el resolver del ISP resolvían bien desde el primer momento.
 
-**Nota:** `deploy-anbotosc.sh` ya no hace falta para esto. `anbotofitness.com` está **caducado**
-(NXDOMAIN).
+**Nota:** `deploy-anbotosc.sh` ya no hace falta para esto. `anbotofitness.com` no existe en el
+registro `.com` (NXDOMAIN) y no se va a recuperar — `anbotosc.com` es el dominio definitivo y ya
+está registrado. Ver CLAUDE.md para el detalle de dónde sí sobrevive el nombre "Anboto Fitness".
 
 ### 1.2 Chat Widget Redesign
 - **File**: `public/widget/widget.js`
@@ -175,7 +176,7 @@ Hasta que se ejecute `vercel --prod`, nada de esto se ve en anbotosc.com.
   - `lib/wodbuster.js` — WodBuster client (598 lines)
   - `lib/supabase.js` — Lazy Supabase client (Proxy)
   - `lib/email.js` — Resend + signup logic
-  - `lib/whatsapp.js` — Kapso WhatsApp client
+  - ~~`lib/whatsapp.js`~~ — **borrado el 2026-08-19**: se eliminaron las notificaciones WhatsApp
   
 - **Widget**: `public/widget/widget.js` (vanilla JS, no deps)
   

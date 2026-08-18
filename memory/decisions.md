@@ -89,7 +89,8 @@
 - El certificado TLS NO se emite solo: hubo que forzarlo con `vercel certs issue`.
 - Verificado: https://anbotosc.com 200 OK, www redirige 308, Vercel `verified:true misconfigured:false`.
 - Diagnostico rapido de este fallo: SERVFAIL (no NXDOMAIN) + "Query refused" al preguntar al NS.
-- `anbotofitness.com` esta CADUCADO (NXDOMAIN).
+- `anbotosc.com` es el dominio DEFINITIVO y esta registrado. `anbotofitness.com` no existe en el
+  registro `.com` (NXDOMAIN) y no se recupera; el SEO ya lo da por zanjado. Tema cerrado.
 
 ## 2026-08-18: vercel.json — no inventar claves `services`
 - Alguien (sesion anterior) metio en `vercel.json` un rewrite con `"destination": {"type":"service"}`
@@ -121,7 +122,9 @@
 - Anthropic client MUST set `baseURL: 'https://api.anthropic.com'`
 - Model: `claude-sonnet-4-5-20250929`
 - Email: **Resend** (`RESEND_API_KEY`). Gmail/Nodemailer ya no se usa.
-- WhatsApp: **Kapso** (`KAPSO_*`). Twilio ya no se usa, aunque siga en package.json.
+- **WhatsApp: ELIMINADO** (2026-08-19, commit `017f05c`). Ya no hay notificaciones por WhatsApp:
+  fuera Kapso, fuera `src/lib/whatsapp.js` y fuera las env `KAPSO_*`. Los avisos de alta van
+  **solo por email (Resend)** a `anbotocf@gmail.com`. Twilio tampoco se usa.
 - Vercel Hobby plan: only daily cron jobs allowed
 - `.env` no esta en el repo. Desde el fix del 2026-08-15 el servidor SI arranca sin las env
   (supabase lazy via Proxy, cliente Anthropic diferido), pero chat/BD/email/WhatsApp no funcionan
