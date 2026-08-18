@@ -10,7 +10,7 @@
 |------|--------|-------|
 | **Active branch** | `feat/react-vite-migration` | React+Vite landing, deployed to Vercel preview |
 | **Phase 1** | ✅ COMPLETE | Domain LIVE, widget redesigned, favicon theme-aware |
-| **Phase 2** | 🔵 BLOCKED | Awaiting answers to 4 clarification questions |
+| **Phase 2** | ✅ IMPLEMENTADA, ⚠️ **SIN DESPLEGAR** | Hecha en el otro ordenador (5 commits). Producción sirve aún el bundle viejo |
 | **Dominio** | ✅ **https://anbotosc.com EN PRODUCCIÓN** | A 76.76.21.21 en IONOS + cert emitido. El fallo NO era propagación — ver `project_status.md` |
 | **Next action** | Responder las 4 preguntas de phase 2 |
 

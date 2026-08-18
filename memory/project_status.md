@@ -76,7 +76,39 @@ Cloudflare. Google (8.8.8.8), Quad9 y el resolver del ISP resolvían bien desde 
   - ⚠️ These are secrets and should never be in memory files. Keep in `.env` only (gitignored)
   - Rotate if any are exposed
 
-## Phase 2 — Planning Stage 🔵 (BLOCKED ON USER INPUT)
+## Phase 2 — ✅ IMPLEMENTADA (en el otro ordenador) · ⚠️ SIN DESPLEGAR
+
+**Las 4 preguntas de clarificación de abajo ya NO aplican: se resolvieron implementando.**
+5 commits en `feat/react-vite-migration` (2026-08-18):
+- `5b36c93` feat(web,api): clases por objetivo y formulario guiado
+- `af54fa4` feat(web): /reservar en React + arregla dos bugs del flujo de reserva
+- `361cb83` feat(reservar): recomienda la clase de la prueba gratuita según el objetivo
+- `fdc8325` fix(seo): anbotosc.com pasa a ser el dominio canónico
+- `47d060b` feat(email): avisos a anbotocf@gmail.com y remitente configurable
+
+**Decisiones que quedaron tomadas (leer antes de tocar nada):**
+- **5 objetivos** en `web/src/data/site.js` → `OBJETIVOS` (fuente única de verdad; la sección de
+  clases filtra con esto y el formulario recomienda con esto, para que web y alta no se contradigan):
+  - `salud` → WOD, Oinarriak, Endurance
+  - `rendimiento` → Hyrox, WOD, Endurance
+  - `musculacion` → Total Strength, Halterofilia
+  - `grasa` → WOD, Endurance, Hyrox
+  - `empezar` → Oinarriak, WOD
+  - El **primer** elemento de `clases` es la puerta de entrada recomendada.
+- `OBJETIVO_VALUES`: los valores viajan al backend en castellano fijo (igual que `nivel`);
+  el backend valida contra `VALID_OBJETIVOS` en `src/routes/signup.js`.
+- `claveClase()` normaliza los nombres de WodBuster ("Wod"→WOD, "Haltero"→Halterofilia).
+- `CANALES`: lista para "¿Cómo nos conociste?".
+- `/reservar` migrado a React → `web/src/pages/Reservar.jsx` (el antiguo queda como
+  `public/reservar.legacy.html`).
+- Avisos de alta ahora a **anbotocf@gmail.com** (resuelve el punto 3 de la lista de Xabi).
+
+⚠️ **PENDIENTE: DESPLEGAR.** Producción sirve `app-Bgmrtz3G.js` y el repo tiene `app-VFg2lThZ.js`.
+Hasta que se ejecute `vercel --prod`, nada de esto se ve en anbotosc.com.
+
+---
+
+## (Histórico) Phase 2 — Planning Stage 🔵
 
 ### 2.1 Requirements Summary
 1. **Reorganize classes by user objectives** (health, performance, muscle gain, fat loss, beginner)
