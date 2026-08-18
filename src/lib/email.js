@@ -9,6 +9,12 @@ if (process.env.RESEND_API_KEY) {
 
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3003';
 
+// Remitente. OJO: con el `onboarding@resend.dev` de pruebas, Resend SOLO entrega al correo
+// dueño de la cuenta y rechaza cualquier otro destinatario. Para escribir al box o a los
+// usuarios hay que verificar un dominio en Resend y poner MAIL_FROM, por ejemplo
+// "Anboto SC <hola@anbotosc.com>".
+const MAIL_FROM = process.env.MAIL_FROM || 'Anboto SC <onboarding@resend.dev>';
+
 async function createSignup({ nombre, telefono, email, nivel, objetivo, comoConocio, origen }) {
   // Get box_id for Anboto
   const { data: box } = await supabase
@@ -43,11 +49,11 @@ async function createSignup({ nombre, telefono, email, nivel, objetivo, comoCono
     const fecha = new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' });
     try {
       const { data: emailData, error: emailError } = await resend.emails.send({
-        from: 'Anboto Crossfit <onboarding@resend.dev>',
+        from: MAIL_FROM,
         to: notifyEmail,
-        subject: '\u{1F525} Nueva inscripción - Anboto Crossfit',
+        subject: '\u{1F525} Nueva inscripción - Anboto SC',
         html: `
-          <h2>Nueva inscripción en Anboto Crossfit</h2>
+          <h2>Nueva inscripción en Anboto SC</h2>
           <p><strong>Nombre:</strong> ${nombre}</p>
           <p><strong>Teléfono:</strong> ${telefono || 'No indicado'}</p>
           <p><strong>Email:</strong> ${email || 'No indicado'}</p>
@@ -119,13 +125,13 @@ async function sendSchedulingEmail(toEmail, nombre, token) {
 
   try {
     const { data: emailData, error: emailError } = await resend.emails.send({
-      from: 'Anboto Crossfit <onboarding@resend.dev>',
+      from: MAIL_FROM,
       to: toEmail,
-      subject: 'Elige tu clase gratuita en Anboto Crossfit',
+      subject: 'Elige tu clase gratuita en Anboto SC',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #1a1a1a;">Hola ${nombre}!</h2>
-          <p>Gracias por querer probar una clase en Anboto Crossfit.</p>
+          <p>Gracias por querer probar una clase en Anboto SC.</p>
           <p>Elige el dia y la hora que mejor te vengan para tu clase gratuita:</p>
           <div style="text-align: center; margin: 30px 0;">
             <a href="${schedulingUrl}" style="background-color: #ff6b35; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-size: 18px; font-weight: bold; display: inline-block;">Elige tu clase gratuita</a>
@@ -164,13 +170,13 @@ async function sendFollowupEmail(toEmail, nombre, signupId) {
 
   try {
     const { data: emailData, error: emailError } = await resend.emails.send({
-      from: 'Anboto Crossfit <onboarding@resend.dev>',
+      from: MAIL_FROM,
       to: toEmail,
-      subject: 'Como te fue en tu clase en Anboto?',
+      subject: 'Como te fue en tu clase en Anboto SC?',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #1a1a1a;">Hola ${nombre}!</h2>
-          <p>Esperamos que disfrutaras tu clase en Anboto Crossfit!</p>
+          <p>Esperamos que disfrutaras tu clase en Anboto SC!</p>
           <p>Te ha gustado? Quieres formar parte de la familia Anboto?</p>
           <div style="text-align: center; margin: 30px 0;">
             <a href="${yesUrl}" style="background-color: #4caf50; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-size: 18px; font-weight: bold; display: inline-block; margin-right: 10px;">Si, me quiero apuntar!</a>
