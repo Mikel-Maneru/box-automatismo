@@ -11,19 +11,26 @@
 | **Rama activa** | `feat/react-vite-migration` | Aún NO mergeada a `main` |
 | **Dominio** | ✅ **https://anbotosc.com EN PRODUCCIÓN** | `A 76.76.21.21` en IONOS + cert TLS. `www` redirige 308 |
 | **Fase 1** | ✅ COMPLETA | Dominio, widget con marca, favicon según tema |
-| **Fase 2** | ✅ COMPLETA Y DESPLEGADA | Clases por objetivo, formulario guiado, `/reservar` en React. Verificado en vivo |
-| **Email propio** | ✅ `send.anbotosc.com` **Verified** en Resend | Listo para enviar. Falta `MAIL_FROM` en Vercel |
-| **WhatsApp** | ❌ Eliminado (`017f05c`) | ⚠️ **En git pero SIN desplegar** |
+| **Fase 2** | ✅ **DESPLEGADA Y VERIFICADA EN VIVO (2026-08-19)** | Bundle en prod `app-VFg2lThZ.js` = el del repo |
+| **Email propio** | ✅ **FUNCIONANDO** | Envío real comprobado a `anbotocf@gmail.com` desde `hola@send.anbotosc.com` |
+| **WhatsApp** | ❌ Eliminado (`017f05c`) y **desplegado** | Los 2 avisos que importaban pasaron a email |
 | **Limpieza** | ⏳ Decidida, sin ejecutar | Borrar `api/` (código muerto) y el dominio `send.anboto.sc` en Resend |
-| **Próxima acción** | Un solo `vercel --prod` que saque la eliminación de WhatsApp + `MAIL_FROM`, y luego alta de prueba |
+| **Próxima acción** | Rotar la `RESEND_API_KEY` (se pegó en un chat) · esperar a Xabi (cuenta Anthropic + API WodBuster) |
 
-### ⚠️ Dos trampas que ya nos costaron horas — no repetir
+### ⚠️ Tres trampas que ya nos costaron horas — no repetir
 
 1. **Nameservers de Vercel sin zona.** Poner `ns*.vercel-dns-*.com` en el registrador NO funciona
    si Vercel no gestiona el DNS: responden REFUSED → SERVFAIL global y no se arregla esperando.
    Señal: SERVFAIL (no NXDOMAIN) + "Intended Nameservers" vacío. Solución: registros A/CNAME.
 2. **Nombre de dominio mal partido.** En Resend se creó `send.anboto.sc` en vez de
    `send.anbotosc.com`. Leer el nombre carácter a carácter antes de tocar el DNS.
+3. **API key de la cuenta equivocada.** El dominio estaba verificado en la cuenta Resend del box
+   (`anbotocf`), pero la `RESEND_API_KEY` del `.env` era de la cuenta **personal de Mikel**. Resend
+   respondía *"The send.anbotosc.com domain is not verified"* aunque el DNS estuviera perfecto: un
+   dominio verificado en una cuenta **no existe** para la clave de otra.
+   **Cómo saber de quién es una clave sin entrar al panel:** intenta enviar a una dirección
+   cualquiera; si la cuenta está en modo pruebas, el error 403 dice literalmente el email del
+   titular (*"You can only send testing emails to your own email address (X)"*).
 
 ---
 
@@ -85,28 +92,38 @@
 
 ---
 
-## 🚀 Phase 2 Planning (BLOCKED 🔵)
+## 🚀 Fase 2 — ✅ EN PRODUCCIÓN (2026-08-19)
 
-### Requirements
-1. Reorganize 6 classes by user objectives (health, performance, muscle, fat loss, beginner)
-2. Improve signup form: add "How did you hear?" + "What's your objective?"
-3. Dynamic class recommendations based on user objective
-4. New UI for free trial class booking
-5. Use WodBuster API for real availability (not hardcoded)
-6. Chat widget: move from personal token (Mikel) to client token
+Las 4 preguntas que bloqueaban esta fase se resolvieron implementando. Lo que hay en vivo:
 
-### Code Exploration ✅ (COMPLETE)
-- **WodBuster**: Already integrated in `src/lib/wodbuster.js` (getClassAvailability, bookClass, etc)
-- **Landing data**: Structure in `web/src/data/site.js` (6 disciplines, SCHED, PLANS)
-- **Widget architecture**: Token-based, validated against Supabase `boxes` table
+1. **Clases por objetivo** — la sección *"Una clase para cada objetivo"* ya existía (era el título
+   de Disciplinas, `disc.title`), así que se convirtió esa en vez de crear otra.
+2. **Formulario** con `objetivo` y `comoConocio`, que recomienda clases **antes** de enviar.
+3. **`/reservar` en React** (`web/src/pages/Reservar.jsx`), que recomienda el hueco del día
+   según el objetivo elegido en el formulario.
+4. **Avisos por email** a `anbotocf@gmail.com`, WhatsApp eliminado.
 
-### 4 Questions Blocking Phase 2 ❓
-**See full details in**: `C:\Users\Mikel\.claude\plans\reactive-wishing-wozniak.md`
+Sigue pendiente de la fase original: usar la **API oficial de WodBuster** (la pide Xabi) y pasar
+el chat a la **cuenta de Anthropic de Xabi**.
 
-1. **Class-to-objective mapping**: Which classes → which objectives?
-2. **Chat token**: New box in Supabase vs change existing token?
-3. **Free class app location**: Landing component vs /reservar page vs modal?
-4. **Form fields**: Which new fields (howKnew dropdown, objective radio, wantsFreeClass checkbox)?
+### Detalles de implementación que conviene no re-descubrir
+- **El reveal rompe el filtrado.** `useScrollFx` observa `.rev-up` **solo al montar** y deja de
+  observar cada tarjeta al revelarla → una tarjeta creada al filtrar nunca recibe `.in` y queda
+  invisible para siempre. Solución: las 6 disciplinas siguen montadas y se ocultan con `[hidden]`
+  (hace falta `.ei[hidden]{display:none}` porque `.ei` es `display:grid` y gana al `[hidden]` del
+  navegador), y tras la primera interacción las tarjetas nacen con `.in`.
+- **Un solo hueco recomendado en `/reservar`.** Marcar todas las clases del objetivo no sirve:
+  la mayoría de huecos del día son WOD y acababan señalados 7 de 10. Se recorre `clases` por orden
+  de preferencia y se marca **el primero reservable**.
+- **`claveClase()`** cruza los nombres: WodBuster dice `Wod` y `Haltero` donde nosotros decimos
+  `WOD` y `Halterofilia`. Sin ese puente la recomendación no casa nunca.
+- **Fechas en euskera a mano.** Chromium en Windows **no trae datos de la locale `eu`**:
+  `Intl.DateTimeFormat('eu-ES')` cae a castellano sin avisar. Hay arrays explícitos en `Reservar.jsx`.
+- **El `<Head>` de vite-react-ssg no llega al HTML generado** en esta versión: el `<title>` y el
+  `noindex` de `/reservar` se ponen en cliente y la señal buena es `Disallow: /reservar` en
+  `robots.txt`.
+- El SSG emite `public/reservar.html` **en la misma ruta de siempre**, así que la ruta de Express
+  y el rewrite de `vercel.json` siguieron valiendo sin tocarlos.
 
 ---
 
@@ -159,8 +176,10 @@ Ese hash debe coincidir con el de `public/assets/`. Si no coincide, producción 
 - **Supabase**: tgbpgxakctedvlyepppu.supabase.co
 - **WodBuster**: anboto.wodbuster.com (login manual con credenciales de Mikel, CAPTCHA)
 - **Registrador**: IONOS — cuenta **anbotocf@gmail.com** (¡no la personal de Mikel!)
-- **Email**: Resend, cuenta `anbotocf`. Dominio de envío `send.anbotosc.com` (eu-west-1) ✅
-  - La `RESEND_API_KEY` del `.env` es **solo de envío**: no sirve para leer dominios por API
+- **Email**: Resend, **cuenta `anbotocf`** (¡NO la personal de Mikel — ver trampa 3!).
+  Dominio de envío `send.anbotosc.com` (eu-west-1) ✅ · `MAIL_FROM=Anboto SC <hola@send.anbotosc.com>`
+  - La `RESEND_API_KEY` es **solo de envío**: no sirve para leer ni crear dominios por API
+    (devuelve `restricted_api_key`). Para inspeccionar dominios hay que mirar el panel.
 - ~~WhatsApp API: Kapso~~ — **eliminado el 2026-08-19**, los avisos van solo por email
 
 ---

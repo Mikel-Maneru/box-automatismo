@@ -112,17 +112,36 @@ muerto que Vercel no invoca) y el dominio erróneo `send.anboto.sc` en Resend. N
 `*.legacy.html` (CLAUDE.md los conserva a propósito), ni `deploy-anbotosc.sh`, ni los restos de
 `.env`. Detalle completo en `decisions.md`.
 
-**PENDIENTE (el dominio ya está listo para enviar):**
-1. Poner en Vercel (production): `MAIL_FROM=Anboto SC <hola@send.anbotosc.com>`
-2. Redesplegar y enviar un alta de prueba, comprobando que llega a anbotocf@gmail.com
-3. Borrar el dominio sobrante `send.anboto.sc` en Resend (lo decide Mikel, no se borra solo)
-4. La `RESEND_API_KEY` del `.env` es **solo de envío** (`restricted_api_key`): sirve para mandar
-   correo pero NO para leer dominios por API. Si hace falta inspeccionar dominios, hay que
-   generar otra key con permisos de lectura o mirarlo en el panel.
+### ✅ CERRADO el 2026-08-19: el email funciona de verdad
+
+**El fallo final NO era el DNS: era la API key de otra cuenta.** Con el dominio ya `Verified`
+en el panel, enviar seguía devolviendo `403 "The send.anbotosc.com domain is not verified"`.
+Causa: la `RESEND_API_KEY` del `.env` pertenecía a la cuenta Resend **personal de Mikel**,
+mientras que el dominio se verificó en la cuenta del box (**anbotocf**). Un dominio verificado
+en una cuenta es invisible para la clave de otra.
+
+Cómo se diagnosticó (útil para la próxima):
+- Los tres registros se consultaron contra el NS autoritativo (`ns1020.ui-dns.com`) y estaban
+  **correctos**, incluido el DKIM completo → el DNS quedaba descartado.
+- El `send.send.anbotosc.com` de MX y SPF **no es un error**: Resend usa un subdominio `send.`
+  propio para los rebotes. Parece un typo y no lo es.
+- Un intento de envío devolvió *"You can only send testing emails to your own email address
+  (manerugilmikel@gmail.com)"* → esa frase delata el titular de la clave.
+
+**Configuración final, verificada con envíos reales:**
+- `RESEND_API_KEY` = clave de la cuenta **anbotocf** (en `.env` y en Vercel production)
+- `MAIL_FROM=Anboto SC <hola@send.anbotosc.com>` (en `.env` y en Vercel production)
+- Comprobado a tres niveles: envío directo por API, y **un alta real por `POST /api/signup`**
+  cuyo log confirma `Email enviado via Resend`.
+
+**PENDIENTE:**
+1. ⚠️ **Rotar la `RESEND_API_KEY`**: se pegó en texto plano en un chat. Es de solo envío (no da
+   acceso a datos), pero permitiría mandar correo *en nombre de Anboto SC* → riesgo de phishing.
+2. Borrar el dominio sobrante `send.anboto.sc` en Resend (lo decide Mikel, no se borra solo).
 
 ---
 
-## Phase 2 — ✅ IMPLEMENTADA (en el otro ordenador) · ⚠️ SIN DESPLEGAR
+## Phase 2 — ✅ IMPLEMENTADA Y DESPLEGADA EN PRODUCCIÓN (2026-08-19)
 
 **Las 4 preguntas de clarificación de abajo ya NO aplican: se resolvieron implementando.**
 5 commits en `feat/react-vite-migration` (2026-08-18):
@@ -149,8 +168,26 @@ muerto que Vercel no invoca) y el dominio erróneo `send.anboto.sc` en Resend. N
   `public/reservar.legacy.html`).
 - Avisos de alta ahora a **anbotocf@gmail.com** (resuelve el punto 3 de la lista de Xabi).
 
-⚠️ **PENDIENTE: DESPLEGAR.** Producción sirve `app-Bgmrtz3G.js` y el repo tiene `app-VFg2lThZ.js`.
-Hasta que se ejecute `vercel --prod`, nada de esto se ve en anbotosc.com.
+✅ **DESPLEGADO el 2026-08-19** con `vercel --prod`, y verificado en vivo (no fiándose del
+"ready" del CLI):
+
+| Comprobación | Resultado |
+|---|---|
+| `https://anbotosc.com` | 200 OK |
+| Bundle servido vs repo | `app-VFg2lThZ.js` **=** `app-VFg2lThZ.js` |
+| Clases por objetivo | presentes en el HTML servido |
+| `/reservar` | 200 OK |
+| `robots.txt` | con `Disallow: /reservar` y el sitemap nuevo |
+
+**Truco para verificar producción desde un equipo con la caché DNS sucia:** el resolver del ISP
+puede seguir dando la IP vieja de parking de IONOS y `curl` falla con 000. Se salta con:
+```bash
+curl -s --resolve anbotosc.com:443:76.76.21.21 https://anbotosc.com
+```
+
+Commits posteriores a los 5 de la fase 2:
+- `017f05c` refactor: elimina las notificaciones por WhatsApp (Kapso)
+- `361cb83`/`fdc8325`/`47d060b` ya listados arriba
 
 ---
 

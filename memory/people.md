@@ -78,8 +78,26 @@ fallo y de la configuracion buena en `project_status.md` y `decisions.md`.
 Sigue pendiente (ya anotado el 2026-08-16): conseguir el SVG o PNG original del isotipo. El
 trazado actual esta aproximado a partir del PDF del manual, que esta aplanado.
 
-## 9. Produccion va muy por detras
-`main` esta en el 2 de junio; toda la migracion a React + el rediseno viven en
-`feat/react-vite-migration` y NO estan en produccion. Recordar que el deploy es manual
-(`vercel --prod`): la integracion Git-Vercel esta inactiva desde el 12 de mayo, asi que
-hacer push no despliega nada.
+## 9. Produccion va muy por detras — ✅ RESUELTO (2026-08-19)
+Todo lo de `feat/react-vite-migration` esta desplegado y verificado en https://anbotosc.com.
+Ojo, la rama **sigue sin mergearse a `main`**: `main` continua en el 2 de junio. Y el deploy
+sigue siendo manual (`vercel --prod`); la integracion Git-Vercel esta inactiva desde el 12 de
+mayo, asi que hacer push NO despliega.
+
+## 10. Fotos y datos reales del centro nuevo
+Pendiente de Xabi (lista completa preparada el 2026-08-18):
+- Fotos de los 4 coaches (hoy son medallones con iniciales) y del centro nuevo
+- Tarifas definitivas (hoy: 8/12/16 clases a 60/70/80 EUR e Ilimitado 95 EUR, mas bonos)
+- Horario del centro nuevo y confirmacion de las 6 disciplinas
+- Direccion exacta si cambia: condiciona mapa, coordenadas y datos estructurados
+
+## 11. API oficial de WodBuster — a solicitar por Xabi
+WodBuster **si tiene API oficial** (comprobado en su web): **API de Reservas** (reservar desde
+una plataforma externa) y **API de Usuarios** (alta de atletas desde tu propia web, que es el
+"autorregistro" del video que os pasaron), ademas de API de Datos, de Tornos y RestHook.
+**No publican documentacion**: hay que pedir acceso a soporte (+34 911 238 103) y, como el
+cliente de WodBuster es el box, **lo tiene que pedir Xabi**.
+Merece la pena: quitaria la cookie `.WBAuth` renovada a mano, el bloqueo por CAPTCHA y la
+limitacion de ver solo hoy y manana. El cambio seria barato: `src/lib/wodbuster.js` ya expone
+una interfaz limpia (`getClassAvailability`, `bookClass`, `validateSession`) que solo consumen
+`scheduling.js` y `cron.js` → bastaria un adaptador detras de la misma interfaz.

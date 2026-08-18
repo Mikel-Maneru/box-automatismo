@@ -165,3 +165,35 @@ Inventario de lo que sobra en el repo y decision de Mikel sobre cada cosa:
 - `.env` no esta en el repo. Desde el fix del 2026-08-15 el servidor SI arranca sin las env
   (supabase lazy via Proxy, cliente Anthropic diferido), pero chat/BD/email/WhatsApp no funcionan
   hasta rellenarlas. En `main` ese fix no existe todavia y el arranque falla.
+## 2026-08-19: Fase 2 desplegada a produccion y email operativo
+
+**Lo que salio a produccion** (`vercel --prod`, verificado con el bundle servido == el del repo):
+clases por objetivo, formulario con objetivo + "como nos conociste", `/reservar` en React,
+eliminacion de WhatsApp y el SEO apuntando a `anbotosc.com`.
+
+**`OBJETIVOS` es la fuente unica de verdad** (`web/src/data/site.js`): la seccion de clases
+filtra con ella y el formulario recomienda con ella, para que web y alta no puedan contradecirse.
+El primer elemento de `clases` es la puerta de entrada. El objetivo viaja despues a `/reservar`
+via `GET /api/booking-status`, que ahora devuelve `objetivo`.
+
+**Decision de diseno: un solo hueco recomendado.** En `/reservar` se marca UNA sola clase, no
+todas las del objetivo. Se probo lo contrario y salian 7 de 10 huecos insignados (la mayoria del
+dia son WOD), con lo que el badge dejaba de significar nada.
+
+**Correo del box en vez del personal.** `NOTIFY_EMAIL=anbotocf@gmail.com` y remitente propio
+`MAIL_FROM=Anboto SC <hola@send.anbotosc.com>`. El remitente es ahora una variable de entorno,
+no una constante en el codigo.
+
+**Trampa que costo la sesion: API key de la cuenta equivocada.** Ver `project_status.md`. Resumen:
+un dominio verificado en una cuenta de Resend es invisible para una clave de otra cuenta, y el
+mensaje de error habla de "domain is not verified" aunque el DNS este perfecto.
+
+**Bugs de terceros corregidos de paso** (estaban rotos desde antes):
+- `getApiOnlyClasses` devolvia un array pelado mientras `getClassAvailability` devuelve
+  `{classes, realData}` → cualquier dia sin horario scrapeado daba un 500.
+- `POST /api/book` hacia `.find()` sobre ese objeto → la rama que resuelve la clase cuando no
+  llega `classId` no funciono nunca.
+
+**Regla de trabajo confirmada otra vez: verificar el resultado, no el paso.** Ni el "Verified"
+del panel de Resend ni el "ready" de Vercel prueban nada. Lo que prueba es un envio real que
+devuelve id, y el hash del bundle servido coincidiendo con el del repo.
