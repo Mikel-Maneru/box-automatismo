@@ -5,7 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reserva tu clase gratuita - Anboto SC</title>
   <meta name="robots" content="noindex">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%231B1A18'/%3E%3Cpath fill='%23E16C34' fill-rule='evenodd' d='M50 20 L84 80 H16 Z M34 60 H66 V69 H34 Z'/%3E%3C/svg%3E">
+  <link rel="icon" id="favicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-12 -30 725 725'%3E%3Cstyle%3Epath%7Bfill:%23141311%7D@media(prefers-color-scheme:dark)%7Bpath%7Bfill:%23F4EDE2%7D%7D%3C/style%3E%3Cpath fill-rule='evenodd' d='M333.5,10.0L369.5,92.0L389.5,111.0L411.5,175.0L446.5,198.0L476.5,282.0L528.5,323.0L551.5,398.0L586.5,428.0L605.5,478.0L632.5,509.0L653.5,563.0L693.0,655.5L620.0,655.5L617.0,653.5L471.0,525.5L339.0,412.5L142.0,582.5L60.0,655.5L8.5,655.0L101.5,473.0L127.5,437.0L153.5,362.0L192.5,330.0L227.5,236.0L255.5,208.0ZM337.5,454.0L340.0,453.5L344.0,456.5L378.0,487.5L571.5,655.0L107.0,655.5L127.0,636.5Z'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var link = document.getElementById('favicon');
+      if (!link || !window.matchMedia) return;
+      var mq = window.matchMedia('(prefers-color-scheme: dark)');
+      var svg = function (color) {
+        return "data:image/svg+xml," + encodeURIComponent(
+          "<svg xmlns='http://www.w3.org/2000/svg' viewBox='-12 -30 725 725'><path fill='" + color +
+          "' fill-rule='evenodd' d='M333.5,10.0L369.5,92.0L389.5,111.0L411.5,175.0L446.5,198.0L476.5,282.0L528.5,323.0L551.5,398.0L586.5,428.0L605.5,478.0L632.5,509.0L653.5,563.0L693.0,655.5L620.0,655.5L617.0,653.5L471.0,525.5L339.0,412.5L142.0,582.5L60.0,655.5L8.5,655.0L101.5,473.0L127.5,437.0L153.5,362.0L192.5,330.0L227.5,236.0L255.5,208.0ZM337.5,454.0L340.0,453.5L344.0,456.5L378.0,487.5L571.5,655.0L107.0,655.5L127.0,636.5Z'/></svg>"
+        );
+      };
+      var apply = function () { link.href = svg(mq.matches ? '#F4EDE2' : '#141311'); };
+      apply();
+      mq.addEventListener ? mq.addEventListener('change', apply) : mq.addListener(apply);
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">

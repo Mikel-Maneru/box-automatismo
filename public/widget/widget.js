@@ -11,29 +11,41 @@
   // Styles
   const style = document.createElement('style');
   style.textContent = `
-    .box-chat-btn{position:fixed;bottom:24px;right:24px;width:60px;height:60px;border-radius:50%;background:#000;border:none;cursor:pointer;box-shadow:0 4px 24px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;z-index:999998;transition:transform .2s,box-shadow .2s}
-    .box-chat-btn:hover{transform:scale(1.08);box-shadow:0 6px 32px rgba(0,0,0,.4)}
-    .box-chat-btn svg{width:32px;height:32px}
-    .box-chat-panel{position:fixed;bottom:96px;right:24px;width:350px;height:500px;border-radius:16px;background:#fff;box-shadow:0 12px 48px rgba(0,0,0,.15);z-index:999999;display:flex;flex-direction:column;overflow:hidden;animation:boxSlideUp .25s ease-out}
+    /* Paleta de marca Anboto: pizarra #14110E, granito #777069, bruma #D1C8C1,
+       caliza #F4EDE2, madera #A7693B (acento), cuero #703D26 */
+    .box-chat-btn{position:fixed;bottom:24px;right:24px;width:60px;height:60px;border-radius:50%;background:#A7693B;border:none;cursor:pointer;box-shadow:0 6px 24px rgba(20,17,14,.35);display:flex;align-items:center;justify-content:center;z-index:999998;transition:transform .2s,box-shadow .2s,background .2s}
+    /* El pico va relleno del color del boton (efecto recorte), asi que el fondo NO cambia en hover */
+    .box-chat-btn:hover{transform:translateY(-2px) scale(1.06);box-shadow:0 10px 32px rgba(20,17,14,.45)}
+    .box-chat-btn:focus-visible{outline:3px solid #F4EDE2;outline-offset:3px}
+    .box-chat-btn svg{width:30px;height:30px}
+    .box-chat-panel{position:fixed;bottom:96px;right:24px;width:350px;height:500px;border-radius:18px;background:#F4EDE2;box-shadow:0 16px 52px rgba(20,17,14,.28);z-index:999999;display:flex;flex-direction:column;overflow:hidden;animation:boxSlideUp .25s ease-out;font-family:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif}
     @keyframes boxSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-    .box-chat-header{background:#000;color:#fff;padding:16px 20px;display:flex;align-items:center;justify-content:space-between}
-    .box-chat-header h4{margin:0;font-size:15px;font-weight:600}
-    .box-chat-close{background:none;border:none;color:#fff;cursor:pointer;font-size:20px;padding:0 4px;line-height:1}
+    .box-chat-header{background:#14110E;color:#F4EDE2;padding:15px 18px;display:flex;align-items:center;gap:10px;justify-content:space-between}
+    .box-chat-header h4{margin:0;font-size:15px;font-weight:800;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+    .box-chat-header h4 svg{width:17px;height:17px;flex:none}
+    .box-chat-close{background:none;border:none;color:#D1C8C1;cursor:pointer;font-size:22px;padding:0 4px;line-height:1;transition:color .2s}
+    .box-chat-close:hover{color:#F4EDE2}
     .box-chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
     .box-chat-msg{max-width:80%;padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.5;word-wrap:break-word}
-    .box-chat-msg.user{align-self:flex-end;background:#000;color:#fff;border-bottom-right-radius:4px}
-    .box-chat-msg.assistant{align-self:flex-start;background:#f3f3f3;color:#222;border-bottom-left-radius:4px}
-    .box-chat-typing{align-self:flex-start;background:#f3f3f3;color:#888;padding:10px 14px;border-radius:16px;border-bottom-left-radius:4px;font-size:14px;display:flex;gap:4px;align-items:center}
-    .box-chat-typing span{width:6px;height:6px;background:#999;border-radius:50%;animation:boxBounce 1.4s infinite both}
+    .box-chat-msg.user{align-self:flex-end;background:#A7693B;color:#F4EDE2;border-bottom-right-radius:4px}
+    .box-chat-msg.assistant{align-self:flex-start;background:#E7DECF;color:#14110E;border-bottom-left-radius:4px}
+    .box-chat-typing{align-self:flex-start;background:#E7DECF;color:#777069;padding:10px 14px;border-radius:16px;border-bottom-left-radius:4px;font-size:14px;display:flex;gap:4px;align-items:center}
+    .box-chat-typing span{width:6px;height:6px;background:#A7693B;border-radius:50%;animation:boxBounce 1.4s infinite both}
     .box-chat-typing span:nth-child(2){animation-delay:.2s}
     .box-chat-typing span:nth-child(3){animation-delay:.4s}
     @keyframes boxBounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
-    .box-chat-input-area{padding:12px 16px;border-top:1px solid #eee;display:flex;gap:8px}
-    .box-chat-input{flex:1;border:1px solid #ddd;border-radius:24px;padding:10px 16px;font-size:14px;outline:none;font-family:inherit}
-    .box-chat-input:focus{border-color:#000}
-    .box-chat-send{background:#000;color:#fff;border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
-    .box-chat-send:hover{background:#333}
-    .box-chat-send:disabled{background:#ccc;cursor:not-allowed}
+    .box-chat-input-area{padding:12px 16px;border-top:1px solid #D1C8C1;display:flex;gap:8px;background:#F4EDE2}
+    .box-chat-input{flex:1;border:1px solid #D1C8C1;background:#fff;color:#14110E;border-radius:24px;padding:10px 16px;font-size:14px;outline:none;font-family:inherit}
+    .box-chat-input::placeholder{color:#777069}
+    .box-chat-input:focus{border-color:#A7693B;box-shadow:0 0 0 3px rgba(167,105,59,.18)}
+    .box-chat-send{background:#A7693B;color:#F4EDE2;border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+    .box-chat-send:hover{background:#703D26}
+    .box-chat-send:disabled{background:#D1C8C1;cursor:not-allowed}
+    @media(prefers-reduced-motion:reduce){
+      .box-chat-btn,.box-chat-panel{transition:none;animation:none}
+      .box-chat-btn:hover{transform:none}
+      .box-chat-typing span{animation:none}
+    }
     @media(max-width:480px){
       .box-chat-panel{width:100%;height:100%;bottom:0;right:0;border-radius:0}
       .box-chat-btn{bottom:16px;right:16px}
@@ -44,7 +56,9 @@
   // Toggle button
   const btn = document.createElement('button');
   btn.className = 'box-chat-btn';
-  btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`;
+  // Burbuja de chat con el pico de Anboto recortado en negativo (mismo recurso de marca que el logo)
+  const PICO_BUBBLE = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#F4EDE2" d="M5 3h14a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3h-6.6l-4.7 3.6A.7.7 0 0 1 6.6 19v-3H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z"/><path fill="#A7693B" d="M12 6.1l4.3 7.4H7.7z"/></svg>`;
+  btn.innerHTML = PICO_BUBBLE;
   btn.setAttribute('aria-label', 'Abrir chat');
   document.body.appendChild(btn);
 
@@ -122,8 +136,8 @@
 
   async function loadBoxInfo() {
     const title = document.getElementById('box-chat-title');
-    title.textContent = 'Anboto Crossfit';
-    addMessage('assistant', '¡Hola! Soy el asistente de Anboto Crossfit. ¿En qué puedo ayudarte?');
+    title.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#A7693B" d="M12 3.5l9 17H3z"/></svg><span>Anboto SC</span>`;
+    addMessage('assistant', '¡Hola! Soy el asistente de Anboto SC. ¿En qué puedo ayudarte?');
   }
 
   function addMessage(role, text) {
