@@ -92,6 +92,28 @@
 - `anbotosc.com` es el dominio DEFINITIVO y esta registrado. `anbotofitness.com` no existe en el
   registro `.com` (NXDOMAIN) y no se recupera; el SEO ya lo da por zanjado. Tema cerrado.
 
+## 2026-08-19: Limpieza de codigo muerto — DECIDIDO, PENDIENTE DE EJECUTAR
+Inventario de lo que sobra en el repo y decision de Mikel sobre cada cosa:
+
+**SE BORRA:**
+- **`api/` (8 archivos)**: `book.js`, `booking-status.js`, `chat.js`, `classes.js`,
+  `cron/followup.js`, `followup/no.js`, `followup/yes.js`, `signup.js`. Son copias serverless
+  legacy que Vercel NO invoca (framework preset `express` → todo pasa por `src/index.js`).
+  **Dato que lo confirma como problema real:** el commit `017f05c` (quitar WhatsApp) tambien
+  toco `api/cron/followup.js` y `api/followup/yes.js` — o sea, se esta manteniendo codigo
+  muerto sin darse cuenta. Esa es justo la razon de borrarlo.
+- **Dominio `send.anboto.sc` en Resend**: creado por error (`anbotosc.com` partido mal),
+  quedo en "Not Started". El bueno es `send.anbotosc.com` y ya esta Verified.
+
+**NO se borra (decision explicita):**
+- `public/index.legacy.html` y `public/reservar.legacy.html` (121 KB): CLAUDE.md dice que se
+  conservan como referencia. Borrarlos contradiria una decision ya documentada.
+- `deploy-anbotosc.sh`: ya no sirve (el dominio esta en produccion) pero se deja.
+- Las 9 lineas de `KAPSO_*` / `TWILIO_*` / `GMAIL_*` del `.env`: el codigo ya no las lee,
+  pero se quedan por ahora.
+
+**Al borrar `api/`**: hacerlo en un commit APARTE, para poder revertir solo eso si algo falla.
+
 ## 2026-08-19: Dominio de envio propio send.anbotosc.com (Resend) — VERIFIED
 - Se envia desde un SUBDOMINIO, no desde el apex: si un envio quema la reputacion, se quema la
   del subdominio y no la del correo normal del box. Es lo que recomienda Resend.

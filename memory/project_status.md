@@ -107,6 +107,11 @@ conviene borrarlo para que nadie lo confunda.
 - **Estado en Resend: `Verified` ✅** (Domain added 00:15 → DNS verified 00:21 → Domain verified
   00:24, el 2026-08-19). Tardó 9 minutos en total, no las "horas" que avisaba el aviso.
 
+**Limpieza decidida el 2026-08-19 (PENDIENTE de ejecutar):** borrar `api/` (8 archivos, código
+muerto que Vercel no invoca) y el dominio erróneo `send.anboto.sc` en Resend. NO se borran los
+`*.legacy.html` (CLAUDE.md los conserva a propósito), ni `deploy-anbotosc.sh`, ni los restos de
+`.env`. Detalle completo en `decisions.md`.
+
 **PENDIENTE (el dominio ya está listo para enviar):**
 1. Poner en Vercel (production): `MAIL_FROM=Anboto SC <hola@send.anbotosc.com>`
 2. Redesplegar y enviar un alta de prueba, comprobando que llega a anbotocf@gmail.com

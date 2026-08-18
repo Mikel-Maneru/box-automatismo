@@ -14,6 +14,7 @@
 | **Fase 2** | ✅ COMPLETA Y DESPLEGADA | Clases por objetivo, formulario guiado, `/reservar` en React. Verificado en vivo |
 | **Email propio** | ✅ `send.anbotosc.com` **Verified** en Resend | Listo para enviar. Falta `MAIL_FROM` en Vercel |
 | **WhatsApp** | ❌ Eliminado (`017f05c`) | ⚠️ **En git pero SIN desplegar** |
+| **Limpieza** | ⏳ Decidida, sin ejecutar | Borrar `api/` (código muerto) y el dominio `send.anboto.sc` en Resend |
 | **Próxima acción** | Un solo `vercel --prod` que saque la eliminación de WhatsApp + `MAIL_FROM`, y luego alta de prueba |
 
 ### ⚠️ Dos trampas que ya nos costaron horas — no repetir
