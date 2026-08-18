@@ -43,9 +43,12 @@ deploy; the Vite build is deliberately named `web:build`.
 ## Brand naming — read before touching any string
 
 - Public-facing name is **Anboto SC** (Strength & Conditioning), since the 2026-06-02 rebrand.
-- The previous name "Anboto Fitness" survives in two places **on purpose**: the Supabase slug
-  `anboto-fitness` and the domain `anbotofitness.com`.
+- The previous name "Anboto Fitness" survives **on purpose** in the Supabase slug
+  `anboto-fitness` and in the Instagram handle `@anbotofitness`.
 - Do NOT "fix" that slug. `schema.sql` seeds it and `src/lib/email.js` looks the box up by it.
+- **The canonical domain is `anbotosc.com`** (decidido el 2026-08-18). `anbotofitness.com`
+  NUNCA llegó a existir: devuelve NXDOMAIN en cualquier resolver. Toda referencia a ese
+  dominio en `public/alt-*.html` e `index.legacy.html` es residuo de archivos archivados.
 
 ## Architecture
 

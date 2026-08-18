@@ -2,7 +2,7 @@
 
 Widget de chat con IA para boxes de CrossFit. Los propietarios pegan un `<script>` en su web; el widget abre un chat flotante que llama al backend, carga el contexto del box desde Supabase, construye un system prompt y llama a Claude.
 
-Instancia en produccion: **Anboto SC** — https://anbotofitness.com
+Instancia en produccion: **Anboto SC** — https://anbotosc.com
 
 ## Request flow
 
@@ -68,7 +68,7 @@ produccion, no se caigan al arrancar.
 |---|---|
 | `PORT` | Puerto del servidor. El codigo usa 3000 por defecto; en local usamos **3003** |
 | `BASE_URL` | URL base para los enlaces de los emails (default `http://localhost:3003`) |
-| `ALLOWED_ORIGIN` | Origen permitido en CORS de produccion (default `https://anbotofitness.com`) |
+| `ALLOWED_ORIGIN` | Origen permitido en CORS de produccion (default `https://anbotosc.com`) |
 | `NODE_ENV` | `production` activa el CORS restrictivo |
 | `CRON_SECRET` | Secreto que valida las llamadas al cron de follow-up |
 
