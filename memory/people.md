@@ -63,13 +63,17 @@ Probando el chat, el asistente ofrecio "12 clases por 780 EUR/ano" con compromis
 Pero el 2026-05-12 se decidio quitar el precio anual de la landing. El bot promete algo que
 la web ya no ofrece. Decidir: se reponen las tarifas anuales o se quitan del prompt.
 
-## 7. Dominio: anbotosc.com en Vercel (✅ 2026-08-18 completado)
-**RESUELTO**: anbotosc.com está registrado en IONOS (contrato 300279721) y completamente
-configurado. Nameservers cambiados a Vercel el 2026-08-18. Propagación DNS en progreso.
+## 7. Dominio: anbotosc.com en Vercel (⏳ 2026-08-18, DNS en propagación)
+**ESTADO**: Nameservers configurados el 2026-08-18. Propagación DNS en progreso (24-48h).
 - Proyecto Vercel: box-automatismo
-- Nameservers: ns1/2/3/4.vercel-dns-3.com
-- HTTPS: Se generará automáticamente tras propagación (2-6h, máx 48h)
-- Pendiente: Cambiar BASE_URL en .env a https://anbotosc.com cuando resuelva.
+- Nameservers: ns1/2/3/4.vercel-dns-3.com (configurados en IONOS)
+- BASE_URL: Ya cambiado a https://anbotosc.com en .env
+- **PENDIENTE**: Cuando anbotosc.com resuelva (verifica en navegador), ejecuta:
+  ```bash
+  bash deploy-anbotosc.sh
+  ```
+  O manualmente: `cd /path/to/anboto && vercel --prod`
+- HTTPS se generará automáticamente tras propagación y deploy.
 
 ## 8. Logo en alta
 Sigue pendiente (ya anotado el 2026-08-16): conseguir el SVG o PNG original del isotipo. El
