@@ -29,6 +29,11 @@
 - Daily cron: WodBuster session keep-alive + WhatsApp alert on expiry
 - Deployed to Vercel: https://box-automatismo.vercel.app
 
+## 2026-05-12: Tarifas reales en la landing y en el chatbot
+- Seccion de precios anadida a la landing, sin toggle de precio anual
+- El prompt del chatbot incorpora las tarifas reales
+- Plan ilimitado incluye plan de entrenamiento personalizado y seguimiento semanal por grupo de WhatsApp
+
 ## 2026-06-02: Redesign desplegado a producción (PR #1 merged → main, tag v3)
 - PR #1 (rama feat/rediseno-premium-marca) MERGED a main → Vercel despliega producción. Tags: v1=original, v2=primer rediseño, v3=versión final desplegada.
 - Hero final = inmersivo a sangre (estilo motionsites/LinkFlow) con fondo "boomerang" (crossfade ping-pong de fotos; listo para vídeo real si lo aportan).
@@ -70,5 +75,9 @@
 - `dotenv` MUST use `{ override: true }`
 - Anthropic client MUST set `baseURL: 'https://api.anthropic.com'`
 - Model: `claude-sonnet-4-5-20250929`
-- Gmail uses App Password
+- Email: **Resend** (`RESEND_API_KEY`). Gmail/Nodemailer ya no se usa.
+- WhatsApp: **Kapso** (`KAPSO_*`). Twilio ya no se usa, aunque siga en package.json.
 - Vercel Hobby plan: only daily cron jobs allowed
+- `.env` no esta en el repo. Desde el fix del 2026-08-15 el servidor SI arranca sin las env
+  (supabase lazy via Proxy, cliente Anthropic diferido), pero chat/BD/email/WhatsApp no funcionan
+  hasta rellenarlas. En `main` ese fix no existe todavia y el arranque falla.
