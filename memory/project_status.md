@@ -77,6 +77,42 @@ está registrado. Ver CLAUDE.md para el detalle de dónde sí sobrevive el nombr
   - ⚠️ These are secrets and should never be in memory files. Keep in `.env` only (gitignored)
   - Rotate if any are exposed
 
+## Email propio: send.anbotosc.com en Resend (2026-08-19) — DNS ✅, SES ⏳
+
+**Por qué un subdominio y no `anbotosc.com` a secas:** si algún envío quema la reputación,
+se quema la del subdominio y no la del correo normal del box. Es lo que recomienda Resend.
+
+**⚠️ TRAMPA QUE YA PASÓ UNA VEZ:** el dominio se creó primero como **`send.anboto.sc`**
+(alguien partió mal `anbotosc.com` → `anboto.sc`, que es un TLD de Seychelles ajeno). Con ese
+nombre los registros en IONOS NUNCA habrían verificado. **Al crear el dominio en Resend, leer
+el nombre carácter a carácter.** El dominio erróneo sigue en la cuenta como "Not Started" y
+conviene borrarlo para que nadie lo confunda.
+
+**Configuración buena (la que está activa):**
+- Resend domain: `send.anbotosc.com`, región **Ireland (eu-west-1)**,
+  id `cb294e62-50b7-48a1-b816-04328daac942`
+- Registros añadidos en IONOS (IONOS añade `.anbotosc.com` solo, por eso el host va corto):
+
+  | Tipo | Host en IONOS | Valor | Prio |
+  |---|---|---|---|
+  | TXT | `resend._domainkey.send` | `p=MIGfMA0GCSqG…IDAQAB` (218 car.) | — |
+  | MX  | `send.send` | `feedback-smtp.eu-west-1.amazonses.com` | 10 |
+  | TXT | `send.send` | `v=spf1 include:amazonses.com ~all` | — |
+
+- **NO se añadió** el MX de "Enable Receiving" (`send` → `inbound-smtp.eu-west-1.amazonaws.com`):
+  eso es para *recibir* correo en el subdominio y no hace falta.
+- Los registros de correo del box en IONOS (MX `@` a mx00/mx01.ionos.es, SPF `@`, DKIM, DMARC)
+  quedaron **intactos**: los de Resend cuelgan de `send.*`, no del apex.
+- Verificado por DNS contra `ns1020.ui-dns.com`: los tres resuelven correctamente.
+- Estado en Resend: **DNS verified ✅**, "Verifying domain" (paso de Amazon SES) en curso.
+
+**PENDIENTE cuando el estado pase a Verified:**
+1. Poner en Vercel (production): `MAIL_FROM=Anboto SC <hola@send.anbotosc.com>`
+2. Redesplegar y enviar un alta de prueba, comprobando que llega a anbotocf@gmail.com
+3. Borrar el dominio sobrante `send.anboto.sc` en Resend
+
+---
+
 ## Phase 2 — ✅ IMPLEMENTADA (en el otro ordenador) · ⚠️ SIN DESPLEGAR
 
 **Las 4 preguntas de clarificación de abajo ya NO aplican: se resolvieron implementando.**
