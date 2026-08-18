@@ -216,9 +216,10 @@ router.get('/booking-status', async (req, res) => {
       return res.json({ valid: false, reason: 'expired' });
     }
 
+    // `objetivo` viaja a /reservar para recomendar clases con el mismo criterio que la web.
     const { data: signup } = await supabase
       .from('signups')
-      .select('id, nombre, nivel')
+      .select('id, nombre, nivel, objetivo')
       .eq('id', tokenData.signup_id)
       .single();
 
@@ -234,6 +235,7 @@ router.get('/booking-status', async (req, res) => {
       used: tokenData.used,
       nombre: signup?.nombre,
       nivel: signup?.nivel,
+      objetivo: signup?.objetivo || null,
       booking: booking || null,
     });
   } catch (err) {

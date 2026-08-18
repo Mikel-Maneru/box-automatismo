@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { LangProvider, useLang, T } from '../i18n/LangContext.jsx';
 import { Pico } from '../components/icons.jsx';
-import { WHATSAPP_URL } from '../data/site.js';
+import { WHATSAPP_URL, objetivoPorValor, claveClase } from '../data/site.js';
 
 // Página de reserva de la clase gratuita. Se llega SIEMPRE con ?token=... desde el email
 // de scheduling (src/lib/email.js), nunca desde la landing. Sustituye a la antigua
@@ -47,6 +47,7 @@ function ReservarInner() {
   const [error, setError] = useState('');
   const [nombre, setNombre] = useState(null);
   const [nivel, setNivel] = useState(null);
+  const [objetivo, setObjetivo] = useState(null);
   const [dias, setDias] = useState([]);
   const [reserva, setReserva] = useState(null); // {date,time,className}
 
@@ -64,6 +65,28 @@ function ReservarInner() {
   const diaSem = useCallback((d) => (eu ? EU_D[d.getDay()] : esCorto(d, { weekday: 'short' })), [eu]);
   const mesCorto = useCallback((d) => (eu ? EU_M[d.getMonth()] : esCorto(d, { month: 'short' })), [eu]);
 
+  const obj = objetivoPorValor(objetivo);
+
+  // Se marca UN SOLO hueco: el mejor del día. Marcar todas las clases del objetivo no
+  // sirve de nada porque la mayoría de huecos son WOD y acababan señalados 7 de 10.
+  // Se recorre el objetivo en orden de preferencia y gana el primero reservable.
+  const idxRecomendado = useMemo(() => {
+    const orden = obj
+      ? obj.clases.map(claveClase)
+      : (nivel === 'Sin experiencia' ? [claveClase('Oinarriak')] : []);
+    if (!orden.length || !clases.length) return -1;
+    for (const clase of orden) {
+      const i = clases.findIndex((c) => claveClase(c.name) === clase && c.canBook);
+      if (i !== -1) return i;
+    }
+    // Ninguna reservable: se señala igualmente para orientar, aunque no se pueda pulsar.
+    for (const clase of orden) {
+      const i = clases.findIndex((c) => claveClase(c.name) === clase);
+      if (i !== -1) return i;
+    }
+    return -1;
+  }, [clases, obj, nivel]);
+
   useEffect(() => {
     if (!token) { setError(t('rsv.errLink')); setEstado('error'); return; }
     let vivo = true;
@@ -79,6 +102,7 @@ function ReservarInner() {
         }
         setNombre(data.nombre || null);
         setNivel(data.nivel || null);
+        setObjetivo(data.objetivo || null);
         if (data.used && data.booking) {
           setReserva({ date: data.booking.class_date, time: data.booking.class_time, className: null });
           setEstado('ya');
@@ -197,6 +221,13 @@ function ReservarInner() {
             <T as="h1" k="rsv.title" />
             <T as="p" className="rsv-sub" k="rsv.sub" />
 
+            {obj && (
+              <p className="rsv-obj">
+                <span className="o">{t(obj.k)}</span>
+                <span className="r">{t('rsv.porObj')}: <b>{obj.clases.join(' · ')}</b></span>
+              </p>
+            )}
+
             <T as="span" className="rsv-lbl" k="rsv.fecha" />
             <div className="rsv-dias">
               {dias.map((d) => {
@@ -223,7 +254,7 @@ function ReservarInner() {
                 <div className="rsv-slots">
                   {clases.map((c, i) => {
                     const hora = c.time.substring(0, 5);
-                    const recomendada = nivel === 'Sin experiencia' && c.name === 'Oinarriak';
+                    const recomendada = i === idxRecomendado;
                     const activa = sel && sel.id === c.id && sel.time === c.time;
                     return (
                       <button key={`${c.time}-${i}`} type="button"

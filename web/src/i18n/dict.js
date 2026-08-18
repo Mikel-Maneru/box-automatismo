@@ -127,5 +127,6 @@ export const I18N = {
   'rsv.errNo':['Enlace no encontrado.','Ez da esteka aurkitu.'],
   'rsv.errConn':['Error de conexión. Inténtalo de nuevo.','Konexio errorea. Saiatu berriro.'],
   'rsv.errGen':['No se ha podido reservar la clase.','Ezin izan da klasea erreserbatu.'],
-  'rsv.wa':['Escríbenos por WhatsApp','Idatzi WhatsApp bidez']
+  'rsv.wa':['Escríbenos por WhatsApp','Idatzi WhatsApp bidez'],
+  'rsv.porObj':['Por tu objetivo te recomendamos','Zure helbururako hau gomendatzen dizugu']
 };

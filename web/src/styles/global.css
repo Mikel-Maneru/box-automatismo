@@ -747,3 +747,7 @@ nav:not(.scrolled) .logo{text-shadow:none}
 .rsv-err{text-align:center;padding:10px 0}
 .rsv-err p{color:var(--txt-2);line-height:1.6;margin-bottom:18px}
 .rsv-err a{display:inline-block;padding:13px 24px;border-radius:50px;background:var(--brasa);color:#fff;font-weight:800;text-decoration:none}
+.rsv-obj{margin-top:22px;padding:14px 16px;border:1px solid rgba(169,120,79,.34);border-radius:12px;background:rgba(169,120,79,.09);display:flex;flex-direction:column;gap:6px}
+.rsv-obj .o{font-family:var(--ff-m);font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.11em;color:var(--brasa)}
+.rsv-obj .r{font-size:.92rem;color:var(--txt-2);line-height:1.5}
+.rsv-obj .r b{color:var(--caliza);font-weight:800}

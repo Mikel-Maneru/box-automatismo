@@ -66,6 +66,16 @@ export const OBJETIVO_VALUES = {
   empezar: 'Empezar de cero',
 };
 
+// Del valor guardado en la BD ("Empezar de cero") al objetivo, para poder recomendar
+// clases en /reservar con el mismo criterio que usa la landing.
+export const objetivoPorValor = (v) =>
+  OBJETIVOS.find((o) => OBJETIVO_VALUES[o.id] === v) || null;
+
+// WodBuster nombra algunas clases distinto que nosotros ("Wod" por "WOD", "Haltero" por
+// "Halterofilia"). Normalizamos para poder cruzar el horario real con nuestro mapa.
+export const claveClase = (nombre) =>
+  (nombre || '').trim().toLowerCase().replace(/^halterofilia$/, 'haltero');
+
 // Canales de captación para "¿Cómo nos conociste?" (value fijo ES, label traducida).
 export const CANALES = [
   { id: 'instagram', value: 'Instagram',          k: 'cc.ig' },
