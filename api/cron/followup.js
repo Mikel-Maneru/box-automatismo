@@ -1,7 +1,7 @@
 const supabase = require('../../src/lib/supabase');
 const { sendFollowupEmail } = require('../../src/lib/email');
 const wodbuster = require('../../src/lib/wodbuster');
-const { sendWhatsApp } = require('../../src/lib/whatsapp');
+const { sendAlerta } = require('../../src/lib/email');
 
 let lastCookieAlert = 0;
 
@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
         console.error('WodBuster session expired and auto-login failed!');
         if (Date.now() - lastCookieAlert > 60 * 60 * 1000) {
           lastCookieAlert = Date.now();
-          await sendWhatsApp('⚠️ La sesion de WodBuster ha expirado y el auto-login ha fallado. Revisa las credenciales (WODBUSTER_EMAIL/PASSWORD) en Vercel.');
+          await sendAlerta('Anboto SC: aviso de WodBuster', '⚠️ La sesion de WodBuster ha expirado y el auto-login ha fallado. Revisa las credenciales (WODBUSTER_EMAIL/PASSWORD) en Vercel.');
         }
       } else {
         console.log('WodBuster session valid (keep-alive)');
@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
       console.error('WodBuster keep-alive error:', err.message);
       if (Date.now() - lastCookieAlert > 60 * 60 * 1000) {
         lastCookieAlert = Date.now();
-        await sendWhatsApp(`⚠️ Error en WodBuster keep-alive: ${err.message}`);
+        await sendAlerta('Anboto SC: aviso de WodBuster', `⚠️ Error en WodBuster keep-alive: ${err.message}`);
       }
     }
 

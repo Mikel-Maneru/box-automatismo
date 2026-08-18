@@ -1,5 +1,5 @@
 const supabase = require('../../src/lib/supabase');
-const { sendWantsToJoinNotification } = require('../../src/lib/whatsapp');
+const { sendAlerta } = require('../../src/lib/email');
 
 function thankYouPage(nombre) {
   return `<!DOCTYPE html>
@@ -57,7 +57,7 @@ module.exports = async (req, res) => {
       .update({ wants_to_join: true })
       .eq('id', signup.id);
 
-    await sendWantsToJoinNotification(signup.nombre, signup.telefono, signup.email);
+    await sendAlerta('Nuevo interesado en Anboto SC', `<p>${signup.nombre} quiere apuntarse. Tlf: ${signup.telefono || '-'} · Email: ${signup.email || '-'}</p>`);
 
     res.setHeader('Content-Type', 'text/html');
     res.send(thankYouPage(signup.nombre));

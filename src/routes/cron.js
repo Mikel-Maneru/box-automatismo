@@ -3,7 +3,7 @@ const router = express.Router();
 const supabase = require('../lib/supabase');
 const { sendFollowupEmail } = require('../lib/email');
 const wodbuster = require('../lib/wodbuster');
-const { sendWhatsApp } = require('../lib/whatsapp');
+const { sendAlerta } = require('../lib/email');
 
 let lastCookieAlert = 0;
 
@@ -20,10 +20,15 @@ router.get('/followup', async (req, res) => {
       const valid = await wodbuster.validateSession();
       if (!valid) {
         console.error('WodBuster session expired and auto-login failed!');
-        // Alert via WhatsApp at most once per hour
+        // Aviso al box, como mucho uno por hora
         if (Date.now() - lastCookieAlert > 60 * 60 * 1000) {
           lastCookieAlert = Date.now();
-          await sendWhatsApp('⚠️ La sesion de WodBuster ha expirado y el auto-login ha fallado. Revisa las credenciales (WODBUSTER_EMAIL/PASSWORD) en Vercel.');
+          await sendAlerta(
+            '\u{26A0} Anboto SC: la sesion de WodBuster ha caducado',
+            '<p>La sesion de WodBuster ha expirado y el login automatico ha fallado.</p>' +
+            '<p><strong>Mientras no se arregle, nadie puede reservar la clase de prueba.</strong></p>' +
+            '<p>Hay que renovar la cookie .WBAuth o revisar WODBUSTER_EMAIL / WODBUSTER_PASSWORD en Vercel.</p>'
+          );
         }
       } else {
         console.log('WodBuster session valid (keep-alive)');
@@ -32,7 +37,10 @@ router.get('/followup', async (req, res) => {
       console.error('WodBuster keep-alive error:', err.message);
       if (Date.now() - lastCookieAlert > 60 * 60 * 1000) {
         lastCookieAlert = Date.now();
-        await sendWhatsApp(`⚠️ Error en WodBuster keep-alive: ${err.message}`);
+        await sendAlerta(
+          '\u{26A0} Anboto SC: error en el keep-alive de WodBuster',
+          `<p>Ha fallado la comprobacion diaria de la sesion de WodBuster.</p><p><code>${err.message}</code></p>`
+        );
       }
     }
 

@@ -1,6 +1,5 @@
 const { Resend } = require('resend');
 const supabase = require('./supabase');
-const { sendNewSignupNotification } = require('./whatsapp');
 
 let resend = null;
 if (process.env.RESEND_API_KEY) {
@@ -74,13 +73,6 @@ async function createSignup({ nombre, telefono, email, nivel, objetivo, comoCono
     } catch (err) {
       console.error('Error enviando email via Resend:', err.message || err);
     }
-  }
-
-  // Send WhatsApp notification
-  try {
-    await sendNewSignupNotification(nombre, telefono, email, nivel, origen, objetivo, comoConocio);
-  } catch (err) {
-    console.error('Error enviando WhatsApp de notificacion:', err.message || err);
   }
 
   // Generate scheduling token and send scheduling email
@@ -196,4 +188,21 @@ async function sendFollowupEmail(toEmail, nombre, signupId) {
   }
 }
 
-module.exports = { createSignup, sendSchedulingEmail, sendFollowupEmail };
+// Aviso operativo al box. Sustituye a las notificaciones que iban por WhatsApp (Kapso):
+// lead que quiere apuntarse y sesion de WodBuster caida.
+async function sendAlerta(subject, html) {
+  const to = process.env.NOTIFY_EMAIL;
+  if (!to || !resend) {
+    console.log('Sin NOTIFY_EMAIL o Resend, no se envia aviso:', subject);
+    return null;
+  }
+  try {
+    const { error } = await resend.emails.send({ from: MAIL_FROM, to, subject, html });
+    if (error) console.error('Error enviando aviso:', error);
+  } catch (err) {
+    console.error('Error enviando aviso:', err.message || err);
+  }
+  return null;
+}
+
+module.exports = { createSignup, sendSchedulingEmail, sendFollowupEmail, sendAlerta };
