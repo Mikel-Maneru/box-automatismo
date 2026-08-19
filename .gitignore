@@ -35,3 +35,10 @@ AnbotoManual.pdf
 # capturas de verificación (temporales)
 /*.jpeg
 /*.png
+
+# Originales de camara que manda el cliente (4-7 MB cada uno). No van a git: GitHub
+# rechaza ficheros de mas de 100 MB y el repo se dispara. Se optimizan y solo la
+# seleccion final, ya ligera, se copia a public/fotos/.
+fotos/IMG_*.JPG
+fotos/IMG_*.jpg
+fotos/*.zip

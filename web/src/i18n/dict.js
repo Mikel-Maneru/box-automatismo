@@ -128,5 +128,7 @@ export const I18N = {
   'rsv.errConn':['Error de conexión. Inténtalo de nuevo.','Konexio errorea. Saiatu berriro.'],
   'rsv.errGen':['No se ha podido reservar la clase.','Ezin izan da klasea erreserbatu.'],
   'rsv.wa':['Escríbenos por WhatsApp','Idatzi WhatsApp bidez'],
-  'rsv.porObj':['Por tu objetivo te recomendamos','Zure helbururako hau gomendatzen dizugu']
+  'rsv.porObj':['Por tu objetivo te recomendamos','Zure helbururako hau gomendatzen dizugu'],
+  'rsv.pendTitle':['¡Solicitud recibida!','Eskaera jasota!'],
+  'rsv.pendBody':['Te confirmamos la plaza enseguida. Si tienes cualquier prisa o duda, escríbenos por WhatsApp.','Plaza berehala baieztatuko dizugu. Presarik edo zalantzarik baduzu, idatzi WhatsApp bidez.']
 };

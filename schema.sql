@@ -172,7 +172,9 @@ CREATE TABLE class_bookings (
   class_time TIME NOT NULL,
   class_capacity INTEGER,
   booked_at TIMESTAMPTZ DEFAULT NOW(),
-  booking_status TEXT DEFAULT 'confirmed' CHECK (booking_status IN ('confirmed', 'cancelled', 'failed')),
+  -- 'pending' = el usuario eligio hueco pero la reserva la hace el box a mano
+  -- (WODBUSTER_AUTOBOOK=off, ver src/routes/scheduling.js)
+  booking_status TEXT DEFAULT 'confirmed' CHECK (booking_status IN ('confirmed', 'pending', 'cancelled', 'failed')),
   UNIQUE(signup_id, class_date, class_time)
 );
 

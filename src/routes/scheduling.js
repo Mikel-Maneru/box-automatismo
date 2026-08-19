@@ -2,6 +2,14 @@ const express = require('express');
 const router = express.Router();
 const supabase = require('../lib/supabase');
 const wodbuster = require('../lib/wodbuster');
+const { sendAlerta } = require('../lib/email');
+
+// Reserva automatica en WodBuster. DESACTIVADA a proposito: la sesion de WodBuster es la
+// CUENTA PERSONAL de Mikel, asi que cada clase de prueba quedaba reservada a su nombre.
+// Mientras esta en 'off' no se toca WodBuster: se guarda la peticion como 'pending' y se
+// avisa al box por email para que la reserve a mano. Poner WODBUSTER_AUTOBOOK=on cuando
+// exista una cuenta del box (ver punto 4 de memory/people.md).
+const AUTOBOOK = process.env.WODBUSTER_AUTOBOOK === 'on';
 
 const CLASS_DESCRIPTIONS = {
   'Oinarriak': 'Clase para principiantes',
@@ -138,10 +146,13 @@ router.post('/book', async (req, res) => {
       return res.status(404).json({ error: 'Signup no encontrado' });
     }
 
-    // Book in WodBuster
-    const [year, month, day] = date.split('-').map(Number);
-    const dateObj = new Date(year, month - 1, day);
-    const bookingResult = await wodbuster.bookClass(bookingClassId, dateObj);
+    // Reservar en WodBuster solo si el autobook esta activo (ver AUTOBOOK arriba).
+    let bookingResult = { success: true };
+    if (AUTOBOOK) {
+      const [year, month, day] = date.split('-').map(Number);
+      const dateObj = new Date(year, month - 1, day);
+      bookingResult = await wodbuster.bookClass(bookingClassId, dateObj);
+    }
 
     // Save booking to Supabase
     const { data: booking, error: bookingError } = await supabase
@@ -153,13 +164,16 @@ router.post('/book', async (req, res) => {
         class_date: date,
         class_time: classTime || null,
         class_capacity: null,
-        booking_status: bookingResult.success ? 'confirmed' : 'failed',
+        booking_status: !AUTOBOOK ? 'pending' : (bookingResult.success ? 'confirmed' : 'failed'),
       })
       .select()
       .single();
 
     if (bookingError) {
       console.error('Error guardando reserva:', bookingError);
+      if (bookingError.code === '23514') {
+        console.error('>>> Falta el ALTER que permite booking_status = pending. El aviso por email SI se ha enviado, asi que el lead no se pierde, pero la peticion no queda registrada. SQL en schema.sql.');
+      }
     }
 
     // Mark token as used
@@ -172,8 +186,22 @@ router.post('/book', async (req, res) => {
       return res.status(500).json({ error: 'Error reservando la clase en WodBuster' });
     }
 
+    if (!AUTOBOOK) {
+      // Sin reserva automatica, el aviso al box es lo unico que hace que la plaza exista.
+      await sendAlerta(
+        'Clase de prueba solicitada: ' + signup.nombre,
+        '<h2>' + signup.nombre + ' quiere una clase de prueba</h2>' +
+        '<p><strong>Dia:</strong> ' + date + '</p>' +
+        '<p><strong>Hora:</strong> ' + (classTime || 'sin especificar') + '</p>' +
+        '<p><strong>Clase:</strong> ' + (className || 'sin especificar') + '</p>' +
+        '<hr><p><strong>Hay que reservarla a mano en WodBuster.</strong> La reserva automatica ' +
+        'esta desactivada para no apuntar a la gente con la cuenta personal de Mikel.</p>'
+      );
+    }
+
     res.json({
       ok: true,
+      pending: !AUTOBOOK,
       booking: {
         date,
         time: classTime,

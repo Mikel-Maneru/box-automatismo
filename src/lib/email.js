@@ -197,8 +197,9 @@ async function sendAlerta(subject, html) {
     return null;
   }
   try {
-    const { error } = await resend.emails.send({ from: MAIL_FROM, to, subject, html });
+    const { data, error } = await resend.emails.send({ from: MAIL_FROM, to, subject, html });
     if (error) console.error('Error enviando aviso:', error);
+    else console.log('Aviso enviado via Resend:', data?.id, '|', subject);
   } catch (err) {
     console.error('Error enviando aviso:', err.message || err);
   }

@@ -159,7 +159,8 @@ function ReservarInner() {
       });
       const data = await res.json();
       if (data.ok) {
-        setReserva({ date: data.booking.date, time: data.booking.time, className: data.booking.className });
+        // pending = el box la reserva a mano (autobook desactivado en el backend)
+        setReserva({ date: data.booking.date, time: data.booking.time, className: data.booking.className, pending: !!data.pending });
         setEstado('hecha');
       } else {
         setError(data.error || t('rsv.errGen'));
@@ -206,12 +207,12 @@ function ReservarInner() {
         {(estado === 'ya' || estado === 'hecha') && reserva && (
           <div className="rsv-ok">
             <span className="rsv-check" aria-hidden="true">✓</span>
-            <T as="h1" k={estado === 'ya' ? 'rsv.yaTitle' : 'rsv.okTitle'} />
+            <T as="h1" k={estado === 'ya' ? 'rsv.yaTitle' : (reserva.pending ? 'rsv.pendTitle' : 'rsv.okTitle')} />
             <div className="rsv-when">
               <span className="d">{fechaLarga(reserva.date)}</span>
               <span className="h">{(reserva.time || '').substring(0, 5)}{reserva.className ? ` · ${reserva.className}` : ''}</span>
             </div>
-            <T as="p" k="rsv.okBody" />
+            <T as="p" k={reserva.pending ? 'rsv.pendBody' : 'rsv.okBody'} />
           </div>
         )}
 
