@@ -1,22 +1,24 @@
 // Datos del sitio (portados del index.legacy.html). Texto no traducido = ES fijo.
 
-// Fotos reales del box (placeholders hasta que llegue el nuevo centro).
+// Fotos del box (agosto 2026). Los originales de camara viven en fotos/ (fuera de git,
+// pesan 4-7 MB cada uno); aqui solo van las versiones optimizadas de public/fotos/.
 export const HERO_SLIDES = [
-  '/fotos/681663370_18141850495507230_842418771480859784_n.jpeg',
-  '/fotos/684158573_18141850543507230_7164727509411748566_n.jpeg',
-  '/fotos/684166869_18141850504507230_4228607507298611888_n.jpeg',
-  '/fotos/622920499_18141564865474629_8282454509847242170_n.jpeg',
+  '/fotos/hero-1-monte.jpg',
+  '/fotos/hero-2-clase.jpg',
+  '/fotos/hero-3-calle.jpg',
+  '/fotos/hero-4-fila.jpg',
 ];
 
+// { src, alt } para que cada foto tenga su texto alternativo: antes todas decian "Anboto SC".
 export const IG_PHOTOS = [
-  '/fotos/681663370_18141850495507230_842418771480859784_n.jpeg',
-  '/fotos/684158573_18141850543507230_7164727509411748566_n.jpeg',
-  '/fotos/684166869_18141850504507230_4228607507298611888_n.jpeg',
-  '/fotos/497431307_18106569196507230_5749734071044956827_n.jpeg',
-  '/fotos/622920499_18141564865474629_8282454509847242170_n.jpeg',
-  '/fotos/624429118_18089691254121461_6918128091737313437_n.jpeg',
-  '/fotos/625681096_18091344503008058_5522638003780336332_n.jpeg',
-  '/fotos/629223800_18205928797322466_1736022441803597074_n.jpeg',
+  { src: '/fotos/ig-1-risa.jpg',     alt: 'Atleta riendo con la camiseta de Anboto tras el entrenamiento' },
+  { src: '/fotos/ig-3-grupo.jpg',    alt: 'Grupo de companeros charlando y riendo en el box' },
+  { src: '/fotos/ig-4-apoyo.jpg',    alt: 'Companeras ayudando a una atleta durante el ejercicio' },
+  { src: '/fotos/ig-6-veterano.jpg', alt: 'Atleta veterano entrenando a tope en Anboto SC' },
+  { src: '/fotos/ig-2-sonrisa.jpg',  alt: 'Atleta sonriendo en el box de Anboto SC' },
+  { src: '/fotos/ig-5-charla.jpg',   alt: 'Companeras juntas entre serie y serie' },
+  { src: '/fotos/ig-7-trineo.jpg',   alt: 'Empujando el trineo en la calle, junto al box' },
+  { src: '/fotos/ig-8-equipo.jpg',   alt: 'Foto de equipo de la comunidad de Anboto SC' },
 ];
 
 // Horario interactivo (idéntico a SCHED del sitio original).

@@ -22,7 +22,7 @@ export function Marquee() {
 export function PhotoBand() {
   return (
     <section className="photoband" aria-label="Comunidad Anboto SC">
-      <img src="/fotos/684166869_18141850504507230_4228607507298611888_n.jpeg" alt="Entrenando en Anboto SC" loading="lazy" />
+      <img src="/fotos/comunidad.jpg" alt="La comunidad de Anboto SC al completo en el box" loading="lazy" />
       <div className="pb-scrim" aria-hidden="true" />
       <div className="pb-inner">
         <T as="span" className="eyebrow" k="pb.eyebrow" />
@@ -81,7 +81,7 @@ export function QueEs() {
             <T as="p" k="f1.p" />
           </div>
           <div className="bento-tile b-photo rev-up" aria-hidden="true"
-            style={{ backgroundImage: "url('/fotos/681663370_18141850495507230_842418771480859784_n.jpeg')" }} />
+            style={{ backgroundImage: "url('/fotos/bento-grupo.jpg')" }} />
           <div className="bento-tile rev-up">
             <T as="h3" k="f2.h" />
             <T as="p" k="f2.p" />
@@ -337,9 +337,9 @@ export function Instagram() {
         <T as="span" className="sec-index rev-up" k="ig.idx" />
         <T as="h2" className="title rev-up" style={{ marginBottom: 8 }} k="ig.title" />
         <div className="ig-grid">
-          {IG_PHOTOS.map((src, i) => (
-            <a href={INSTAGRAM_URL} target="_blank" rel="noopener" className="ig" key={i}>
-              <img src={src} alt="Anboto SC" loading="lazy" />
+          {IG_PHOTOS.map((foto) => (
+            <a href={INSTAGRAM_URL} target="_blank" rel="noopener" className="ig" key={foto.src}>
+              <img src={foto.src} alt={foto.alt} loading="lazy" />
             </a>
           ))}
         </div>
