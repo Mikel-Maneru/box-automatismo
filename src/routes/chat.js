@@ -6,10 +6,11 @@ const { buildSystemPrompt } = require('../lib/prompt');
 const { createSignup } = require('../lib/email');
 
 const router = Router();
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-  baseURL: 'https://api.anthropic.com'
-});
+// Lazy/guardado: no construir el cliente si falta la API key (permite arrancar en
+// previews sin env). En producción, con la key, es idéntico al comportamiento previo.
+const anthropic = process.env.ANTHROPIC_API_KEY
+  ? new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, baseURL: 'https://api.anthropic.com' })
+  : null;
 const MODEL = 'claude-sonnet-4-5-20250929';
 const MAX_MESSAGES_PER_SESSION = 20;
 const HISTORY_LIMIT = 10;

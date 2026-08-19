@@ -4,10 +4,13 @@ const { createSignup } = require('../lib/email');
 const router = Router();
 
 const VALID_LEVELS = ['Sin experiencia', 'Algo de experiencia', 'Vengo de otro box'];
+// Deben coincidir con OBJETIVO_VALUES y CANALES de web/src/data/site.js
+const VALID_OBJETIVOS = ['Salud y bienestar', 'Rendimiento', 'Musculación', 'Perder grasa', 'Empezar de cero'];
+const VALID_CANALES = ['Instagram', 'Google', 'Un amigo', 'Pasaba por delante', 'Otro'];
 
 router.post('/signup', async (req, res) => {
   try {
-    const { nombre, telefono, email, nivel, origen, website } = req.body;
+    const { nombre, telefono, email, nivel, objetivo, comoConocio, origen, website } = req.body;
 
     // Honeypot: if filled, silently accept without saving
     if (website) return res.json({ ok: true, honeypot: true });
@@ -32,11 +35,21 @@ router.post('/signup', async (req, res) => {
       return res.status(400).json({ error: 'Nivel no válido' });
     }
 
+    if (objetivo && !VALID_OBJETIVOS.includes(objetivo)) {
+      return res.status(400).json({ error: 'Objetivo no válido' });
+    }
+
+    if (comoConocio && !VALID_CANALES.includes(comoConocio)) {
+      return res.status(400).json({ error: 'Canal no válido' });
+    }
+
     const signup = await createSignup({
       nombre: nombre.trim(),
       telefono: telefono || null,
       email: email || null,
       nivel: nivel || null,
+      objetivo: objetivo || null,
+      comoConocio: comoConocio || null,
       origen: origen || 'formulario'
     });
 

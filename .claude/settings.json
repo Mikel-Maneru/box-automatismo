@@ -1,0 +1,13 @@
+{
+  "env": {
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "960000"
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "type": "command",
+        "command": "powershell -ExecutionPolicy Bypass -File \"C:\\Users\\Mikel\\Desktop\\Proyectos\\Bidener\\.claude\\hooks\\memory_stop.ps1\""
+      }
+    ]
+  }
+}

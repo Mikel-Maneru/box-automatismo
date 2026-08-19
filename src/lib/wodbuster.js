@@ -431,9 +431,12 @@ async function getClassAvailability(date) {
   return { classes, realData: isRealData };
 }
 
+// Devuelve la MISMA forma que getClassAvailability ({classes, realData}). Antes devolvia
+// un array pelado y quien lo consume hace wbResult.classes.map(...), asi que cualquier dia
+// sin horario scrapeado reventaba con un 500.
 async function getApiOnlyClasses(date) {
   const result = await getApiClassData(date);
-  return result.classes
+  const classes = result.classes
     .filter(c => !c.isOpenBox)
     .map(c => ({
       id: c.id,
@@ -445,6 +448,7 @@ async function getApiOnlyClasses(date) {
       capacity: result.isRealData ? c.capacity : null,
       booked: result.isRealData ? c.booked : null,
     }));
+  return { classes, realData: result.isRealData };
 }
 
 async function getApiClassData(date) {

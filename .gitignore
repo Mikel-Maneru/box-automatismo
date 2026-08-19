@@ -16,3 +16,22 @@ UsersMikelDesktopProyectosbox-automatismowodbuster_page.html
 .roo/
 .trae/
 .windsurf/
+web/node_modules/
+
+# Build artefactos internos de Vite/SSG (no necesarios para servir)
+public/.vite/
+public/static-loader-data-manifest*.json
+web/.vite-react-ssg-temp/
+web/dist/
+
+# Artefactos de dev y material de marca (no versionar)
+.playwright-mcp/
+.claude/_redesign-brief.md
+scrollbar-check.png
+Manual de Marca*.html
+Manual de Marca*.pdf
+AnbotoManual.pdf
+
+# capturas de verificación (temporales)
+/*.jpeg
+/*.png

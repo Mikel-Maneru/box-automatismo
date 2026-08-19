@@ -1,3 +1,5 @@
 User-agent: *
 Allow: /
-Sitemap: https://anbotofitness.com/sitemap.xml
+# Página privada: solo se llega con el token del email de reserva.
+Disallow: /reservar
+Sitemap: https://anbotosc.com/sitemap.xml

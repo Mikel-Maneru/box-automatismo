@@ -23,7 +23,7 @@ app.use(helmet({
 }));
 app.use(cors({
   origin: process.env.NODE_ENV === 'production'
-    ? [process.env.ALLOWED_ORIGIN || 'https://anbotofitness.com']
+    ? [process.env.ALLOWED_ORIGIN || 'https://anbotosc.com']
     : '*'
 }));
 app.use(express.json());

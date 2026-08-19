@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const supabase = require('../lib/supabase');
-const { sendWantsToJoinNotification } = require('../lib/whatsapp');
+const { sendAlerta } = require('../lib/email');
 
 function thankYouPage(nombre, wantsToJoin) {
   const title = wantsToJoin
@@ -64,8 +64,15 @@ router.get('/yes', async (req, res) => {
       .update({ wants_to_join: true })
       .eq('id', signup.id);
 
-    // Send WhatsApp notification
-    await sendWantsToJoinNotification(signup.nombre, signup.telefono, signup.email);
+    // Aviso al box: es el lead mas caliente del sistema, ha probado y quiere entrar.
+    await sendAlerta(
+      `\u{1F525} ${signup.nombre} quiere apuntarse a Anboto SC`,
+      `<h2>${signup.nombre} quiere apuntarse</h2>
+       <p>Ha hecho la clase de prueba y ha dicho que si.</p>
+       <p><strong>Telefono:</strong> ${signup.telefono || 'No indicado'}</p>
+       <p><strong>Email:</strong> ${signup.email || 'No indicado'}</p>
+       <hr><p>Llamale para formalizar la inscripcion.</p>`
+    );
 
     res.setHeader('Content-Type', 'text/html');
     res.send(thankYouPage(signup.nombre, true));
