@@ -18,9 +18,11 @@
 
 Lista abierta (anotada el 2026-08-18). Marcar como resuelto y mover a `decisions.md` segun se cierre.
 
-## 1. Cuenta de Anthropic y facturacion del chat  ← el motivo original de esta lista
-Hoy el chat consume de la cuenta de **Mikel** y se le factura a el. Decision del usuario:
-debe pasar a Xabi.
+## 1. Cuenta de Anthropic y facturacion del chat — RESUELTO (2026-08-19)
+**Xabi creo la organizacion, metio creditos e invito a Mikel como admin.** La clave nueva ya
+esta en Vercel (production) y el chat se verifico en vivo respondiendo con ella: **paga Xabi y
+Mikel conserva el control**. PENDIENTE: que Mikel revoque su clave personal antigua.
+Se siguio este camino, que era el unico que funcionaba:
 - El codigo NO esta atado a ninguna cuenta: es solo la variable `ANTHROPIC_API_KEY`
   (`src/routes/chat.js` y `api/chat.js`). El cambio es de una linea de configuracion.
 - Camino recomendado: **Xabi crea la cuenta/organizacion en console.anthropic.com con SU
@@ -37,8 +39,10 @@ Por orden de gravedad:
 - `SUPABASE_SERVICE_KEY` — se salta el RLS, acceso total a la BD (hay 16 inscripciones con
   nombres, telefonos y emails de personas reales). El JWT caduca en 2036.
 - `VERCEL_TOKEN` — permite desplegar y administrar el proyecto.
-- `ANTHROPIC_API_KEY` (se resuelve solo con el punto 1), `RESEND_API_KEY`,
-  `TWILIO_AUTH_TOKEN`, `GMAIL_APP_PASSWORD`. (Las `KAPSO_*` ya no aplican: WhatsApp eliminado.)
+- `ANTHROPIC_API_KEY` y `RESEND_API_KEY`: **AMBAS se volvieron a pegar en un chat el 2026-08-19**
+  al configurarlas, asi que siguen pendientes de rotar. La de Anthropic es la mas urgente de las
+  dos: gasta el credito de Xabi. Ninguna da acceso a datos de clientes.
+  `GMAIL_APP_PASSWORD` sigue en la lista. (`TWILIO_*` y `KAPSO_*` ya no aplican: fuera del stack.)
 - `WODBUSTER_PASSWORD` — **no es una clave de API, es la contrasena personal de Mikel**.
   Si la reutiliza en otros sitios, cambiarla tambien alli.
 
@@ -58,10 +62,10 @@ La banda de cifras muestra **"5+ MIEMBROS ACTIVOS"**, **"1 DISCIPLINAS"** y
 disciplinas y presume de 46 resenas con 4.9 estrellas. Hacen falta los numeros reales.
 Se corrigen en `web/src/data/site.js`.
 
-## 6. Tarifas anuales en el prompt del chatbot
-Probando el chat, el asistente ofrecio "12 clases por 780 EUR/ano" con compromiso anual.
-Pero el 2026-05-12 se decidio quitar el precio anual de la landing. El bot promete algo que
-la web ya no ofrece. Decidir: se reponen las tarifas anuales o se quitan del prompt.
+## 6. Tarifas anuales en el prompt del chatbot — RESUELTO (2026-08-19)
+Se borraron los 4 planes anuales del JSONB `boxes.membership_plans` en Supabase. El bot ya solo
+ofrece mensuales y bonos, igual que la web. Era problema de DATOS, no de codigo: prompt.js
+interpola el period tal cual desde esa columna.
 
 ## 7. Dominio: anbotosc.com — ✅ RESUELTO (2026-08-18)
 **https://anbotosc.com esta en produccion y sirve la landing.** Detalle tecnico completo del

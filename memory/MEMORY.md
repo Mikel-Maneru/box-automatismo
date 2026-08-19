@@ -14,8 +14,9 @@
 | **Fase 2** | ✅ **DESPLEGADA Y VERIFICADA EN VIVO (2026-08-19)** | Bundle en prod `app-VFg2lThZ.js` = el del repo |
 | **Email propio** | ✅ **FUNCIONANDO** | Envío real comprobado a `anbotocf@gmail.com` desde `hola@send.anbotosc.com` |
 | **WhatsApp** | ❌ Eliminado (`017f05c`) y **desplegado** | Los 2 avisos que importaban pasaron a email |
+| **Chat** | ✅ **En la cuenta de Anthropic de Xabi** (2026-08-19) | Mikel es admin. Verificado en vivo. Paga Xabi |
 | **Limpieza** | ⏳ Decidida, sin ejecutar | Borrar `api/` (código muerto) y el dominio `send.anboto.sc` en Resend |
-| **Próxima acción** | Rotar la `RESEND_API_KEY` (se pegó en un chat) · esperar a Xabi (cuenta Anthropic + API WodBuster) |
+| **Próxima acción** | ⚠️ Rotar `RESEND_API_KEY` **y** `ANTHROPIC_API_KEY` (ambas se pegaron en un chat) · esperar a Xabi (API WodBuster, fotos y datos del centro) |
 
 ### ⚠️ Tres trampas que ya nos costaron horas — no repetir
 

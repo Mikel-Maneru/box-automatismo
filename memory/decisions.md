@@ -197,3 +197,31 @@ mensaje de error habla de "domain is not verified" aunque el DNS este perfecto.
 **Regla de trabajo confirmada otra vez: verificar el resultado, no el paso.** Ni el "Verified"
 del panel de Resend ni el "ready" de Vercel prueban nada. Lo que prueba es un envio real que
 devuelve id, y el hash del bundle servido coincidiendo con el del repo.
+
+## 2026-08-19: Chat a la cuenta de Xabi + dos bugs de datos del chatbot
+
+**Cuenta migrada.** Xabi creo la organizacion en console.anthropic.com con SU metodo de pago,
+metio creditos e invito a Mikel como admin. Se cambio `ANTHROPIC_API_KEY` en Vercel (production)
+y se redesplego: **las variables de entorno NO se aplican hasta el siguiente deploy**. Verificado
+con una peticion real a `/api/chat` en produccion. Paga Xabi, Mikel conserva el control.
+Orden util: **validar la clave contra la API antes de tocar produccion** (una llamada minima a
+`/v1/messages`), asi no se despliega una clave invalida o sin credito.
+
+**Los dos bugs del chatbot eran DATOS en Supabase, no codigo.** `prompt.js` interpola tal cual
+lo que haya en las columnas JSONB del box, asi que basura dentro = basura en el prompt:
+1. `boxes.membership_plans` tenia 4 planes ANUALES retirados de la web el 2026-05-12. El bot
+   ofrecia "12 clases por 780 EUR/ano". Se dejaron solo los 4 mensuales + 2 bonos.
+2. `boxes.classes` guardaba un cuadrante semanal `{day, classes:[...]}` con IDs de WodBuster
+   (y un "Kickbox" inexistente), pero `prompt.js` espera `{name,duration,level,description}`:
+   generaba `- undefined (undefined, nivel undefined): undefined`. Se sustituyo por las 6
+   disciplinas reales **con el objetivo escrito dentro de la descripcion**, para que el bot
+   recomiende igual que la web sin tener que tocar `prompt.js`.
+
+Resultado verificado en vivo: "cuanto cuesta" -> solo mensuales y bonos; "quiero ganar musculo"
+-> Total Strength y Halterofilia, que es exactamente `musculacion` en `OBJETIVOS`. Con esto los
+cuatro sitios (seccion de clases, formulario, /reservar y chatbot) recomiendan con el mismo mapa.
+
+**Falsa alarma documentada:** `conversations.session_id` es UUID NOT NULL. Probar `/api/chat` a
+mano con un `sessionId` cualquiera devuelve 500 "Error al crear conversacion" y parece que el
+chat esta roto. No lo esta: el widget manda `null` la primera vez y el backend genera el UUID.
+Al probar a mano, omitir `sessionId`.

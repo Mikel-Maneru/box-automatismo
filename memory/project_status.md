@@ -141,6 +141,35 @@ Cómo se diagnosticó (útil para la próxima):
 
 ---
 
+## Chat: cuenta de Xabi + dos bugs de datos (2026-08-19)
+
+**Cuenta migrada.** Xabi creo la organizacion en console.anthropic.com con su metodo de pago,
+metio creditos e invito a Mikel como admin. La clave se valido contra la API antes de tocar
+nada, se puso en Vercel (production), se redesplego (las env NO se aplican hasta el siguiente
+deploy) y se verifico con una peticion real a `/api/chat` en produccion.
+
+**Falsa alarma que conviene no repetir:** una primera prueba devolvio
+`{"error":"Error al crear conversacion"}` y parecia que el chat estaba roto. No lo estaba: la
+columna `conversations.session_id` es **UUID NOT NULL** y la prueba mandaba `"qa-test-1"`.
+El widget real manda `null` la primera vez y el backend genera un UUID (`chat.js:42`), asi que
+el flujo normal funciona. **Al probar `/api/chat` a mano, o no mandar `sessionId` o mandar un
+UUID valido.** (Queda un hueco menor de validacion: un `sessionId` no-UUID da un 500 en vez de
+un 400.)
+
+**Dos bugs del chatbot, ambos de DATOS en Supabase, no de codigo:**
+1. `boxes.membership_plans` tenia 4 planes ANUALES que la web no ofrece desde el 2026-05-12.
+   El bot llegaba a ofrecer "12 clases por 780 EUR/ano". Se dejaron solo mensuales + bonos.
+2. `boxes.classes` guardaba un cuadrante semanal `{day, classes:[...]}` (con una clase
+   "Kickbox" que ya no existe), pero `prompt.js:6-8` espera `{name,duration,level,description}`
+   -> el prompt generaba `- undefined (undefined, nivel undefined): undefined`. Se sustituyo por
+   las 6 disciplinas reales, **con el objetivo dentro de la descripcion** para que el bot
+   recomiende con el mismo criterio que la web sin tocar `prompt.js`.
+
+Verificado en vivo: pregunta de precios -> solo mensuales y bonos; "quiero ganar musculo" ->
+Total Strength y Halterofilia, que es exactamente `musculacion` en `OBJETIVOS`.
+
+---
+
 ## Phase 2 — ✅ IMPLEMENTADA Y DESPLEGADA EN PRODUCCIÓN (2026-08-19)
 
 **Las 4 preguntas de clarificación de abajo ya NO aplican: se resolvieron implementando.**
