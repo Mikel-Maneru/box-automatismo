@@ -64,11 +64,14 @@ so the build does not wipe `fotos/`, `widget/` or `reservar.html`. The compiled 
 **is committed**, because that is what gets served. Express (`src/index.js`) serves `public/` plus
 `/api/*` unchanged. The pre-migration landing is kept as `public/index.legacy.html`.
 
-**`api/` is NOT used in production — this is the main trap in this repo.**
-The Vercel project is set to *Framework Preset = `express`*, so Vercel wraps `src/index.js` as a
-single function that serves everything (static `public/` + `/api` through Express). The loose
-`api/*.js` files are not invoked and Vercel does not run the Vite build either. `src/routes/*` is
-the code that actually runs; treat `api/*` as legacy until it is removed.
+**`api/` fue BORRADO el 2026-08-19 — y la nota anterior aquí decía lo contrario de la verdad.**
+Este fichero afirmaba que `api/*` no se usaba en producción. **Era falso:** Vercel enruta
+`/api/*` a las funciones de la carpeta `api/` ANTES que al Express, así que esas copias viejas
+eran las que respondían y las de `src/routes/*` no llegaban a ejecutarse. Costó tres bugs en
+producción (campos del formulario que se perdían, la recomendación por objetivo que no llegaba a
+`/reservar`, y reservas hechas con la cuenta personal de Mikel pese a estar desactivadas).
+Ahora `src/routes/*` es lo único que hay y lo único que corre. **No recrear `api/`.**
+Si alguna vez hace falta separar funciones, hacerlo con una sola fuente de verdad.
 
 **Signup flow (dual entry):**
 1. **Chat:** Agent collects nombre/telefono/email/nivel conversationally, appends `SIGNUP_DATA:{json}` → chat.js strips it, calls createSignup
@@ -103,7 +106,7 @@ real data (`realData: true`); farther dates show "las reservas se abren 1-2 día
 - `src/lib/whatsapp.js` — Kapso WhatsApp Cloud API client
 - `src/lib/wodbuster.js` — WodBuster scraping/API client, session handling (largest file)
 - `src/lib/supabase.js` — Supabase client, lazily built behind a Proxy
-- `api/` — legacy serverless copies, not used by the current Vercel setup
+- ~~`api/`~~ — borrado el 2026-08-19: ensombrecia a `src/routes/*` en produccion
 
 Frontend (edit here, never the compiled output):
 
