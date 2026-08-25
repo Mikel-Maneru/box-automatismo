@@ -16,8 +16,8 @@
 | **WhatsApp** | ❌ Eliminado (`017f05c`) y **desplegado** | Los 2 avisos que importaban pasaron a email |
 | **Chat** | ✅ **En la cuenta de Anthropic de Xabi** (2026-08-19) | Mikel es admin. Verificado en vivo. Paga Xabi |
 | **Limpieza** | ✅ `api/` borrado (`ff330ef`) | Queda solo el dominio `send.anboto.sc` en Resend |
-| **Tarifas** | 🚫 **NO se publican precios** (25-08-2026) | Petición del cliente. Fuera de la landing, del JSON-LD y del prompt del chatbot. Ver `decisions.md` |
-| **Próxima acción** | ⚠️ Desplegar la retirada de tarifas (`vercel --prod`) · rotar `RESEND_API_KEY` **y** `ANTHROPIC_API_KEY` (ambas se pegaron en un chat) · esperar a Xabi (API WodBuster, fotos y datos del centro) |
+| **Tarifas** | 🚫 **NO se publican precios** — ✅ **EN PRODUCCIÓN (25-08-2026)** | Petición del cliente. Fuera de la landing, del JSON-LD y del prompt del chatbot. Bundle en prod `app-CNg4DcFO.js`. Ver `decisions.md` |
+| **Próxima acción** | ⚠️ Vaciar `boxes.membership_plans` en Supabase y revisar `boxes.faqs`/`boxes.extra_info` · rotar `RESEND_API_KEY` **y** `ANTHROPIC_API_KEY` (ambas se pegaron en un chat) · esperar a Xabi (API WodBuster, fotos y datos del centro) |
 
 ### ⚠️ Tres trampas que ya nos costaron horas — no repetir
 

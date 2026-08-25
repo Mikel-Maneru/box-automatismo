@@ -271,3 +271,33 @@ inexistente, nav sin el enlace, indices 01-08 seguidos, banda en fila a 1280px y
 pero deja de haber precios retirados guardados en la BD. Y **revisar `boxes.faqs` y
 `boxes.extra_info`**: esos SI siguen entrando en el prompt y si alguien escribio importes ahi,
 el bot los tendria delante (la regla del prompt se lo prohibe, pero el dato es la defensa buena).
+
+### Desplegado y verificado en produccion (25-08-2026)
+
+`vercel --prod` desde `main` (`3430732`). Deploy `dpl_8mpxqPAq3vXwsQVnT1MztCH5aAW6`.
+Comprobado contra el dominio, no contra el "ready" del CLI:
+
+| Comprobacion | Antes | Despues |
+|---|---|---|
+| Bundle servido en anbotosc.com | `app-DlvqwfBE.js` | `app-CNg4DcFO.js` (= el del repo) |
+| `priceRange` en el JSON-LD | 1 | 0 |
+| `id="tarifas"` | 1 | 0 |
+| Importes en el HTML | 4 | 0 |
+| Simbolo € | — | 0 |
+| Palabras tarifa/precio/mensual/bono | — | 0 |
+
+Tambien: `/reservar` 200 con 0 importes, `www` sigue redirigiendo 308, `/health` ok, y los dos
+JSON-LD de ambas paginas validos y sin `priceRange`.
+
+**El chatbot se probo en produccion con dos peticiones reales** (es la parte que de verdad podia
+filtrar precios). Pregunta normal y luego presion insistiendo en "un rango" o "un desde X":
+en las dos deriva al 688 661 924 y ofrece la clase gratuita, **0 cifras**. La regla aguanta.
+
+**Detalle observado, por si molesta:** el bot nombra TIPOS de plan sin importes ("ilimitado, dias
+sueltos, bonos..."). No sale de `membership_plans` (ya no se interpola): lo improvisa, o viene de
+`faqs`/`extra_info`. Si el cliente considera que eso ya es "hablar de tarifas", hay que endurecer
+la regla de `prompt.js` para que tampoco enumere tipos de plan.
+
+**Nota de entorno:** `vercel link` creo un `.env.local` con un `VERCEL_OIDC_TOKEN` (ignorado por
+git) y añadio un `.env*` redundante al `.gitignore` que se revirtio: `.env` y `.env.local` ya
+estaban en las lineas 2 y 3, y ese patron ademas tapaba `.env.example`, que SI va trackeado.
