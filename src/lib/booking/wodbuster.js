@@ -3,12 +3,12 @@ const BOX_SLUG = process.env.WODBUSTER_BOX_SLUG || 'anboto';
 const PUBLIC_URL = BOX_URL;
 const LOGIN_URL = `https://wodbuster.com/account/login.aspx?cb=${BOX_SLUG}`;
 
-class WodbusterAuthError extends Error {
-  constructor(message = 'Sesion de WodBuster expirada') {
-    super(message);
-    this.name = 'WodbusterAuthError';
-  }
-}
+const { BookingAuthError } = require('./errors');
+
+// Alias historico: el resto del fichero sigue lanzando WodbusterAuthError, pero la
+// clase real es la compartida, asi que las rutas pueden comprobarla sin saber que
+// proveedor esta activo.
+const WodbusterAuthError = BookingAuthError;
 
 // --- Cookie management with Supabase persistence ---
 
@@ -16,7 +16,7 @@ let memoryCookie = null;
 
 async function getSupabase() {
   try {
-    return require('./supabase');
+    return require('../supabase');
   } catch {
     return null;
   }

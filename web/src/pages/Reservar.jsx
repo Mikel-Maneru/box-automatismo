@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { LangProvider, useLang, T } from '../i18n/LangContext.jsx';
 import { Pico } from '../components/icons.jsx';
-import { WHATSAPP_URL, objetivoPorValor, claveClase } from '../data/site.js';
+import { WHATSAPP_URL, objetivoPorValor, esMismaClase } from '../data/site.js';
 
 // Página de reserva de la clase gratuita. Se llega SIEMPRE con ?token=... desde el email
 // de scheduling (src/lib/email.js), nunca desde la landing. Sustituye a la antigua
@@ -72,16 +72,16 @@ function ReservarInner() {
   // Se recorre el objetivo en orden de preferencia y gana el primero reservable.
   const idxRecomendado = useMemo(() => {
     const orden = obj
-      ? obj.clases.map(claveClase)
-      : (nivel === 'Sin experiencia' ? [claveClase('Oinarriak')] : []);
+      ? obj.clases
+      : (nivel === 'Sin experiencia' ? ['Oinarriak'] : []);
     if (!orden.length || !clases.length) return -1;
     for (const clase of orden) {
-      const i = clases.findIndex((c) => claveClase(c.name) === clase && c.canBook);
+      const i = clases.findIndex((c) => esMismaClase(c.name, clase) && c.canBook);
       if (i !== -1) return i;
     }
     // Ninguna reservable: se señala igualmente para orientar, aunque no se pueda pulsar.
     for (const clase of orden) {
-      const i = clases.findIndex((c) => claveClase(c.name) === clase);
+      const i = clases.findIndex((c) => esMismaClase(c.name, clase));
       if (i !== -1) return i;
     }
     return -1;

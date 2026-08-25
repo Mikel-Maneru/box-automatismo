@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const supabase = require('../lib/supabase');
 const { sendFollowupEmail } = require('../lib/email');
-const wodbuster = require('../lib/wodbuster');
+const reservas = require('../lib/booking');
 const { sendAlerta } = require('../lib/email');
 
 let lastCookieAlert = 0;
@@ -15,31 +15,31 @@ router.get('/followup', async (req, res) => {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
-    // Keep-alive: validate WodBuster session and auto-re-login if expired
+    // Keep-alive: valida la sesion del proveedor de reservas y reintenta login si caduco
     try {
-      const valid = await wodbuster.validateSession();
+      const valid = await reservas.validateSession();
       if (!valid) {
-        console.error('WodBuster session expired and auto-login failed!');
+        console.error('Sesion del proveedor de reservas expirada y auto-login fallido');
         // Aviso al box, como mucho uno por hora
         if (Date.now() - lastCookieAlert > 60 * 60 * 1000) {
           lastCookieAlert = Date.now();
           await sendAlerta(
-            '\u{26A0} Anboto SC: la sesion de WodBuster ha caducado',
-            '<p>La sesion de WodBuster ha expirado y el login automatico ha fallado.</p>' +
+            '\u{26A0} Anboto SC: la sesion de ' + reservas.nombreProveedor + ' ha caducado',
+            '<p>La sesion de ' + reservas.nombreProveedor + ' ha expirado y el login automatico ha fallado.</p>' +
             '<p><strong>Mientras no se arregle, nadie puede reservar la clase de prueba.</strong></p>' +
-            '<p>Hay que renovar la cookie .WBAuth o revisar WODBUSTER_EMAIL / WODBUSTER_PASSWORD en Vercel.</p>'
+            '<p>Hay que renovar la cookie .WBAuth o revisar las credenciales del proveedor en Vercel.</p>'
           );
         }
       } else {
-        console.log('WodBuster session valid (keep-alive)');
+        console.log('Sesion del proveedor de reservas valida (keep-alive)');
       }
     } catch (err) {
-      console.error('WodBuster keep-alive error:', err.message);
+      console.error('Error en keep-alive del proveedor de reservas:', err.message);
       if (Date.now() - lastCookieAlert > 60 * 60 * 1000) {
         lastCookieAlert = Date.now();
         await sendAlerta(
-          '\u{26A0} Anboto SC: error en el keep-alive de WodBuster',
-          `<p>Ha fallado la comprobacion diaria de la sesion de WodBuster.</p><p><code>${err.message}</code></p>`
+          '\u{26A0} Anboto SC: error en el keep-alive de ' + reservas.nombreProveedor,
+          `<p>Ha fallado la comprobacion diaria de la sesion de ${reservas.nombreProveedor}.</p><p><code>${err.message}</code></p>`
         );
       }
     }

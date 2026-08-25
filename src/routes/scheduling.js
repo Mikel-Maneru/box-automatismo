@@ -1,24 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const supabase = require('../lib/supabase');
-const wodbuster = require('../lib/wodbuster');
+const reservas = require('../lib/booking');
 const { sendAlerta } = require('../lib/email');
+const clases = require('../lib/clases');
 
-// Reserva automatica en WodBuster. DESACTIVADA a proposito: la sesion de WodBuster es la
+// Reserva automatica en el proveedor. DESACTIVADA a proposito: la sesion es la
 // CUENTA PERSONAL de Mikel, asi que cada clase de prueba quedaba reservada a su nombre.
-// Mientras esta en 'off' no se toca WodBuster: se guarda la peticion como 'pending' y se
+// Mientras esta en off no se toca el proveedor: se guarda la peticion como pending y se
 // avisa al box por email para que la reserve a mano. Poner WODBUSTER_AUTOBOOK=on cuando
 // exista una cuenta del box (ver punto 4 de memory/people.md).
 const AUTOBOOK = process.env.WODBUSTER_AUTOBOOK === 'on';
 
-const CLASS_DESCRIPTIONS = {
-  'Oinarriak': 'Clase para principiantes',
-  'Wod': 'CrossTraining',
-  'Hyrox': 'Hyrox - preparacion carrera',
-  'Haltero': 'Halterofilia - fuerza tecnica',
-  'Endurance': 'Endurance - resistencia',
-  'Total Strength': 'Total Strength - fuerza',
-};
+// Los nombres y descripciones de clase viven en shared/clases.json (fuente unica).
 
 // GET /api/classes?date=YYYY-MM-DD
 router.get('/classes', async (req, res) => {
@@ -39,22 +33,22 @@ router.get('/classes', async (req, res) => {
       return res.json({ classes: [] });
     }
 
-    // Get schedule directly from WodBuster
+    // Horario y disponibilidad desde el proveedor activo
     let wbResult = { classes: [], realData: false };
     try {
-      wbResult = await wodbuster.getClassAvailability(dateObj);
+      wbResult = await reservas.getClassAvailability(dateObj);
     } catch (err) {
-      if (err instanceof wodbuster.WodbusterAuthError) {
+      if (err instanceof reservas.BookingAuthError) {
         return res.json({ classes: [], error: 'auth', retry: true, message: 'Temporalmente no disponible' });
       }
-      console.error('WodBuster error:', err.message);
+      console.error('Error del proveedor de reservas:', err.message);
       return res.json({ classes: [], retry: true, message: 'Error obteniendo horarios' });
     }
 
     let classes = wbResult.classes.map(c => ({
       time: c.time,
       name: c.name,
-      description: CLASS_DESCRIPTIONS[c.name] || c.name,
+      description: clases.descripcion(c.name),
       id: c.id || null,
       capacity: c.capacity,
       booked: c.booked,
@@ -90,19 +84,19 @@ router.post('/book', async (req, res) => {
       return res.status(400).json({ error: 'Faltan parametros' });
     }
 
-    // If no classId, try to find it from WodBuster
+    // Sin classId, intenta resolverlo consultando al proveedor
     let bookingClassId = classId;
     if (!bookingClassId && className && classTime) {
       try {
         const [year, month, day] = date.split('-').map(Number);
         const dateObj = new Date(year, month - 1, day);
-        const wb = await wodbuster.getClassAvailability(dateObj);
+        const wb = await reservas.getClassAvailability(dateObj);
         // getClassAvailability devuelve {classes, realData}: iterar el objeto lanzaba
         // "wbClasses.find is not a function" y esta rama nunca resolvia la clase.
         const match = (wb.classes || []).find(c => c.time === classTime + ':00' && c.name === className);
         bookingClassId = match?.id;
       } catch (err) {
-        if (err instanceof wodbuster.WodbusterAuthError) {
+        if (err instanceof reservas.BookingAuthError) {
           return res.status(503).json({
             error: 'Temporalmente no disponible',
             retry: true,
@@ -113,7 +107,7 @@ router.post('/book', async (req, res) => {
     }
 
     if (!bookingClassId) {
-      return res.status(400).json({ error: 'No se ha encontrado la clase en WodBuster. Escribenos por WhatsApp al 688 661 924.' });
+      return res.status(400).json({ error: 'No hemos encontrado esa clase. Escribenos por WhatsApp al 688 661 924 y te la reservamos.' });
     }
 
     // Validate token
@@ -146,12 +140,12 @@ router.post('/book', async (req, res) => {
       return res.status(404).json({ error: 'Signup no encontrado' });
     }
 
-    // Reservar en WodBuster solo si el autobook esta activo (ver AUTOBOOK arriba).
+    // Reservar en el proveedor solo si el autobook esta activo (ver AUTOBOOK arriba).
     let bookingResult = { success: true };
     if (AUTOBOOK) {
       const [year, month, day] = date.split('-').map(Number);
       const dateObj = new Date(year, month - 1, day);
-      bookingResult = await wodbuster.bookClass(bookingClassId, dateObj);
+      bookingResult = await reservas.bookClass(bookingClassId, dateObj);
     }
 
     // Save booking to Supabase
@@ -183,7 +177,7 @@ router.post('/book', async (req, res) => {
       .eq('id', tokenData.id);
 
     if (!bookingResult.success) {
-      return res.status(500).json({ error: 'Error reservando la clase en WodBuster' });
+      return res.status(500).json({ error: 'No se ha podido completar la reserva' });
     }
 
     if (!AUTOBOOK) {
@@ -194,8 +188,8 @@ router.post('/book', async (req, res) => {
         '<p><strong>Dia:</strong> ' + date + '</p>' +
         '<p><strong>Hora:</strong> ' + (classTime || 'sin especificar') + '</p>' +
         '<p><strong>Clase:</strong> ' + (className || 'sin especificar') + '</p>' +
-        '<hr><p><strong>Hay que reservarla a mano en WodBuster.</strong> La reserva automatica ' +
-        'esta desactivada para no apuntar a la gente con la cuenta personal de Mikel.</p>'
+        '<hr><p><strong>Hay que reservarla a mano en ' + reservas.nombreProveedor + '.</strong> La reserva ' +
+        'automatica esta desactivada para no apuntar a la gente con una cuenta personal.</p>'
       );
     }
 
@@ -210,7 +204,7 @@ router.post('/book', async (req, res) => {
       },
     });
   } catch (err) {
-    if (err instanceof wodbuster.WodbusterAuthError) {
+    if (err instanceof reservas.BookingAuthError) {
       return res.status(503).json({
         error: 'Temporalmente no disponible',
         retry: true,

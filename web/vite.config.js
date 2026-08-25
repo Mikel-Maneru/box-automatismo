@@ -20,5 +20,6 @@ export default defineConfig({
     emptyOutDir: false,
     assetsDir: 'assets',
   },
-  server: { port: 5173, proxy },
+  // fs.allow: shared/clases.json vive fuera de web/, y Vite lo bloquea por defecto.
+  server: { port: 5173, proxy, fs: { allow: ['..'] } },
 });

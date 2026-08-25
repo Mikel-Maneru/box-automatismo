@@ -73,10 +73,9 @@ export const OBJETIVO_VALUES = {
 export const objetivoPorValor = (v) =>
   OBJETIVOS.find((o) => OBJETIVO_VALUES[o.id] === v) || null;
 
-// WodBuster nombra algunas clases distinto que nosotros ("Wod" por "WOD", "Haltero" por
-// "Halterofilia"). Normalizamos para poder cruzar el horario real con nuestro mapa.
-export const claveClase = (nombre) =>
-  (nombre || '').trim().toLowerCase().replace(/^halterofilia$/, 'haltero');
+// Los sistemas de reserva nombran las clases a su manera ("Wod", "WOD (ANBOTO)", "Haltero").
+// La normalizacion vive en shared/clases.json, que tambien lee el backend.
+export { clave as claveClase, canonica as claseCanonica, esMismaClase } from './clases.js';
 
 // Canales de captación para "¿Cómo nos conociste?" (value fijo ES, label traducida).
 export const CANALES = [
