@@ -103,14 +103,6 @@ export const REVIEWS = [
   { av: 'K', name: 'Kike Largo',   src: 'Local Guide', text: 'He estado como en casa, gracias Xabi por toda tu amabilidad. Nos vemos en el box!' },
 ];
 
-// Tarifas mensuales. price = número, feats = lista (claves i18n o texto fijo), pop = destacado.
-export const PLANS = [
-  { nameKey: 't.n8',  price: 60, feats: [{ k:'t.f8' }, { txt:'Wod, Open Box, Total Strength' }, { txt:'Haltero, Oinarriak, Endurance, Hyrox' }, { k:'t.coach' }] },
-  { nameKey: 't.n12', price: 70, feats: [{ k:'t.f12' }, { txt:'Wod, Open Box, Total Strength' }, { txt:'Haltero, Oinarriak, Endurance, Hyrox' }, { k:'t.coach' }] },
-  { nameKey: 't.n16', price: 80, feats: [{ k:'t.f16' }, { txt:'Wod, Open Box, Total Strength' }, { txt:'Haltero, Oinarriak, Endurance, Hyrox' }, { k:'t.coach' }] },
-  { nameKey: 't.nun', price: 95, pop: true, feats: [{ k:'t.fun' }, { k:'t.fall' }, { k:'t.fwa' }, { k:'t.coach' }, { k:'t.fflex' }] },
-];
-
 export const WHATSAPP_URL = 'https://wa.me/34688661924?text=Hola%2C%20me%20gustar%C3%ADa%20apuntarme%20a%20una%20clase%20gratis%20en%20Anboto%20SC';
 export const WODBUSTER_URL = 'https://anboto.wodbuster.com';
 export const INSTAGRAM_URL = 'https://www.instagram.com/anbotofitness/';

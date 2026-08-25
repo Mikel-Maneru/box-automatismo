@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLang, T } from '../i18n/LangContext.jsx';
 import { Pico, PkMark, WhatsApp, Pin, Phone, Mail, InstagramIcon } from './icons.jsx';
 import {
-  DISCIPLINAS, OBJETIVOS, COACHES, REVIEWS, PLANS, IG_PHOTOS,
+  DISCIPLINAS, OBJETIVOS, COACHES, REVIEWS, IG_PHOTOS,
   WHATSAPP_URL, INSTAGRAM_URL,
 } from '../data/site.js';
 
@@ -169,43 +169,19 @@ export function StatBand() {
   );
 }
 
-/* ---------- 05 · Tarifas (oscuro) ---------- */
-export function Tarifas() {
+/* ---------- Prueba gratis (banda de CTA) ---------- */
+export function PruebaGratis() {
   return (
-    <section className="pad dark on-dark arch" id="tarifas">
+    <section className="pad dark on-dark arch" id="prueba-gratis">
       <div className="wrap">
-        <T as="span" className="sec-index rev-up" k="t.idx" />
-        <T as="h2" className="title rev-up" k="t.title" />
-        <T as="p" className="lead rev-up" k="t.lead" />
-        <div className="price-grid">
-          {PLANS.map((pl) => (
-            <div className={`plan rev-up ${pl.pop ? 'pop' : ''}`.trim()} key={pl.nameKey}>
-              {pl.pop && <T as="span" className="badge" k="t.pop" />}
-              <span className="pn"><T as="span" k={pl.nameKey} /></span>
-              <div className="pp"><span className="v">{pl.price}</span><span className="c">€</span><T as="span" className="per" k="t.month" /></div>
-              <ul className="tri-list">
-                {pl.feats.map((f, i) => (f.k ? <T as="li" k={f.k} key={i} /> : <li key={i}>{f.txt}</li>))}
-              </ul>
-              <T as="a" href="#apuntarse" className="pbtn" k="t.start" />
-            </div>
-          ))}
-        </div>
-        <div className="extras">
-          <div>
-            <T as="p" className="mono rev-up" style={{ marginBottom: 14 }} k="t.bonos" />
-            <div className="bonos">
-              <div className="bono rev-up"><T as="div" className="s" k="t.b5" /><div className="p">60 €</div><T as="div" className="d" k="t.b5d" /></div>
-              <div className="bono rev-up"><T as="div" className="s" k="t.b10" /><div className="p">100 €</div><T as="div" className="d" k="t.b10d" /></div>
-            </div>
+        <div className="trial trial-band rev-up">
+          <div className="tb-txt">
+            <T as="span" className="tl" k="pg.eyebrow" />
+            <T as="strong" k="pg.title" />
+            <T as="p" k="pg.lead" />
           </div>
-          <div className="trial rev-up">
-            <T as="span" className="tl" k="t.trtl" />
-            <T as="strong" k="t.trh" />
-            <T as="p" k="t.trp" />
-            <T as="a" href="#apuntarse" k="t.trcta" />
-          </div>
+          <T as="a" href="#apuntarse" k="pg.cta" />
         </div>
-        <T as="p" className="activities rev-up" k="t.act" />
       </div>
     </section>
   );

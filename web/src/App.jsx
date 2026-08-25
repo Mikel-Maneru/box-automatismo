@@ -7,7 +7,7 @@ import Faq from './components/Faq.jsx';
 import Signup from './components/Signup.jsx';
 import ChatWidget from './components/ChatWidget.jsx';
 import {
-  Marquee, PhotoBand, QueEs, Disciplinas, StatBand, Tarifas,
+  Marquee, PhotoBand, QueEs, Disciplinas, StatBand, PruebaGratis,
   Coaches, Opiniones, CtaContacto, MapEmbed, Instagram, Footer,
 } from './components/Sections.jsx';
 
@@ -24,7 +24,7 @@ function Site() {
       <Disciplinas />
       <StatBand />
       <Horarios />
-      <Tarifas />
+      <PruebaGratis />
       <Coaches />
       <Opiniones />
       <Faq />

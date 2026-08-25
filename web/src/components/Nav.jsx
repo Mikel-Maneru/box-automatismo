@@ -7,7 +7,6 @@ const NAV_LINKS = [
   ['#que-es', 'nav.train'],
   ['#disciplinas', 'nav.classes'],
   ['#horarios', 'nav.sched'],
-  ['#tarifas', 'nav.prices'],
   ['#coaches', 'nav.coaches'],
   ['#faq', 'nav.faq'],
 ];
@@ -16,7 +15,6 @@ const MOBILE_LINKS = [
   ['#que-es', 'nav.train'],
   ['#disciplinas', 'nav.classes'],
   ['#horarios', 'nav.sched'],
-  ['#tarifas', 'nav.prices'],
   ['#coaches', 'nav.coaches'],
   ['#opiniones', 'nav.reviews'],
   ['#faq', 'nav.faq'],

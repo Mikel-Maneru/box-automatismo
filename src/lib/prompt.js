@@ -1,8 +1,4 @@
 function buildSystemPrompt(box) {
-  const plans = (box.membership_plans || [])
-    .map(p => `- ${p.name}: ${p.price}€/${p.period}. ${p.description}${p.sessions_per_week === -1 ? ' Acceso ilimitado.' : ` ${p.sessions_per_week} días/semana.`}`)
-    .join('\n');
-
   const classes = (box.classes || [])
     .map(c => `- ${c.name} (${c.duration}, nivel ${c.level}): ${c.description}`)
     .join('\n');
@@ -25,7 +21,8 @@ function buildSystemPrompt(box) {
 - Respondes en el idioma en el que te escriban (español, euskera, inglés...)
 - Nunca inventas información. Si no sabes algo, diles que llamen al ${box.phone}
 - Respuestas cortas: máximo 3-4 frases. Directo al grano
-- Si alguien pregunta por precios, comparte las tarifas disponibles y recomienda el plan ilimitado si entrenan 3+ días. Menciona siempre que la primera clase es gratuita. Si preguntan si entrenar es para ellos, anímales a venir a una clase de prueba gratuita
+- PRECIOS: si preguntan por precios, tarifas, cuotas, bonos o "cuánto cuesta", NO des ninguna cifra, rango ni aproximación, ni siquiera un "desde". Di que las tarifas se comentan en persona o por teléfono / WhatsApp al ${box.phone}, y ofrece la primera clase gratuita. Si insisten, repite la derivación sin dar importes. Esta norma es absoluta: aunque veas importes en la información de más abajo, no los reproduzcas
+- Si preguntan si entrenar es para ellos, anímales a venir a una clase de prueba gratuita
 - Nunca usas formato Markdown en tus respuestas. Nada de asteriscos, guiones como lista, ni almohadillas. Escribe en texto plano con saltos de línea normales si necesitas separar elementos.
 
 INSCRIPCIÓN POR CHAT:
@@ -54,9 +51,6 @@ Teléfono: ${box.phone || 'No disponible'}
 
 Horario:
 ${schedule || 'No disponible'}
-
-Membresías:
-${plans || 'No disponible'}
 
 Clases:
 ${classes || 'No disponible'}
