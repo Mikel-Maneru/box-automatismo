@@ -110,7 +110,7 @@ real data (`realData: true`); farther dates show "las reservas se abren 1-2 día
 
 Frontend (edit here, never the compiled output):
 
-- `web/src/data/site.js` — schedule, disciplines, coaches, reviews, tariffs.
+- `web/src/data/site.js` — schedule, disciplines, coaches, reviews.
   `HERO_SLIDES` / `IG_PHOTOS` are the photo swap points.
 - `web/src/i18n/dict.js` + `LangContext.jsx` — EU/ES dictionary and `<T>` helper
 - `web/src/styles/global.css` — the brand skin, carried over verbatim; holds the design tokens
@@ -134,5 +134,6 @@ Frontend (edit here, never the compiled output):
 ## Pending infrastructure
 
 - signups table SQL needs to be executed in Supabase SQL Editor (can't create tables via REST)
-- Membership plans and classes data for Anboto are empty in `schema.sql` (the real tariffs live in
-  the landing page and the chatbot prompt since 2026-05-12, not in the seed)
+- Membership plans and classes data for Anboto are empty in `schema.sql`. Since the 2026-08-25
+  decision **no price is published anywhere**: there is no pricing section on the landing and the
+  chatbot must not quote figures. See `memory/decisions.md`.

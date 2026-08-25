@@ -225,3 +225,49 @@ cuatro sitios (seccion de clases, formulario, /reservar y chatbot) recomiendan c
 mano con un `sessionId` cualquiera devuelve 500 "Error al crear conversacion" y parece que el
 chat esta roto. No lo esta: el widget manda `null` la primera vez y el backend genera el UUID.
 Al probar a mano, omitir `sessionId`.
+
+## 2026-08-25: El cliente no quiere precios en la web — tarifas fuera de los 4 sitios
+
+Peticion del cliente: que no aparezca **nada** de tarifas en la web. Los precios estaban en
+cuatro sitios distintos, no solo en la seccion de precios, asi que se limpiaron todos:
+
+1. **Seccion `#tarifas`**: borrada. Con ella se fueron `PLANS` de `web/src/data/site.js`, el
+   componente `Tarifas()` de `Sections.jsx`, las 12 lineas de claves `t.*` de `dict.js`, la clave
+   `nav.prices` y el enlace `#tarifas` de `Nav.jsx` (escritorio y movil), y ~35 reglas de
+   `global.css` (`.price-grid`, `.plan*`, `.extras`, `.bonos`, `.bono*`, `.activities`, mas sus
+   entradas en los bloques responsive y en el tema oscuro).
+2. **Bonos** (60 EUR / 100 EUR): estaban **hardcodeados en el JSX**, no en `site.js`. Se fueron con
+   la seccion. Si alguien vuelve a buscar precios en `site.js` y no los encuentra, era por esto.
+3. **Datos estructurados**: `"priceRange": "60-95 EUR"` fuera del JSON-LD de `web/index.html`
+   (que es la plantilla comun, asi que tambien desaparece de `public/reservar.html` al compilar).
+4. **Chatbot**: era el sitio menos evidente y el que mas importaba. Dos cambios en `prompt.js`:
+   - Se **elimino la interpolacion de `box.membership_plans`** y el bloque `Membresias:` del
+     prompt. Ahora los importes de Supabase **no llegan al modelo**, asi que no puede citarlos
+     aunque la columna siga llena. Esta es la parte que de verdad lo garantiza.
+   - La regla de precios pasa de "comparte las tarifas disponibles" a no dar ninguna cifra, rango
+     ni "desde", derivar al telefono/WhatsApp y ofrecer la clase gratuita.
+
+**Se salva el CTA de la prueba gratuita.** El bloque "Primera clase 100% gratis" vivia DENTRO de
+la seccion de tarifas. Borrar la seccion entera se habria llevado un punto de conversion a mitad
+de pagina, asi que se extrajo a su propia banda (`PruebaGratis()`, `#prueba-gratis`, entre
+Horarios y Coaches) con claves `pg.*`. Reutiliza el `.trial` de siempre mas un `.trial-band` que
+lo pone en fila en escritorio y en columna por debajo de 760px. No se metio en la seccion
+"Apuntate" porque ya dice lo mismo ("Tu clase gratis te espera", badge "1a clase gratis"): habria
+sido duplicar el mensaje.
+
+**Los indices de seccion son texto a mano en `dict.js`**, no un contador. Al quitar la 04 habia
+que renumerar o quedaba un salto 03 -> 05: Equipo 04, Opiniones 05, FAQ 06, Apuntate 07,
+Instagram 08. La banda nueva **no lleva indice** a proposito (es un CTA, no una seccion mas).
+Ojo: `step.idx` y `p.idx` siguen con numeros viejos pero sus componentes (`Empezar`,
+`SobreNosotros`) **no se renderizan** en `App.jsx`, asi que no se tocaron.
+
+**Verificado en el DOM compilado** (servidor local sobre `public/`, no solo en el fuente):
+0 coincidencias de `N EUR` y de tarifa/precio/mensual/bono en ES **y** en EU, `#tarifas`
+inexistente, nav sin el enlace, indices 01-08 seguidos, banda en fila a 1280px y en columna a
+375px sin overflow, 0 errores de consola, y los dos JSON-LD validos y sin `priceRange`.
+
+**PENDIENTE (lo tiene que hacer Mikel, no hay claves en el repo):** vaciar
+`boxes.membership_plans` en Supabase. Ya no es imprescindible — el prompt no lee esa columna —
+pero deja de haber precios retirados guardados en la BD. Y **revisar `boxes.faqs` y
+`boxes.extra_info`**: esos SI siguen entrando en el prompt y si alguien escribio importes ahi,
+el bot los tendria delante (la regla del prompt se lo prohibe, pero el dato es la defensa buena).

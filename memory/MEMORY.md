@@ -4,19 +4,20 @@
 
 ---
 
-## 📋 Quick Status (2026-08-19)
+## 📋 Quick Status (2026-08-25)
 
 | Item | Status | Notes |
 |------|--------|-------|
-| **Rama activa** | `feat/react-vite-migration` | Aún NO mergeada a `main` |
+| **Rama activa** | `main` | Ya mergeada (`a81baca`) y 5 commits por delante de `feat/react-vite-migration`. Verificado el 25-08-2026 |
 | **Dominio** | ✅ **https://anbotosc.com EN PRODUCCIÓN** | `A 76.76.21.21` en IONOS + cert TLS. `www` redirige 308 |
 | **Fase 1** | ✅ COMPLETA | Dominio, widget con marca, favicon según tema |
 | **Fase 2** | ✅ **DESPLEGADA Y VERIFICADA EN VIVO (2026-08-19)** | Bundle en prod `app-VFg2lThZ.js` = el del repo |
 | **Email propio** | ✅ **FUNCIONANDO** | Envío real comprobado a `anbotocf@gmail.com` desde `hola@send.anbotosc.com` |
 | **WhatsApp** | ❌ Eliminado (`017f05c`) y **desplegado** | Los 2 avisos que importaban pasaron a email |
 | **Chat** | ✅ **En la cuenta de Anthropic de Xabi** (2026-08-19) | Mikel es admin. Verificado en vivo. Paga Xabi |
-| **Limpieza** | ⏳ Decidida, sin ejecutar | Borrar `api/` (código muerto) y el dominio `send.anboto.sc` en Resend |
-| **Próxima acción** | ⚠️ Rotar `RESEND_API_KEY` **y** `ANTHROPIC_API_KEY` (ambas se pegaron en un chat) · esperar a Xabi (API WodBuster, fotos y datos del centro) |
+| **Limpieza** | ✅ `api/` borrado (`ff330ef`) | Queda solo el dominio `send.anboto.sc` en Resend |
+| **Tarifas** | 🚫 **NO se publican precios** (25-08-2026) | Petición del cliente. Fuera de la landing, del JSON-LD y del prompt del chatbot. Ver `decisions.md` |
+| **Próxima acción** | ⚠️ Desplegar la retirada de tarifas (`vercel --prod`) · rotar `RESEND_API_KEY` **y** `ANTHROPIC_API_KEY` (ambas se pegaron en un chat) · esperar a Xabi (API WodBuster, fotos y datos del centro) |
 
 ### ⚠️ Tres trampas que ya nos costaron horas — no repetir
 

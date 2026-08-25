@@ -148,7 +148,8 @@ Pega este codigo antes de `</body>` en la web del box:
 
 Frontend (aqui es donde se edita):
 
-- `web/src/data/site.js` — horario, disciplinas, coaches, resenas y tarifas.
+- `web/src/data/site.js` — horario, disciplinas, coaches y resenas. **Sin tarifas**: no se publican
+  precios (decision del cliente, 25-08-2026).
   `HERO_SLIDES` / `IG_PHOTOS` son los puntos de intercambio de fotos
 - `web/src/i18n/dict.js` + `LangContext.jsx` — diccionario EU/ES y helper `<T>`
 - `web/src/styles/global.css` — la piel de marca y los tokens de diseno
