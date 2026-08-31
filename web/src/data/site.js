@@ -26,13 +26,17 @@ export const DAYS = [
   ['mon', 'd.mon'], ['tue', 'd.tue'], ['wed', 'd.wed'],
   ['thu', 'd.thu'], ['fri', 'd.fri'], ['sat', 'd.sat'],
 ];
+// Horario real leido de la web publica de WodBuster el 2026-08-25 (Xabi lo cambio).
+// Open Box va en PARALELO a casi todo (entrenamiento libre), asi que aqui se muestra la
+// clase guiada de cada franja; Open Box solo aparece en las horas que no tienen otra.
+// Provisional hasta que Xabi mande el definitivo del centro nuevo.
 export const SCHED = {
-  mon: [['06:30','WOD'],['09:30','Open Box'],['13:30','WOD'],['17:30','Oinarriak'],['18:30','WOD'],['19:30','Halterofilia'],['20:30','WOD']],
-  tue: [['06:30','WOD'],['09:30','Open Box'],['13:30','WOD'],['17:30','WOD'],['18:30','Hyrox'],['19:30','WOD'],['20:30','Endurance']],
-  wed: [['06:30','WOD'],['09:30','Open Box'],['13:30','WOD'],['17:30','Oinarriak'],['18:30','WOD'],['19:30','Total Strength'],['20:30','WOD']],
-  thu: [['06:30','WOD'],['09:30','Open Box'],['13:30','WOD'],['17:30','WOD'],['18:30','Halterofilia'],['19:30','WOD'],['20:30','Hyrox']],
-  fri: [['06:30','WOD'],['09:30','Open Box'],['13:30','WOD'],['17:30','Oinarriak'],['18:30','WOD'],['19:30','Endurance'],['20:30','WOD']],
-  sat: [['09:00','WOD'],['10:00','Hyrox'],['11:00','Open Box']],
+  mon: [['06:30','WOD'],['07:30','Iniciación'],['08:30','Open Box'],['10:15','Hycross'],['11:30','Open Box'],['12:45','WOD'],['14:30','WOD'],['15:30','Open Box'],['17:15','WOD'],['18:15','WOD'],['19:15','WOD'],['20:15','Hycross']],
+  tue: [['06:30','WOD'],['07:30','WOD'],['08:30','Open Box'],['10:15','WOD'],['11:30','Open Box'],['12:45','WOD'],['14:30','WOD'],['15:30','Open Box'],['17:15','WOD'],['18:15','WOD'],['19:15','Halterofilia'],['20:15','Iniciación']],
+  wed: [['06:30','WOD'],['07:30','WOD'],['08:30','Open Box'],['10:15','Endurance'],['11:30','Open Box'],['12:45','Iniciación'],['14:30','WOD'],['15:30','Open Box'],['17:15','Endurance'],['18:15','WOD'],['19:15','WOD'],['20:15','WOD']],
+  thu: [['06:30','WOD'],['07:30','WOD'],['08:30','Open Box'],['10:15','Strength'],['11:30','Open Box'],['12:45','WOD'],['14:30','WOD'],['15:30','Open Box'],['17:15','Iniciación'],['18:15','Strength'],['19:15','WOD'],['20:15','WOD']],
+  fri: [['06:30','WOD'],['07:30','Iniciación'],['08:30','Open Box'],['10:15','WOD'],['11:30','Open Box'],['12:45','WOD'],['14:30','WOD'],['15:30','Open Box'],['17:15','WOD'],['18:15','WOD'],['19:15','Iniciación']],
+  sat: [['09:00','WOD'],['10:00','WOD'],['11:00','WOD']],
 };
 // getDay(): 0=Dom..6=Sáb -> clave del día (Dom cae a lun)
 export const TODAY_KEYS = ['mon','mon','tue','wed','thu','fri','sat'];
