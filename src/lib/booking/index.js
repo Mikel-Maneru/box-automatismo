@@ -6,6 +6,7 @@ const { BookingAuthError } = require('./errors');
 //
 // Interfaz que todo proveedor debe cumplir:
 //   getClassAvailability(date) -> { classes: [...], realData: bool }
+//   getWeeklySchedule()        -> { mon: [[hora, clase], ...], ... } | null  (opcional)
 //   bookClass(classId, date)   -> { success: bool }
 //   validateSession()          -> bool
 // y lanzar BookingAuthError cuando la sesion haya caducado.
@@ -34,6 +35,8 @@ module.exports = {
   proveedorActivo: elegido,
 
   getClassAvailability: (...args) => proveedor.getClassAvailability(...args),
+  // Parrilla semanal para la web. Opcional: no todos los proveedores tienen que darla.
+  getWeeklySchedule: (...args) => (proveedor.getWeeklySchedule ? proveedor.getWeeklySchedule(...args) : Promise.resolve(null)),
   bookClass: (...args) => proveedor.bookClass(...args),
   validateSession: (...args) => proveedor.validateSession(...args),
 

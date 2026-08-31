@@ -4,6 +4,7 @@ const PUBLIC_URL = BOX_URL;
 const LOGIN_URL = `https://wodbuster.com/account/login.aspx?cb=${BOX_SLUG}`;
 
 const { BookingAuthError } = require('./errors');
+const clases = require('../clases');
 
 // Alias historico: el resto del fichero sigue lanzando WodbusterAuthError, pero la
 // clase real es la compartida, asi que las rutas pueden comprobarla sin saber que
@@ -264,8 +265,13 @@ async function fetchScheduleFromWebsite() {
   return schedule;
 }
 
+// Rejilla semanal para la WEB (incluye las franjas que solo tienen Open Box). Se rellena
+// dentro de parseScheduleTable para no recorrer el HTML dos veces.
+let gridSemana = {};
+
 function parseScheduleTable(tableHtml) {
   const schedule = {};
+  gridSemana = {};
 
   const rowRegex = /<tr>([\s\S]*?)<\/tr>/gi;
   let match;
@@ -289,10 +295,18 @@ function parseScheduleTable(tableHtml) {
 
       const classMatches = cells[dayIdx].match(/<span>([^<]+)<\/span>/gi);
       if (classMatches) {
-        const classNames = classMatches
+        const todas = classMatches
           .map(m => m.replace(/<\/?span>/gi, '').trim())
-          .filter(n => n && n !== 'Open box');
-        schedule[dayOfWeek][formattedTime] = classNames.length > 0 ? classNames[0] : null;
+          .filter(Boolean);
+        // Open Box es entrenamiento libre y va en paralelo a casi todo: la clase que
+        // interesa es la guiada. Se compara por nombre canonico, NO por string exacto:
+        // el filtro anterior buscaba 'Open box' literal y dejo de funcionar cuando el
+        // box renombro las clases a "OPEN BOX (ANBOTO)", perdiendo las especiales.
+        const guiadas = todas.filter(n => clases.canonica(n) !== 'Open Box');
+        schedule[dayOfWeek][formattedTime] = guiadas[0] || null;
+        // Rejilla para la WEB: aqui SI queremos las franjas que solo tienen Open Box.
+        if (!gridSemana[dayOfWeek]) gridSemana[dayOfWeek] = {};
+        gridSemana[dayOfWeek][formattedTime] = clases.canonica(guiadas[0] || todas[0] || '') || null;
       }
     }
   }
@@ -591,8 +605,31 @@ async function validateSession() {
   }
 }
 
+
+// Parrilla semanal para la WEB: { mon: [['06:30','WOD'], ...], ... }.
+// Distinta de getClassAvailability, que es por dia y para reservar. Aqui se muestra la
+// clase guiada de cada franja y Open Box solo donde no hay otra, que es como lo entiende
+// un visitante. Domingo se omite: el box cierra.
+const DIAS_WEB = [null, 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+
+async function getWeeklySchedule() {
+  await fetchScheduleFromWebsite(); // rellena gridSemana como efecto
+  const out = {};
+  for (let d = 1; d <= 6; d++) {
+    const franjas = gridSemana[d];
+    if (!franjas) continue;
+    const filas = Object.entries(franjas)
+      .filter(([, nombre]) => nombre)
+      .map(([hora, nombre]) => [hora.slice(0, 5), nombre])
+      .sort((a, b) => a[0].localeCompare(b[0]));
+    if (filas.length) out[DIAS_WEB[d]] = filas;
+  }
+  return Object.keys(out).length ? out : null;
+}
+
 module.exports = {
   getClassAvailability,
+  getWeeklySchedule,
   bookClass,
   validateSession,
   loginToWodBuster,

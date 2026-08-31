@@ -14,6 +14,41 @@ const AUTOBOOK = process.env.WODBUSTER_AUTOBOOK === 'on';
 
 // Los nombres y descripciones de clase viven en shared/clases.json (fuente unica).
 
+
+// GET /api/schedule -> parrilla semanal para la web.
+// Cacheada en memoria: el horario de un box no cambia cada minuto, y asi una visita a la
+// landing no dispara un scraping. Si el proveedor falla se devuelve 503 SIN cuerpo util:
+// la web tiene su propio horario de respaldo y es preferible que lo use a enseñar un hueco
+// vacio o un horario a medias.
+// Se responde 200 con schedule:null en vez de 503: para la web no es un error, es 'no hay
+// dato', y un 503 pintaria un error rojo en la consola del navegador en una pagina que
+// funciona perfectamente.
+const CACHE_TTL = 6 * 60 * 60 * 1000; // 6 h
+let cacheHorario = { data: null, at: 0 };
+
+router.get('/schedule', async (req, res) => {
+  const fresco = cacheHorario.data && (Date.now() - cacheHorario.at) < CACHE_TTL;
+  if (fresco) {
+    return res.json({ schedule: cacheHorario.data, cached: true, proveedor: reservas.nombreProveedor });
+  }
+  try {
+    const schedule = await reservas.getWeeklySchedule();
+    if (!schedule || !Object.keys(schedule).length) {
+      // Sin datos utiles: que la web se quede con el suyo.
+      return res.json({ schedule: null, disponible: false });
+    }
+    cacheHorario = { data: schedule, at: Date.now() };
+    res.json({ schedule, cached: false, proveedor: reservas.nombreProveedor });
+  } catch (err) {
+    console.error('Error obteniendo la parrilla semanal:', err.message);
+    // Si hay una version cacheada aunque este vieja, mejor esa que nada.
+    if (cacheHorario.data) {
+      return res.json({ schedule: cacheHorario.data, cached: true, stale: true, proveedor: reservas.nombreProveedor });
+    }
+    res.json({ schedule: null, disponible: false });
+  }
+});
+
 // GET /api/classes?date=YYYY-MM-DD
 router.get('/classes', async (req, res) => {
   try {

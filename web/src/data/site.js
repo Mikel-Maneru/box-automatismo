@@ -31,11 +31,11 @@ export const DAYS = [
 // clase guiada de cada franja; Open Box solo aparece en las horas que no tienen otra.
 // Provisional hasta que Xabi mande el definitivo del centro nuevo.
 export const SCHED = {
-  mon: [['06:30','WOD'],['07:30','Iniciación'],['08:30','Open Box'],['10:15','Hycross'],['11:30','Open Box'],['12:45','WOD'],['14:30','WOD'],['15:30','Open Box'],['17:15','WOD'],['18:15','WOD'],['19:15','WOD'],['20:15','Hycross']],
-  tue: [['06:30','WOD'],['07:30','WOD'],['08:30','Open Box'],['10:15','WOD'],['11:30','Open Box'],['12:45','WOD'],['14:30','WOD'],['15:30','Open Box'],['17:15','WOD'],['18:15','WOD'],['19:15','Halterofilia'],['20:15','Iniciación']],
-  wed: [['06:30','WOD'],['07:30','WOD'],['08:30','Open Box'],['10:15','Endurance'],['11:30','Open Box'],['12:45','Iniciación'],['14:30','WOD'],['15:30','Open Box'],['17:15','Endurance'],['18:15','WOD'],['19:15','WOD'],['20:15','WOD']],
-  thu: [['06:30','WOD'],['07:30','WOD'],['08:30','Open Box'],['10:15','Strength'],['11:30','Open Box'],['12:45','WOD'],['14:30','WOD'],['15:30','Open Box'],['17:15','Iniciación'],['18:15','Strength'],['19:15','WOD'],['20:15','WOD']],
-  fri: [['06:30','WOD'],['07:30','Iniciación'],['08:30','Open Box'],['10:15','WOD'],['11:30','Open Box'],['12:45','WOD'],['14:30','WOD'],['15:30','Open Box'],['17:15','WOD'],['18:15','WOD'],['19:15','Iniciación']],
+  mon: [['06:30','WOD'],['07:30','Oinarriak'],['08:30','Open Box'],['10:15','Hyrox'],['11:30','Open Box'],['12:45','WOD'],['14:30','WOD'],['15:30','Open Box'],['17:15','WOD'],['18:15','WOD'],['19:15','WOD'],['20:15','Hyrox']],
+  tue: [['06:30','WOD'],['07:30','WOD'],['08:30','Open Box'],['10:15','WOD'],['11:30','Open Box'],['12:45','WOD'],['14:30','WOD'],['15:30','Open Box'],['17:15','WOD'],['18:15','WOD'],['19:15','Halterofilia'],['20:15','Oinarriak']],
+  wed: [['06:30','WOD'],['07:30','WOD'],['08:30','Open Box'],['10:15','Endurance'],['11:30','Open Box'],['12:45','Oinarriak'],['14:30','WOD'],['15:30','Open Box'],['17:15','Endurance'],['18:15','WOD'],['19:15','WOD'],['20:15','WOD']],
+  thu: [['06:30','WOD'],['07:30','WOD'],['08:30','Open Box'],['10:15','Total Strength'],['11:30','Open Box'],['12:45','WOD'],['14:30','WOD'],['15:30','Open Box'],['17:15','Oinarriak'],['18:15','Total Strength'],['19:15','WOD'],['20:15','WOD']],
+  fri: [['06:30','WOD'],['07:30','Oinarriak'],['08:30','Open Box'],['10:15','WOD'],['11:30','Open Box'],['12:45','WOD'],['14:30','WOD'],['15:30','Open Box'],['17:15','WOD'],['18:15','WOD'],['19:15','Oinarriak']],
   sat: [['09:00','WOD'],['10:00','WOD'],['11:00','WOD']],
 };
 // getDay(): 0=Dom..6=Sáb -> clave del día (Dom cae a lun)

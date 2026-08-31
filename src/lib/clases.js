@@ -8,6 +8,7 @@ function clave(nombre) {
     .replace(/\([^)]*\)/g, ' ')   // "WOD (ANBOTO)" -> "WOD "
     .trim()
     .toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')   // sin acentos: INICIACION / INICIACIÓN valen igual
     .replace(/\s+/g, ' ');
 }
 

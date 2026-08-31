@@ -10,6 +10,7 @@ export const clave = (nombre) => (nombre || '')
   .replace(/\([^)]*\)/g, ' ')
   .trim()
   .toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')   // sin acentos: INICIACION / INICIACIÓN valen igual
   .replace(/\s+/g, ' ');
 
 // Nombre canonico, o el original si no lo reconocemos.

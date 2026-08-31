@@ -38,6 +38,11 @@ async function getClassAvailability(_date) {
   return noConfigurado('getClassAvailability');
 }
 
+async function getWeeklySchedule() {
+  // Devolver null hace que la web use su horario de respaldo en vez de quedarse vacia.
+  return null;
+}
+
 async function bookClass(_classId, _date) {
   return noConfigurado('bookClass');
 }
@@ -51,6 +56,7 @@ async function validateSession() {
 
 module.exports = {
   getClassAvailability,
+  getWeeklySchedule,
   bookClass,
   validateSession,
   BookingAuthError,

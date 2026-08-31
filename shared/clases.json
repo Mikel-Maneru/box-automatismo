@@ -1,9 +1,15 @@
 {
   "_nota": "Fuente unica de los nombres de clase. La leen el backend (src/lib/clases.js) y el frontend (web/src/data/clases.js). Antes esto estaba duplicado en tres sitios (claveClase en site.js, CLASS_DESCRIPTIONS en scheduling.js y wodNames en wodbuster.js) y se desincronizo: el box renombro sus clases a 'WOD (ANBOTO)' y la recomendacion por objetivo dejo de casar sin que nadie se enterara.",
-
-  "canonicas": ["WOD", "Oinarriak", "Halterofilia", "Hyrox", "Endurance", "Total Strength", "Open Box"],
-
-  "_alias": "Como llaman a cada clase los sistemas de reserva. La clave va normalizada (minusculas, sin sufijo entre parentesis, sin espacios de sobra), asi que 'WOD (ANBOTO)' y 'Wod' caen los dos en 'wod'.",
+  "canonicas": [
+    "WOD",
+    "Oinarriak",
+    "Halterofilia",
+    "Hyrox",
+    "Endurance",
+    "Total Strength",
+    "Open Box"
+  ],
+  "_alias": "Como llaman a cada clase los sistemas de reserva. La clave va normalizada (minusculas, sin sufijo entre parentesis, sin espacios de sobra), asi que 'WOD (ANBOTO)' y 'Wod' caen los dos en 'wod'. Ojo: el box renombra sus clases cada cierto tiempo (INICIACION por Oinarriak, HYCROSS por Hyrox, STRENGTH por Total Strength); estos alias son el puente entre como las llama el proveedor y como las llamamos en la web.",
   "alias": {
     "wod": "WOD",
     "crosstraining": "WOD",
@@ -17,9 +23,13 @@
     "total strength": "Total Strength",
     "strength": "Total Strength",
     "open box": "Open Box",
-    "openbox": "Open Box"
+    "openbox": "Open Box",
+    "iniciacion": "Oinarriak",
+    "hycross": "Hyrox",
+    "gymnastics": "Gymnastics",
+    "funcional": "Funcional",
+    "team wod": "Team WOD"
   },
-
   "_descripciones": "Texto corto que se muestra junto a la hora en la pantalla de reserva.",
   "descripciones": {
     "WOD": "CrossTraining",
@@ -28,6 +38,9 @@
     "Hyrox": "Preparacion de carrera",
     "Endurance": "Resistencia",
     "Total Strength": "Fuerza",
-    "Open Box": "Entrenamiento libre"
+    "Open Box": "Entrenamiento libre",
+    "Gymnastics": "Gimnasia y control corporal",
+    "Funcional": "Entrenamiento funcional",
+    "Team WOD": "WOD por equipos"
   }
 }
