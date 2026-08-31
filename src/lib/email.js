@@ -14,6 +14,14 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:3003';
 // "Anboto SC <hola@anbotosc.com>".
 const MAIL_FROM = process.env.MAIL_FROM || 'Anboto SC <onboarding@resend.dev>';
 
+// Correos al INTERESADO (el de elegir dia para la clase de prueba y el de seguimiento
+// posterior). DESACTIVADOS a proposito: la reserva la gestiona el box a mano mientras no
+// haya un sistema que apunte a la persona a su nombre. Cuando se migre a AimHarder, el
+// interesado se registrara el mismo en la pagina de prueba gratuita, asi que estos correos
+// o se reactivan (EMAILS_INTERESADO=on) o se sustituyen por el enlace a AimHarder.
+// Los avisos AL BOX no dependen de esto: siguen saliendo siempre.
+const EMAILS_INTERESADO = process.env.EMAILS_INTERESADO === 'on';
+
 async function createSignup({ nombre, telefono, email, nivel, objetivo, comoConocio, origen }) {
   // Get box_id for Anboto
   const { data: box } = await supabase
@@ -62,7 +70,9 @@ async function createSignup({ nombre, telefono, email, nivel, objetivo, comoCono
           <p><strong>Origen:</strong> ${origen}</p>
           <p><strong>Fecha:</strong> ${fecha}</p>
           <hr>
-          <p>Responde a este email o llama directamente al cliente.</p>
+          <p><strong>Hay que contactar con esta persona.</strong> No recibe ningun correo
+          automatico nuestro, asi que si no la llamais o le escribis, no sabra nada.</p>
+          <p>Responde a este email o llama directamente al telefono de arriba.</p>
         `
       });
       if (emailError) {
@@ -75,8 +85,10 @@ async function createSignup({ nombre, telefono, email, nivel, objetivo, comoCono
     }
   }
 
-  // Generate scheduling token and send scheduling email
-  if (data?.id && email) {
+  // Token de scheduling + email para que elija dia. Solo si los correos al interesado
+  // estan activos: sin ellos no hay a donde enviarle, asi que tampoco se crea el token
+  // (evita llenar signup_tokens de tokens que nadie va a usar).
+  if (EMAILS_INTERESADO && data?.id && email) {
     try {
       const crypto = require('crypto');
       const token = crypto.randomBytes(32).toString('hex');
@@ -108,6 +120,10 @@ async function createSignup({ nombre, telefono, email, nivel, objetivo, comoCono
 }
 
 async function sendSchedulingEmail(toEmail, nombre, token) {
+  if (!EMAILS_INTERESADO) {
+    console.log('Emails al interesado desactivados: no se envia el de elegir dia');
+    return;
+  }
   if (!resend) {
     console.log('Resend no configurado, saltando email de scheduling');
     return;
@@ -143,6 +159,10 @@ async function sendSchedulingEmail(toEmail, nombre, token) {
 }
 
 async function sendFollowupEmail(toEmail, nombre, signupId) {
+  if (!EMAILS_INTERESADO) {
+    console.log('Emails al interesado desactivados: no se envia el de seguimiento');
+    return;
+  }
   if (!resend) return;
 
   // Generate a new token for the follow-up actions
