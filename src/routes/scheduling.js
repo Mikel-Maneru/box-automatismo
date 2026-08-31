@@ -100,14 +100,14 @@ router.post('/book', async (req, res) => {
           return res.status(503).json({
             error: 'Temporalmente no disponible',
             retry: true,
-            message: 'No podemos conectar con el sistema de reservas. Escribenos por WhatsApp al 688 661 924.',
+            message: 'No podemos conectar con el sistema de reservas. Escribenos por WhatsApp al 622 768 134.',
           });
         }
       }
     }
 
     if (!bookingClassId) {
-      return res.status(400).json({ error: 'No hemos encontrado esa clase. Escribenos por WhatsApp al 688 661 924 y te la reservamos.' });
+      return res.status(400).json({ error: 'No hemos encontrado esa clase. Escribenos por WhatsApp al 622 768 134 y te la reservamos.' });
     }
 
     // Validate token
@@ -208,7 +208,7 @@ router.post('/book', async (req, res) => {
       return res.status(503).json({
         error: 'Temporalmente no disponible',
         retry: true,
-        message: 'No podemos conectar con el sistema de reservas. Escribenos por WhatsApp al 688 661 924.',
+        message: 'No podemos conectar con el sistema de reservas. Escribenos por WhatsApp al 622 768 134.',
       });
     }
     console.error('Error reservando clase:', err.message);

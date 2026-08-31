@@ -102,6 +102,6 @@ export const REVIEWS = [
   { av: 'K', name: 'Kike Largo',   src: 'Local Guide', text: 'He estado como en casa, gracias Xabi por toda tu amabilidad. Nos vemos en el box!' },
 ];
 
-export const WHATSAPP_URL = 'https://wa.me/34688661924?text=Hola%2C%20me%20gustar%C3%ADa%20apuntarme%20a%20una%20clase%20gratis%20en%20Anboto%20SC';
+export const WHATSAPP_URL = 'https://wa.me/34622768134?text=Hola%2C%20me%20gustar%C3%ADa%20apuntarme%20a%20una%20clase%20gratis%20en%20Anboto%20SC';
 export const WODBUSTER_URL = 'https://anboto.wodbuster.com';
 export const INSTAGRAM_URL = 'https://www.instagram.com/anbotofitness/';

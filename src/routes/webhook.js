@@ -8,7 +8,7 @@ function thankYouPage(nombre, wantsToJoin) {
     ? 'Bienvenido a la familia Anboto!'
     : 'Gracias por visitarnos';
   const message = wantsToJoin
-    ? `En breve nos pondremos en contacto contigo, ${nombre}. Mientras tanto, si tienes cualquier duda escribenos por WhatsApp al 688 661 924.`
+    ? `En breve nos pondremos en contacto contigo, ${nombre}. Mientras tanto, si tienes cualquier duda escribenos por WhatsApp al 622 768 134.`
     : `Esperamos verte de nuevo por Anboto, ${nombre}. La puerta siempre esta abierta!`;
 
   return `<!DOCTYPE html>

@@ -46,7 +46,7 @@ INSERT INTO boxes (name, slug, widget_token, description, address, phone, schedu
   'anboto-token-2024',
   'Box de entrenamiento en Iurreta con ambiente familiar y acogedor. Valorado con 4.9/5 por más de 46 miembros. Box grande con fácil acceso, muy cerca de la salida de la autopista A8 Durango.',
   'Polígono Ertzilla, P4, 48215 Iurreta, Bizkaia',
-  '688 661 924',
+  '622 768 134',
   '[
     {"day": "Lunes", "hours": "6:30 - 21:15"},
     {"day": "Martes", "hours": "6:30 - 21:15"},
@@ -128,7 +128,7 @@ INSERT INTO boxes (name, slug, widget_token, description, address, phone, schedu
   '[
     {"question": "¿Necesito experiencia previa?", "answer": "No, en absoluto. Empezarás aprendiendo los movimientos básicos adaptados a tu nivel. Todos hemos empezado desde cero."},
     {"question": "¿Qué es un WOD?", "answer": "WOD significa Workout of the Day, el entrenamiento del día. Cada día es diferente y se adapta a tu nivel."},
-    {"question": "¿Cómo puedo apuntarme?", "answer": "Llámanos al 688 661 924 o escríbenos a anbotocf@gmail.com y te explicamos todo."},
+    {"question": "¿Cómo puedo apuntarme?", "answer": "Llámanos al 622 768 134 o escríbenos a anbotocf@gmail.com y te explicamos todo."},
     {"question": "¿Dónde estáis exactamente?", "answer": "Estamos en el Polígono Ertzilla, P4, Iurreta. Muy cerca de la salida de la autopista A8 de Durango, fácil aparcamiento."},
     {"question": "¿Puedo ir a una clase de prueba?", "answer": "¡Claro! Contáctanos y te apuntamos a una clase de prueba para que veas cómo es el ambiente."}
   ]'::jsonb,
