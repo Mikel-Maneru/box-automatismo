@@ -26,17 +26,23 @@ export const DAYS = [
   ['mon', 'd.mon'], ['tue', 'd.tue'], ['wed', 'd.wed'],
   ['thu', 'd.thu'], ['fri', 'd.fri'], ['sat', 'd.sat'],
 ];
-// Horario real leido de la web publica de WodBuster el 2026-08-25 (Xabi lo cambio).
-// Open Box va en PARALELO a casi todo (entrenamiento libre), asi que aqui se muestra la
-// clase guiada de cada franja; Open Box solo aparece en las horas que no tienen otra.
-// Provisional hasta que Xabi mande el definitivo del centro nuevo.
+// Horario de RESPALDO. La parrilla de verdad la sirve /api/schedule leyendo el sistema
+// de reservas del box; esto es lo que se prerenderiza (Google y el primer pintado) y lo
+// que se usa si el proveedor falla o tarda.
+//
+// Generado desde la tabla que el box publica bajo su marca actual ("Anboto SC"), la que
+// incluye las clases del gimnasio Alluitz. Cuando en una franja coinciden varias clases
+// guiadas se muestran todas separadas por " · "; el entrenamiento libre (Open Box,
+// Gimnasio + Open) solo aparece en las horas que no tienen ninguna clase guiada.
+//
+// No se edita a mano: se regenera. Provisional hasta que Xabi mande el definitivo.
 export const SCHED = {
-  mon: [['06:30','WOD'],['07:30','Oinarriak'],['08:30','Open Box'],['10:15','Hyrox'],['11:30','Open Box'],['12:45','WOD'],['14:30','WOD'],['15:30','Open Box'],['17:15','WOD'],['18:15','WOD'],['19:15','WOD'],['20:15','Hyrox']],
-  tue: [['06:30','WOD'],['07:30','WOD'],['08:30','Open Box'],['10:15','WOD'],['11:30','Open Box'],['12:45','WOD'],['14:30','WOD'],['15:30','Open Box'],['17:15','WOD'],['18:15','WOD'],['19:15','Halterofilia'],['20:15','Oinarriak']],
-  wed: [['06:30','WOD'],['07:30','WOD'],['08:30','Open Box'],['10:15','Endurance'],['11:30','Open Box'],['12:45','Oinarriak'],['14:30','WOD'],['15:30','Open Box'],['17:15','Endurance'],['18:15','WOD'],['19:15','WOD'],['20:15','WOD']],
-  thu: [['06:30','WOD'],['07:30','WOD'],['08:30','Open Box'],['10:15','Total Strength'],['11:30','Open Box'],['12:45','WOD'],['14:30','WOD'],['15:30','Open Box'],['17:15','Oinarriak'],['18:15','Total Strength'],['19:15','WOD'],['20:15','WOD']],
-  fri: [['06:30','WOD'],['07:30','Oinarriak'],['08:30','Open Box'],['10:15','WOD'],['11:30','Open Box'],['12:45','WOD'],['14:30','WOD'],['15:30','Open Box'],['17:15','WOD'],['18:15','WOD'],['19:15','Oinarriak']],
-  sat: [['09:00','WOD'],['10:00','WOD'],['11:00','WOD']],
+  mon: [['06:30','WOD · Funcional'],['07:30','Oinarriak · Funcional'],['08:00','Gimnasio + Open'],['09:30','Gimnasio + Open'],['10:30','WOD'],['11:00','Gimnasio + Open'],['12:30','WOD'],['14:00','Gimnasio + Open'],['14:30','WOD'],['15:30','Gimnasio + Open'],['17:00','Gimnasio + Open'],['17:15','WOD · Total Strength'],['18:15','WOD · Funcional'],['18:30','Gimnasio + Open'],['19:15','WOD'],['20:00','Gimnasio + Open'],['20:15','Hyrox']],
+  tue: [['06:30','WOD · Funcional'],['07:30','WOD · Funcional'],['08:00','Gimnasio + Open'],['09:30','Gimnasio + Open'],['10:30','Funcional'],['11:00','Gimnasio + Open'],['12:30','WOD'],['14:00','Gimnasio + Open'],['14:30','WOD'],['15:30','Gimnasio + Open'],['17:00','Gimnasio + Open'],['17:15','WOD · Tonificación'],['18:15','WOD · Funcional'],['18:30','Gimnasio + Open'],['19:15','Halterofilia'],['20:00','Gimnasio + Open'],['20:15','Oinarriak']],
+  wed: [['06:30','WOD · Funcional'],['07:30','Funcional'],['08:00','Gimnasio + Open'],['09:30','Gimnasio + Open'],['10:30','WOD'],['11:00','Gimnasio + Open'],['12:30','Oinarriak'],['14:00','Gimnasio + Open'],['14:30','WOD'],['15:30','Gimnasio + Open'],['17:00','Gimnasio + Open'],['17:15','Endurance · Total Strength'],['18:15','WOD · Funcional'],['18:30','Gimnasio + Open'],['19:15','WOD'],['20:00','Gimnasio + Open'],['20:15','WOD']],
+  thu: [['06:30','WOD · Funcional'],['07:30','WOD · Hyrox'],['08:00','Gimnasio + Open'],['09:30','Gimnasio + Open'],['10:30','Total Strength'],['11:00','Gimnasio + Open'],['12:30','WOD'],['14:00','Gimnasio + Open'],['14:30','WOD'],['15:30','Gimnasio + Open'],['17:00','Gimnasio + Open'],['17:15','WOD · Movilidad + Core'],['18:15','Total Strength · Hyrox'],['18:30','Gimnasio + Open'],['19:15','WOD'],['20:00','Gimnasio + Open'],['20:15','Gymnastics']],
+  fri: [['06:30','WOD · Funcional'],['07:30','WOD · Funcional'],['08:00','Gimnasio + Open'],['09:30','Gimnasio + Open'],['10:30','WOD'],['11:00','Gimnasio + Open'],['12:30','WOD'],['14:00','Gimnasio + Open'],['14:30','WOD'],['15:30','Gimnasio + Open'],['17:00','Gimnasio + Open'],['17:15','WOD · Tonificación'],['18:15','WOD · Funcional'],['18:30','Gimnasio + Open'],['19:15','Oinarriak'],['20:00','Gimnasio + Open']],
+  sat: [['09:00','Team WOD'],['10:00','Team WOD'],['10:30','Gimnasio + Open'],['11:00','Team WOD'],['12:00','Gimnasio + Open']],
 };
 // getDay(): 0=Dom..6=Sáb -> clave del día (Dom cae a lun)
 export const TODAY_KEYS = ['mon','mon','tue','wed','thu','fri','sat'];

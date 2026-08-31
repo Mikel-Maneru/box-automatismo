@@ -8,7 +8,9 @@ import { WHATSAPP_URL, objetivoPorValor, esMismaClase } from '../data/site.js';
 // public/reservar.html (conservada como reservar.legacy.html), que se quedó con la marca
 // vieja. Consume los endpoints ya existentes: booking-status, classes y book.
 
-// Fechas seleccionables: los próximos 7 días saltando domingos (el box cierra).
+// Fechas seleccionables: los próximos 7 días saltando domingos. El box abre todos los
+// días, pero el domingo NO hay clases guiadas en el sistema de reservas, así que ofrecerlo
+// para la clase de prueba sería llevar a la persona a un día sin nada que reservar.
 function proximosDias(n) {
   const dias = [];
   const hoy = new Date();

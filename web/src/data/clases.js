@@ -20,4 +20,7 @@ export const canonica = (nombre) => mapa.alias[clave(nombre)] || (nombre || '').
 export const esMismaClase = (a, b) =>
   canonica(a).toLowerCase() === canonica(b).toLowerCase();
 
+// ¿Es entrenamiento libre (Open Box, Gimnasio + Open) en vez de clase guiada?
+export const esLibre = (nombre) => (mapa.libres || []).includes(canonica(nombre));
+
 export default mapa;

@@ -28,4 +28,11 @@ function esMismaClase(a, b) {
   return canonica(a).toLowerCase() === canonica(b).toLowerCase();
 }
 
-module.exports = { clave, canonica, descripcion, esMismaClase, mapa };
+// ¿Es entrenamiento libre (Open Box, Gimnasio + Open) en vez de clase guiada?
+// Se consulta contra shared/clases.json y NO contra un literal: el filtro antiguo
+// buscaba la cadena 'Open box' y se rompio en silencio al renombrar las clases.
+function esLibre(nombre) {
+  return (mapa.libres || []).includes(canonica(nombre));
+}
+
+module.exports = { clave, canonica, descripcion, esMismaClase, esLibre, mapa };

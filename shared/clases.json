@@ -7,7 +7,13 @@
     "Hyrox",
     "Endurance",
     "Total Strength",
-    "Open Box"
+    "Open Box",
+    "Funcional",
+    "Gymnastics",
+    "Team WOD",
+    "Gimnasio + Open",
+    "Tonificación",
+    "Movilidad + Core"
   ],
   "_alias": "Como llaman a cada clase los sistemas de reserva. La clave va normalizada (minusculas, sin sufijo entre parentesis, sin espacios de sobra), asi que 'WOD (ANBOTO)' y 'Wod' caen los dos en 'wod'. Ojo: el box renombra sus clases cada cierto tiempo (INICIACION por Oinarriak, HYCROSS por Hyrox, STRENGTH por Total Strength); estos alias son el puente entre como las llama el proveedor y como las llamamos en la web.",
   "alias": {
@@ -28,8 +34,15 @@
     "hycross": "Hyrox",
     "gymnastics": "Gymnastics",
     "funcional": "Funcional",
-    "team wod": "Team WOD"
+    "team wod": "Team WOD",
+    "gymnasio + open": "Gimnasio + Open",
+    "gimnasio + open": "Gimnasio + Open",
+    "tonificacion": "Tonificación",
+    "mobilidad + core": "Movilidad + Core",
+    "movilidad + core": "Movilidad + Core"
   },
+  "_libres": "Entrenamiento libre, no clase guiada: van en PARALELO a las clases con horario propio. En la parrilla de la web solo se muestran cuando en esa franja no hay ninguna guiada, si no taparian a la clase de verdad. 'GYMNASIO + OPEN (ALLUITZ)' es el equivalente de Open Box en el gimnasio Alluitz.",
+  "libres": ["Open Box", "Gimnasio + Open"],
   "_descripciones": "Texto corto que se muestra junto a la hora en la pantalla de reserva.",
   "descripciones": {
     "WOD": "CrossTraining",
@@ -41,6 +54,9 @@
     "Open Box": "Entrenamiento libre",
     "Gymnastics": "Gimnasia y control corporal",
     "Funcional": "Entrenamiento funcional",
-    "Team WOD": "WOD por equipos"
+    "Team WOD": "WOD por equipos",
+    "Gimnasio + Open": "Gimnasio y entrenamiento libre",
+    "Tonificación": "Tonificación muscular",
+    "Movilidad + Core": "Movilidad y core"
   }
 }

@@ -64,6 +64,9 @@ router.get('/classes', async (req, res) => {
       return res.json({ classes: [] });
     }
 
+    // Domingo: el box abre, pero no hay clases guiadas en el sistema de reservas (el
+    // proveedor devuelve ahi datos de plantilla, no reales). Se corta antes de preguntar
+    // para no ofrecer clases que en realidad no existen.
     if (dateObj.getDay() === 0) {
       return res.json({ classes: [] });
     }

@@ -260,18 +260,49 @@ async function fetchScheduleFromWebsite() {
     return scheduleCache.data;
   }
 
-  const schedule = parseScheduleTable(tables[0]);
+  // OJO: el box publica VARIAS tablas a la vez (2026-08-31 habia tres: "Anboto",
+  // "Abuztua" y "Anboto SC"). No son alternativas equivalentes, y cada uso necesita una:
+  //
+  //  - EMPAREJAR CON LA API -> tables[0]. Es la que coincide con lo que de verdad se
+  //    puede reservar; se comprobo contra la disponibilidad real (10:15 y 12:45 el
+  //    martes, no 10:30 y 12:30). Si aqui se cogiera la tabla nueva, los nombres de
+  //    clase dejarian de casar con las horas de la API y /api/classes se degradaria.
+  //  - PARRILLA DE LA WEB -> la titulada con la marca actual ("Anboto SC"), que es el
+  //    horario que el box quiere enseñar y la unica que incluye las clases de Alluitz.
+  //
+  // Mientras el sistema de reservas no se ponga al dia, las dos difieren a proposito.
+  const schedule = parseScheduleTable(tables[0]).schedule;
+  gridSemana = parseScheduleTable(tablaParaLaWeb(html, tables)).grid;
+
   scheduleCache = { data: schedule, fetchedAt: Date.now() };
   return schedule;
 }
 
-// Rejilla semanal para la WEB (incluye las franjas que solo tienen Open Box). Se rellena
-// dentro de parseScheduleTable para no recorrer el HTML dos veces.
+// Se elige por TITULO y no por posicion: el orden de las tablas cambia cada vez que el
+// box publica un horario nuevo, asi que un indice fijo caduca sin avisar.
+const TITULO_VIGENTE = /anboto\s*sc/i;
+
+function tablaParaLaWeb(html, tables) {
+  for (const t of tables) {
+    const pos = html.indexOf(t);
+    const antes = html.slice(Math.max(0, pos - 1500), pos);
+    const titulos = antes.match(/<h[1-6][^>]*>[\s\S]*?<\/h[1-6]>/gi) || [];
+    const ultimo = titulos.length
+      ? titulos[titulos.length - 1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+      : '';
+    if (TITULO_VIGENTE.test(ultimo)) return t;
+  }
+  return tables[0];   // sin titulo reconocible, el comportamiento de siempre
+}
+
+// Rejilla semanal para la WEB (incluye las franjas que solo tienen entrenamiento libre).
+// La rellena fetchScheduleFromWebsite a partir de la tabla titulada con la marca actual,
+// que NO es la misma que se usa para emparejar con la API.
 let gridSemana = {};
 
 function parseScheduleTable(tableHtml) {
   const schedule = {};
-  gridSemana = {};
+  const grid = {};
 
   const rowRegex = /<tr>([\s\S]*?)<\/tr>/gi;
   let match;
@@ -302,16 +333,24 @@ function parseScheduleTable(tableHtml) {
         // interesa es la guiada. Se compara por nombre canonico, NO por string exacto:
         // el filtro anterior buscaba 'Open box' literal y dejo de funcionar cuando el
         // box renombro las clases a "OPEN BOX (ANBOTO)", perdiendo las especiales.
-        const guiadas = todas.filter(n => clases.canonica(n) !== 'Open Box');
+        const guiadas = todas.filter(n => !clases.esLibre(n));
         schedule[dayOfWeek][formattedTime] = guiadas[0] || null;
-        // Rejilla para la WEB: aqui SI queremos las franjas que solo tienen Open Box.
-        if (!gridSemana[dayOfWeek]) gridSemana[dayOfWeek] = {};
-        gridSemana[dayOfWeek][formattedTime] = clases.canonica(guiadas[0] || todas[0] || '') || null;
+
+        // Rejilla para la WEB. Dos diferencias con `schedule`:
+        //  - Se quedan las franjas que SOLO tienen entrenamiento libre (Open Box o
+        //    Gimnasio + Open): son huecos reales en los que se puede ir a entrenar.
+        //  - Se muestran TODAS las guiadas de la franja, no solo la primera. En el box
+        //    y en el gimnasio Alluitz coinciden clases a la misma hora, y quedarse con
+        //    una escondia las de Alluitz, que son justo las que hay que enseñar.
+        const mostrar = guiadas.length ? guiadas : todas;
+        const nombres = [...new Set(mostrar.map(n => clases.canonica(n)).filter(Boolean))];
+        if (!grid[dayOfWeek]) grid[dayOfWeek] = {};
+        grid[dayOfWeek][formattedTime] = nombres.join(' · ') || null;
       }
     }
   }
 
-  return schedule;
+  return { schedule, grid };
 }
 
 function findScheduleClass(schedule, dayOfWeek, apiTime) {
