@@ -14,13 +14,12 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:3003';
 // "Anboto SC <hola@anbotosc.com>".
 const MAIL_FROM = process.env.MAIL_FROM || 'Anboto SC <onboarding@resend.dev>';
 
-// Correos al INTERESADO (el de elegir dia para la clase de prueba y el de seguimiento
-// posterior). DESACTIVADOS a proposito: la reserva la gestiona el box a mano mientras no
-// haya un sistema que apunte a la persona a su nombre. Cuando se migre a AimHarder, el
-// interesado se registrara el mismo en la pagina de prueba gratuita, asi que estos correos
-// o se reactivan (EMAILS_INTERESADO=on) o se sustituyen por el enlace a AimHarder.
-// Los avisos AL BOX no dependen de esto: siguen saliendo siempre.
-const EMAILS_INTERESADO = process.env.EMAILS_INTERESADO === 'on';
+// Correo de "elige tu dia" al interesado. DESACTIVADO a proposito: la reserva la gestiona
+// el box a mano mientras no haya un sistema que apunte a la persona a su nombre. Cuando se
+// migre a AimHarder se decide si se reactiva (EMAIL_ELEGIR_DIA=on) o se sustituye por el
+// enlace a su pagina de prueba gratuita.
+// NO afecta ni al aviso al box ni al correo de seguimiento: esos siguen activos.
+const EMAIL_ELEGIR_DIA = process.env.EMAIL_ELEGIR_DIA === 'on';
 
 async function createSignup({ nombre, telefono, email, nivel, objetivo, comoConocio, origen }) {
   // Get box_id for Anboto
@@ -88,7 +87,7 @@ async function createSignup({ nombre, telefono, email, nivel, objetivo, comoCono
   // Token de scheduling + email para que elija dia. Solo si los correos al interesado
   // estan activos: sin ellos no hay a donde enviarle, asi que tampoco se crea el token
   // (evita llenar signup_tokens de tokens que nadie va a usar).
-  if (EMAILS_INTERESADO && data?.id && email) {
+  if (EMAIL_ELEGIR_DIA && data?.id && email) {
     try {
       const crypto = require('crypto');
       const token = crypto.randomBytes(32).toString('hex');
@@ -120,8 +119,8 @@ async function createSignup({ nombre, telefono, email, nivel, objetivo, comoCono
 }
 
 async function sendSchedulingEmail(toEmail, nombre, token) {
-  if (!EMAILS_INTERESADO) {
-    console.log('Emails al interesado desactivados: no se envia el de elegir dia');
+  if (!EMAIL_ELEGIR_DIA) {
+    console.log('EMAIL_ELEGIR_DIA=off: no se envia el correo de elegir dia');
     return;
   }
   if (!resend) {
@@ -159,10 +158,6 @@ async function sendSchedulingEmail(toEmail, nombre, token) {
 }
 
 async function sendFollowupEmail(toEmail, nombre, signupId) {
-  if (!EMAILS_INTERESADO) {
-    console.log('Emails al interesado desactivados: no se envia el de seguimiento');
-    return;
-  }
   if (!resend) return;
 
   // Generate a new token for the follow-up actions
