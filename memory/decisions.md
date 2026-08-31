@@ -357,6 +357,52 @@ con lo que la recomendacion por objetivo sigue casando.
 **Suposicion asumida:** que HYCROSS es Hyrox renombrado (lo habitual, por ser marca
 registrada). Si resultan ser cosas distintas, hay que separarlos.
 
-**Pendiente de decidir por el cliente:** si mostrar las clases de ALLUITZ (otro espacio que
-aparece en el sistema) y corregir las cifras de la landing, que dicen "46+ miembros activos"
+**Pendiente de decidir por el cliente:** ~~si mostrar las clases de ALLUITZ~~ (decidido el
+2026-08-31, ver abajo) y corregir las cifras de la landing, que dicen "46+ miembros activos"
 cuando 46 es el numero de resenas de Google.
+
+## 2026-08-31: Se muestran las clases de Alluitz, con el horario nuevo entero
+
+Decision de Mikel tras ver los datos. **Contexto que la hace no obvia:** la web publica de
+WodBuster servia TRES tablas de horario a la vez ("Anboto", "Abuztua" y "Anboto SC") y solo
+la ultima tiene Alluitz. El scraper cogia `tables[0]` por posicion.
+
+**Que se eligio:** pasar la parrilla de la web al horario titulado con la marca actual
+("Anboto SC"), completo, incluyendo las clases de Alluitz.
+
+**Coste asumido a sabiendas.** Se comprobo contra la disponibilidad real de mañana que **ese
+horario todavia NO esta en el sistema de reservas**: la API devuelve 10:15 WOD y 12:45 WOD
+donde la tabla nueva dice 10:30 Funcional y 12:30 WOD, y de Alluitz solo es reservable
+`GYMNASIO + OPEN`. Es decir, la web enseña clases que hoy no se pueden reservar. Se avisó a
+Mikel antes de desplegar y aun asi se eligio esta opcion, porque es el horario que el box
+quiere enseñar. **La solucion de fondo es que Xabi pase el horario nuevo a WodBuster.**
+
+**Como se implemento sin romper las reservas:** los dos usos de la tabla se separaron.
+`fetchScheduleFromWebsite()` parsea DOS tablas — la que casa con lo reservable sigue
+alimentando el emparejamiento con la API (`/api/classes`, flujo de prueba gratuita), y la de
+la marca actual alimenta solo `gridSemana` (la parrilla de la web). La eleccion es **por
+titulo, no por indice**, porque el orden cambia cada vez que el box publica.
+
+**Franjas con varias clases:** se muestran todas separadas por " · " (`WOD · Funcional`).
+Quedarse con la primera escondia justo las de Alluitz, que era el objetivo del cambio. El
+entrenamiento libre (Open Box y el nuevo `Gimnasio + Open`) solo aparece en las horas sin
+clase guiada, y se reconoce con `esLibre()` contra `shared/clases.json`, **no comparando con
+un literal** — ese fue el fallo que ya se colo dos veces (ver trampa nº4).
+
+## 2026-08-31: El box abre todos los dias, pero el domingo no se publican horas
+
+Mikel confirmo que el box abre todos los dias del año. Se quito el "Domingo cerrado" de la
+web en los dos idiomas y se corrigio el sabado (con el horario nuevo cierra a las **13:00**,
+no a las 12:00).
+
+**Lo que NO se hizo, y por que:** no se añadio el domingo al `openingHoursSpecification` del
+JSON-LD. Hacen falta horas concretas y nadie las ha dado; inventarlas significaria que Google
+enseñe un horario falso a quien busque el box. Se eligio la opcion honesta: texto visible que
+dice "abierto todos los dias" y datos estructurados sin domingo.
+**Consecuencia que hay que cerrar:** hasta que Xabi diga las horas, Google seguira mostrando
+"cerrado" los domingos. Es un cabo suelto conocido, no un olvido.
+
+En el sistema de reservas **no hay ni una clase guiada el domingo** (la API devuelve ahi
+datos de plantilla, `realData: false`, con un "Kickbox" que ya no existe). Por eso
+`/reservar` sigue saltandose los domingos: ofrecerlos llevaria a la persona a un dia sin nada
+que reservar.

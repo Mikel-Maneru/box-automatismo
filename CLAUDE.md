@@ -79,8 +79,18 @@ Si alguna vez hace falta separar funciones, hacerlo con una sola fuente de verda
 
 **Booking flow (WodBuster):** signup → scheduling email → `/reservar` → book in WodBuster →
 follow-up email → WhatsApp. The website schedule is the source of truth for class names/times;
-the WodBuster API only supplies availability (spots, capacity, IDs). Only today/tomorrow return
-real data (`realData: true`); farther dates show "las reservas se abren 1-2 días antes".
+the WodBuster API only supplies availability (spots, capacity, IDs).
+
+**Ojo con `realData`, y esta nota antes decía lo contrario de la verdad.** Afirmaba que solo
+hoy y mañana devuelven datos reales. **Es falso:** comprobado el 2026-08-31, los seis días de
+lunes a sábado devuelven `realData: true` incluso a 5 días vista. El único que cae a datos de
+plantilla es el **domingo**, porque no hay clases guiadas — y esa plantilla trae un "Kickbox"
+que ya no existe, así que es fácil confundirla con un horario real. **Antes de dar por buenos
+unos horarios, mira `realData`.**
+
+**La web pública de WodBuster sirve VARIAS tablas de horario a la vez** (el 2026-08-31 había
+tres: "Anboto", "Abuztua" y "Anboto SC"). No son equivalentes y cada una vale para algo
+distinto — ver la trampa nº7 en `memory/MEMORY.md` antes de tocar el scraper.
 
 ## Key technical constraints
 

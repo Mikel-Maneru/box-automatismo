@@ -18,11 +18,14 @@
 | **Limpieza** | ✅ `api/` borrado (`ff330ef`) | Queda solo el dominio `send.anboto.sc` en Resend |
 | **Tarifas** | 🚫 **NO se publican precios** — ✅ **EN PRODUCCIÓN (25-08-2026)** | Petición del cliente. Fuera de la landing, del JSON-LD y del prompt del chatbot. Ver `decisions.md` |
 | **Horario** | ✅ **AUTOMATICO desde el proveedor** (2026-08-31) | `GET /api/schedule`, cache 6h, con el estatico como red de seguridad |
+| **Clases de Alluitz** | ✅ **EN PRODUCCION (31-08-2026, `d621f4e`)** | La web muestra el horario titulado "Anboto SC", el unico con Alluitz. 59 franjas con clases del gimnasio |
+| **⚠️ Web vs reservas** | 🔶 **DIFIEREN A PROPOSITO** | La web ya enseña el horario NUEVO; WodBuster sigue con el VIEJO. Web dice 10:30/12:30, reservas 10:15/12:45. Las clases con nombre de Alluitz (Funcional, Tonificacion, Movilidad + Core) **no se pueden reservar**. Xabi tiene que pasar el horario nuevo a WodBuster |
+| **Domingo** | 🔶 Abierto, sin horas publicadas | El box abre todos los dias (lo dijo Mikel el 31-08). Se quito el "Domingo cerrado", pero **el JSON-LD sigue sin domingo** porque no hay horas concretas: falta que Xabi las diga o Google seguira mostrando "cerrado" |
 | **Telefono** | ✅ 622 768 134 (Xabi) | El 688 661 924 era del socio anterior; cambiado en los 11 sitios + Supabase |
 | **Proveedor de reservas** | 🔄 **Se migra a AimHarder** (aun no) | Capa `src/lib/booking/` lista: cambiar es poner `BOOKING_PROVIDER=aimharder`. Bloqueado por Xabi (URL de prueba gratuita + docs API) |
-| **Próxima acción** | ⚠️ Vaciar `boxes.membership_plans` en Supabase y revisar `boxes.faqs`/`boxes.extra_info` · rotar `RESEND_API_KEY` **y** `ANTHROPIC_API_KEY` (ambas se pegaron en un chat) · esperar a Xabi (URL de prueba gratuita en AimHarder, docs de su API, fotos y datos del centro) |
+| **Próxima acción** | ⚠️ **Pedir a Xabi: pasar el horario nuevo a WodBuster** (si no, la web enseña clases que no se pueden reservar) **y las horas del domingo** · `boxes.name` sigue con la marca vieja "Anboto Fitness" y el chatbot se presenta asi · vaciar `boxes.membership_plans` y revisar `boxes.faqs`/`boxes.extra_info` · rotar `RESEND_API_KEY` **y** `ANTHROPIC_API_KEY` (ambas se pegaron en un chat) · esperar a Xabi (URL de prueba gratuita en AimHarder, docs de su API, fotos y datos del centro) |
 
-### ⚠️ Seis trampas que ya nos costaron horas — no repetir
+### ⚠️ Siete trampas que ya nos costaron horas — no repetir
 
 1. **Nameservers de Vercel sin zona.** Poner `ns*.vercel-dns-*.com` en el registrador NO funciona
    si Vercel no gestiona el DNS: responden REFUSED → SERVFAIL global y no se arregla esperando.
@@ -55,6 +58,19 @@
    503 cuando no habia horario, y eso pintaba un error rojo en la consola de una pagina que
    funcionaba perfectamente (la web tira del respaldo). Ahora responde 200 con
    `schedule:null`: para el cliente no es un error, es ausencia de dato.
+
+7. **La web de WodBuster publica VARIAS tablas de horario a la vez, y no son alternativas.**
+   El 31-08-2026 habia tres, tituladas "Anboto", "Abuztua" (agosto) y "Anboto SC". El scraper
+   cogia `tables[0]` **por posicion**, que resulto ser la unica SIN las clases de Alluitz.
+   Dos lecciones:
+   - **Elegir la tabla por TITULO, no por indice.** El orden cambia cada vez que el box
+     publica un horario nuevo, y un indice fijo caduca sin que salte ningun error.
+   - **Cada tabla vale para un uso distinto, y hay que separarlos.** La que casa con lo
+     realmente reservable manda en el emparejamiento con la API (`/api/classes`); la titulada
+     con la marca actual manda en la parrilla de la web. Hoy **difieren a proposito**.
+   Como se averiguo cual estaba vigente: **contrastando contra la disponibilidad real de
+   mañana** por la API. La tabla nueva decia 10:30 Funcional y la API devolvia 10:15 WOD.
+   No te fies del titulo ni del orden: **comprueba contra lo que se puede reservar.**
 
 ---
 
