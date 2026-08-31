@@ -17,9 +17,10 @@
 | **Chat** | ✅ **En la cuenta de Anthropic de Xabi** (2026-08-19) | Mikel es admin. Verificado en vivo. Paga Xabi |
 | **Limpieza** | ✅ `api/` borrado (`ff330ef`) | Queda solo el dominio `send.anboto.sc` en Resend |
 | **Tarifas** | 🚫 **NO se publican precios** — ✅ **EN PRODUCCIÓN (25-08-2026)** | Petición del cliente. Fuera de la landing, del JSON-LD y del prompt del chatbot. Bundle en prod `app-CNg4DcFO.js`. Ver `decisions.md` |
-| **Próxima acción** | ⚠️ Vaciar `boxes.membership_plans` en Supabase y revisar `boxes.faqs`/`boxes.extra_info` · rotar `RESEND_API_KEY` **y** `ANTHROPIC_API_KEY` (ambas se pegaron en un chat) · esperar a Xabi (API WodBuster, fotos y datos del centro) |
+| **Proveedor de reservas** | 🔄 **Se migra a AimHarder** (aun no) | Capa `src/lib/booking/` lista: cambiar es poner `BOOKING_PROVIDER=aimharder`. Bloqueado por Xabi (URL de prueba gratuita + docs API) |
+| **Próxima acción** | ⚠️ Vaciar `boxes.membership_plans` en Supabase y revisar `boxes.faqs`/`boxes.extra_info` · rotar `RESEND_API_KEY` **y** `ANTHROPIC_API_KEY` (ambas se pegaron en un chat) · esperar a Xabi (URL de prueba gratuita en AimHarder, docs de su API, fotos y datos del centro) |
 
-### ⚠️ Tres trampas que ya nos costaron horas — no repetir
+### ⚠️ Cinco trampas que ya nos costaron horas — no repetir
 
 1. **Nameservers de Vercel sin zona.** Poner `ns*.vercel-dns-*.com` en el registrador NO funciona
    si Vercel no gestiona el DNS: responden REFUSED → SERVFAIL global y no se arregla esperando.
@@ -33,6 +34,18 @@
    **Cómo saber de quién es una clave sin entrar al panel:** intenta enviar a una dirección
    cualquiera; si la cuenta está en modo pruebas, el error 403 dice literalmente el email del
    titular (*"You can only send testing emails to your own email address (X)"*).
+
+4. **El box renombra sus clases y nada avisa.** WodBuster paso de "Wod" a "WOD (ANBOTO)" y
+   se rompieron dos cosas EN SILENCIO: la descripcion de cada clase pasaba a mostrar el nombre
+   crudo, y la recomendacion por objetivo dejo de casar, asi que el badge "Recomendado" de
+   /reservar desaparecio sin que nadie lo notara. La causa de fondo era tener el mapa de
+   nombres duplicado en tres ficheros. Ahora hay uno solo (`shared/clases.json`) y la
+   normalizacion ignora el sufijo entre parentesis. **Si algo depende de como llama el
+   proveedor a sus clases, comparar por nombre canonico, nunca por string crudo.**
+5. **Desplegar sin hacer `git pull` estando dos personas.** El 25-08 se desplego a produccion
+   antes de bajarse los commits del otro equipo, y eso **devolvio a la web las tarifas** que
+   acababan de retirarse. Se detecto porque el `git push` fallo despues. **Orden correcto:
+   `git pull` -> build -> `vercel --prod`**, y comprobar el hash del bundle servido.
 
 ---
 

@@ -1,4 +1,33 @@
-# Project Status — Anboto SC (2026-08-18)
+# Project Status — Anboto SC
+
+## Migracion a AimHarder — Fase 1 hecha (2026-08-25)
+
+**Estado:** el box sigue en WodBuster (`BOOKING_PROVIDER=wodbuster`, tambien en Vercel).
+La capa esta lista para cambiar cuando migren.
+
+**Hecho y desplegado** (commit `d713e0f`, rebasado sobre la retirada de tarifas):
+- `src/lib/booking/`: `index.js` (elige proveedor), `wodbuster.js` (movido tal cual),
+  `aimharder.js` (esqueleto), `errors.js` (`BookingAuthError` compartido).
+- `shared/clases.json`: mapa unico de nombres, leido por `src/lib/clases.js` (backend) y
+  `web/src/data/clases.js` (frontend). `vite.config.js` necesito `fs: { allow: ['..'] }`
+  porque el JSON vive fuera de `web/`.
+- Los textos que ve el usuario y los emails de alerta ya no nombran a WodBuster: usan
+  `reservas.nombreProveedor`.
+
+**Bug encontrado al probar con datos reales:** el box habia renombrado sus clases a
+"WOD (ANBOTO)" y "OPEN BOX (ANBOTO)". Eso rompio en silencio las descripciones y la
+recomendacion por objetivo. Arreglado con la normalizacion del mapa unico y verificado en
+navegador: el badge "Recomendado" vuelve a marcarse.
+
+**Frontera con el proveedor (util para la Fase 3):** solo 4 simbolos en 2 ficheros
+(`scheduling.js` y `cron.js`). Hoy lo unico vivo es la LECTURA de disponibilidad y el
+keep-alive del cron; la escritura lleva apagada desde el 19-08.
+
+**Siguiente:** Fase 2 (horario automatico con fallback al `SCHED` estatico) — se puede hacer
+ya. Fase 3 (prueba gratuita via pagina publica de AimHarder) — bloqueada por Xabi.
+
+---
+
 
 ## Current Active Branch
 - **Branch**: `feat/react-vite-migration`

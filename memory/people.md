@@ -51,10 +51,12 @@ Ya van a la cuenta del box: **anbotocf@gmail.com** (commit `47d060b`, 2026-08-18
 Las notificaciones por WhatsApp se eliminaron por completo el 2026-08-19 (`017f05c`),
 asi que ahora el unico canal de aviso es el email via Resend.
 
-## 4. Cuenta de WodBuster
-El sistema entra con el usuario y la contrasena PERSONALES de Mikel, y con una cookie
-`.WBAuth` renovada a mano porque un CAPTCHA impide el login automatico. Valorar una cuenta
-del box en vez de una personal.
+## 4. Cuenta del sistema de reservas — se resuelve con la migracion a AimHarder
+WodBuster entra con el usuario y la contrasena PERSONALES de Mikel, con una cookie `.WBAuth`
+renovada a mano porque un CAPTCHA impide el login automatico. Por eso la escritura esta
+apagada (`WODBUSTER_AUTOBOOK` off): las pruebas quedaban a nombre de Mikel.
+**Con AimHarder deja de ser un problema:** el interesado se registra el mismo en la pagina
+publica de prueba gratuita, asi que la reserva queda a SU nombre. Ver punto 11.
 
 ## 5. Cifras falsas en la landing
 La banda de cifras muestra **"5+ MIEMBROS ACTIVOS"**, **"1 DISCIPLINAS"** y
@@ -95,13 +97,29 @@ Pendiente de Xabi (lista completa preparada el 2026-08-18):
 - Horario del centro nuevo y confirmacion de las 6 disciplinas
 - Direccion exacta si cambia: condiciona mapa, coordenadas y datos estructurados
 
-## 11. API oficial de WodBuster — a solicitar por Xabi
-WodBuster **si tiene API oficial** (comprobado en su web): **API de Reservas** (reservar desde
-una plataforma externa) y **API de Usuarios** (alta de atletas desde tu propia web, que es el
-"autorregistro" del video que os pasaron), ademas de API de Datos, de Tornos y RestHook.
-**No publican documentacion**: hay que pedir acceso a soporte (+34 911 238 103) y, como el
-cliente de WodBuster es el box, **lo tiene que pedir Xabi**.
-Merece la pena: quitaria la cookie `.WBAuth` renovada a mano, el bloqueo por CAPTCHA y la
-limitacion de ver solo hoy y manana. El cambio seria barato: `src/lib/wodbuster.js` ya expone
-una interfaz limpia (`getClassAvailability`, `bookClass`, `validateSession`) que solo consumen
-`scheduling.js` y `cron.js` → bastaria un adaptador detras de la misma interfaz.
+## 11. MIGRACION A AIMHARDER — lo que hace falta de Xabi (2026-08-25)
+
+El box se pasa a **AimHarder**. Sustituye al antiguo punto 11 (pedir la API oficial de
+WodBuster), que ya no aplica. Xabi se reunio con ellos y le dijeron que tienen API y un
+sistema para las pruebas gratuitas.
+
+**Lo que hace falta que consiga Xabi:**
+1. **La URL de la clase de prueba gratuita del box**, del tipo
+   `https://{subdominio}.aimharder.com/boxmemberships?buy={id}`. **Con esto solo se resuelve
+   el problema de fondo**, sin API ni credenciales.
+2. **Documentacion oficial de la API** y credenciales de SERVICIO (no la contrasena de una
+   persona), confirmando si permiten leer la parrilla semanal.
+3. El **subdominio** del box en AimHarder y su **boxId**.
+
+**Lo investigado (2026-08-25), para no repetirlo:**
+- **La API de AimHarder que circula por internet es INGENIERIA INVERSA**, igual que la de
+  WodBuster: `POST login.aimharder.com/api/login` (email, password, fingerprint),
+  `GET {box}.aimharder.com/api/bookings?day=YYYYMMDD&box={id}`, `POST .../api/book`. No hay
+  documentacion oficial publica y los propios repos que la usan avisan de que puede romperse
+  sin aviso. **No construir la escritura sobre eso** — es exactamente el agujero del que
+  acabamos de salir.
+- **AimHarder resuelve la prueba gratuita SIN API.** Los boxes publican una pagina publica de
+  bonos con el producto "CLASE DE PRUEBA GRATUITA" (validez 14 dias) donde el interesado
+  **se crea su cuenta, mete sus datos y reserva el mismo**. Eso es justo lo que se pedia:
+  la reserva queda a SU nombre y el box ve a todos los que estan probando. Verificado en una
+  pagina real de otro box.

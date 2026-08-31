@@ -301,3 +301,33 @@ la regla de `prompt.js` para que tampoco enumere tipos de plan.
 **Nota de entorno:** `vercel link` creo un `.env.local` con un `VERCEL_OIDC_TOKEN` (ignorado por
 git) y añadio un `.env*` redundante al `.gitignore` que se revirtio: `.env` y `.env.local` ya
 estaban en las lineas 2 y 3, y ese patron ademas tapaba `.env.example`, que SI va trackeado.
+
+## 2026-08-25: Migracion a AimHarder — capa de proveedor y mapa unico de clases
+
+**El box se pasa a AimHarder** (aun no ha migrado). Dos peticiones del cliente: que el horario
+de la web se actualice solo cuando cambien una clase, y que la prueba gratuita deje de
+reservarse con la cuenta personal de Mikel.
+
+**Decision de arquitectura: capa de proveedor** (`src/lib/booking/`). Las rutas dejan de
+importar un proveedor concreto; `index.js` elige con `BOOKING_PROVIDER` y reexporta la interfaz
+(`getClassAvailability`, `bookClass`, `validateSession`). Cambiar de sistema pasa a ser una
+variable de entorno. `wodbuster.js` se movio dentro sin tocar su logica y `aimharder.js` queda
+como esqueleto que falla con un mensaje explicito.
+
+**Detalle que importa:** `BookingAuthError` vive en `errors.js` y es COMPARTIDO. Las rutas hacen
+`instanceof` para distinguir "sesion caducada" de un fallo cualquiera; si cada proveedor
+definiera su propia clase, esa comprobacion fallaria en silencio justo al cambiar de proveedor.
+
+**Sobre la API de AimHarder:** lo que circula por internet es ingenieria inversa, sin
+documentacion oficial. **No se construye la escritura sobre eso.** Pero AimHarder resuelve la
+prueba gratuita SIN API: publica una pagina de bonos donde el interesado se registra el mismo y
+reserva, con lo que la reserva queda a SU nombre. Esa es la via elegida. Detalle en `people.md`
+punto 11.
+
+**Mapa unico de nombres de clase** (`shared/clases.json`), que leen backend y frontend. Estaba
+duplicado en tres sitios y se habia desincronizado sin dar ningun error. Ver trampa 4 en
+`MEMORY.md`.
+
+**Pendiente:** Fase 2 (horario automatico con red de seguridad, que se puede hacer ya contra
+WodBuster) y Fase 3 (prueba gratuita, bloqueada por la URL que tiene que dar Xabi). Plan
+completo en `~/.claude/plans/c-users-mikel-downloads-anbotomanual-pd-whimsical-raccoon.md`.
