@@ -1,26 +1,28 @@
 # Memory Index — Anboto Project
 
-**READ THIS FIRST** al comenzar cada sesión en este proyecto. Actualizado: **2026-08-19**.
+**READ THIS FIRST** al comenzar cada sesión en este proyecto. Actualizado: **2026-08-31**.
 
 ---
 
-## 📋 Quick Status (2026-08-25)
+## 📋 Quick Status (2026-08-31)
 
 | Item | Status | Notes |
 |------|--------|-------|
 | **Rama activa** | `main` | Ya mergeada (`a81baca`) y 5 commits por delante de `feat/react-vite-migration`. Verificado el 25-08-2026 |
 | **Dominio** | ✅ **https://anbotosc.com EN PRODUCCIÓN** | `A 76.76.21.21` en IONOS + cert TLS. `www` redirige 308 |
 | **Fase 1** | ✅ COMPLETA | Dominio, widget con marca, favicon según tema |
-| **Fase 2** | ✅ **DESPLEGADA Y VERIFICADA EN VIVO (2026-08-19)** | Bundle en prod `app-VFg2lThZ.js` = el del repo |
+| **Fase 2** | ✅ **DESPLEGADA Y VERIFICADA EN VIVO** | Clases por objetivo, formulario guiado, `/reservar` en React |
 | **Email propio** | ✅ **FUNCIONANDO** | Envío real comprobado a `anbotocf@gmail.com` desde `hola@send.anbotosc.com` |
 | **WhatsApp** | ❌ Eliminado (`017f05c`) y **desplegado** | Los 2 avisos que importaban pasaron a email |
 | **Chat** | ✅ **En la cuenta de Anthropic de Xabi** (2026-08-19) | Mikel es admin. Verificado en vivo. Paga Xabi |
 | **Limpieza** | ✅ `api/` borrado (`ff330ef`) | Queda solo el dominio `send.anboto.sc` en Resend |
-| **Tarifas** | 🚫 **NO se publican precios** — ✅ **EN PRODUCCIÓN (25-08-2026)** | Petición del cliente. Fuera de la landing, del JSON-LD y del prompt del chatbot. Bundle en prod `app-CNg4DcFO.js`. Ver `decisions.md` |
+| **Tarifas** | 🚫 **NO se publican precios** — ✅ **EN PRODUCCIÓN (25-08-2026)** | Petición del cliente. Fuera de la landing, del JSON-LD y del prompt del chatbot. Ver `decisions.md` |
+| **Horario** | ✅ **AUTOMATICO desde el proveedor** (2026-08-31) | `GET /api/schedule`, cache 6h, con el estatico como red de seguridad |
+| **Telefono** | ✅ 622 768 134 (Xabi) | El 688 661 924 era del socio anterior; cambiado en los 11 sitios + Supabase |
 | **Proveedor de reservas** | 🔄 **Se migra a AimHarder** (aun no) | Capa `src/lib/booking/` lista: cambiar es poner `BOOKING_PROVIDER=aimharder`. Bloqueado por Xabi (URL de prueba gratuita + docs API) |
 | **Próxima acción** | ⚠️ Vaciar `boxes.membership_plans` en Supabase y revisar `boxes.faqs`/`boxes.extra_info` · rotar `RESEND_API_KEY` **y** `ANTHROPIC_API_KEY` (ambas se pegaron en un chat) · esperar a Xabi (URL de prueba gratuita en AimHarder, docs de su API, fotos y datos del centro) |
 
-### ⚠️ Cinco trampas que ya nos costaron horas — no repetir
+### ⚠️ Seis trampas que ya nos costaron horas — no repetir
 
 1. **Nameservers de Vercel sin zona.** Poner `ns*.vercel-dns-*.com` en el registrador NO funciona
    si Vercel no gestiona el DNS: responden REFUSED → SERVFAIL global y no se arregla esperando.
@@ -40,12 +42,19 @@
    crudo, y la recomendacion por objetivo dejo de casar, asi que el badge "Recomendado" de
    /reservar desaparecio sin que nadie lo notara. La causa de fondo era tener el mapa de
    nombres duplicado en tres ficheros. Ahora hay uno solo (`shared/clases.json`) y la
-   normalizacion ignora el sufijo entre parentesis. **Si algo depende de como llama el
-   proveedor a sus clases, comparar por nombre canonico, nunca por string crudo.**
+   normalizacion ignora acentos y sufijos entre parentesis.
+   **Ha pasado DOS veces**: primero "Wod" -> "WOD (ANBOTO)", y despues INICIACION por
+   Oinarriak, HYCROSS por Hyrox y STRENGTH por Total Strength. Da por hecho que volvera a
+   pasar. **Nunca compares nombres de clase por string crudo: usa esMismaClase().**
 5. **Desplegar sin hacer `git pull` estando dos personas.** El 25-08 se desplego a produccion
    antes de bajarse los commits del otro equipo, y eso **devolvio a la web las tarifas** que
    acababan de retirarse. Se detecto porque el `git push` fallo despues. **Orden correcto:
    `git pull` -> build -> `vercel --prod`**, y comprobar el hash del bundle servido.
+
+6. **Un 503 "correcto" puede ser mala idea de cara al navegador.** `/api/schedule` devolvia
+   503 cuando no habia horario, y eso pintaba un error rojo en la consola de una pagina que
+   funcionaba perfectamente (la web tira del respaldo). Ahora responde 200 con
+   `schedule:null`: para el cliente no es un error, es ausencia de dato.
 
 ---
 
@@ -68,16 +77,18 @@
 - `deploy-anbotosc.sh` — Run this when anbotosc.com DNS resolves (checks + `vercel --prod`)
 
 ### Frontend (React+Vite, in `web/`)
-- `web/src/data/site.js` — Schedule, disciplines, coaches, plans (DATA POINT for phase 2)
-- `web/src/components/Signup.jsx` — Current signup form (NEEDS: howKnew + objective fields)
+- `web/src/data/site.js` — SCHED es el horario de RESPALDO (el bueno llega de /api/schedule), disciplinas, objetivos, coaches
+- `web/src/components/Signup.jsx` — formulario de alta (ya lleva objetivo y "como nos conociste")
 - `web/src/i18n/dict.js` — ES/EU translations
 - `web/src/styles/global.css` — Brand color palette (Anboto official colors)
 
 ### Backend (Express, in `src/`)
 - `src/routes/chat.js` — POST /api/chat (Claude API, token validation)
-- `src/routes/scheduling.js` — GET /api/classes (WodBuster integration)
+- `src/routes/scheduling.js` — GET /api/schedule (parrilla semanal, cache 6h) + /api/classes + /api/book
 - `src/routes/signup.js` — POST /api/signup (Supabase insert)
-- `src/lib/wodbuster.js` — WodBuster client (598 lines, getClassAvailability + bookClass)
+- `src/lib/booking/` — capa de proveedor: `index.js` (elige con BOOKING_PROVIDER), `wodbuster.js`,
+  `aimharder.js` (esqueleto) y `errors.js` (BookingAuthError COMPARTIDO)
+- `shared/clases.json` + `src/lib/clases.js` — nombres de clase, fuente unica para backend y frontend
 - `src/lib/supabase.js` — Lazy Supabase client (Proxy pattern for zero-env startup)
 
 ### Widget

@@ -291,7 +291,8 @@ JSON-LD de ambas paginas validos y sin `priceRange`.
 
 **El chatbot se probo en produccion con dos peticiones reales** (es la parte que de verdad podia
 filtrar precios). Pregunta normal y luego presion insistiendo en "un rango" o "un desde X":
-en las dos deriva al 688 661 924 y ofrece la clase gratuita, **0 cifras**. La regla aguanta.
+en las dos deriva al telefono del box y ofrece la clase gratuita, **0 cifras**. La regla aguanta.
+(El telefono de aquella prueba era el 688 661 924; el 2026-08-31 paso a ser 622 768 134.)
 
 **Detalle observado, por si molesta:** el bot nombra TIPOS de plan sin importes ("ilimitado, dias
 sueltos, bonos..."). No sale de `membership_plans` (ya no se interpola): lo improvisa, o viene de
@@ -331,3 +332,31 @@ duplicado en tres sitios y se habia desincronizado sin dar ningun error. Ver tra
 **Pendiente:** Fase 2 (horario automatico con red de seguridad, que se puede hacer ya contra
 WodBuster) y Fase 3 (prueba gratuita, bloqueada por la URL que tiene que dar Xabi). Plan
 completo en `~/.claude/plans/c-users-mikel-downloads-anbotomanual-pd-whimsical-raccoon.md`.
+
+## 2026-08-31: El horario se lee solo, con red de seguridad
+
+**Problema:** la parrilla estaba escrita a mano y se quedaba vieja cada vez que el box
+cambiaba una clase. Paso de verdad: Xabi la cambio y la web siguio mintiendo.
+
+**Decision: leer del proveedor PERO conservar el estatico.** `GET /api/schedule` sirve la
+parrilla del proveedor cacheada 6 h; `Horarios.jsx` la pide al montar y solo sustituye si
+trae dias con franjas. `SCHED` en `site.js` deja de ser "el horario" y pasa a ser "el
+ultimo horario conocido bueno": es lo que se prerenderiza (bueno para SEO y para el primer
+pintado) y lo que se muestra si el proveedor falla. **Media respuesta seria peor que el
+respaldo**, por eso la comprobacion de que trae dias con contenido.
+
+**Decision menor pero deliberada:** el endpoint responde 200 con `schedule:null` cuando no
+hay dato, no 503. Un 503 pinta un error rojo en la consola del navegador en una pagina que
+funciona perfectamente, porque la web tira del respaldo sin inmutarse.
+
+**Decision de vocabulario:** los alias de `shared/clases.json` mapean los nombres del box
+(INICIACION, HYCROSS, STRENGTH) a los de la web (Oinarriak, Hyrox, Total Strength). Se
+eligio asi porque el titulo y el SEO de la pagina ya usan "Hyrox" y porque mantiene el
+vocabulario unico en las cuatro pantallas (horario, seccion de clases, /reservar y chatbot),
+con lo que la recomendacion por objetivo sigue casando.
+**Suposicion asumida:** que HYCROSS es Hyrox renombrado (lo habitual, por ser marca
+registrada). Si resultan ser cosas distintas, hay que separarlos.
+
+**Pendiente de decidir por el cliente:** si mostrar las clases de ALLUITZ (otro espacio que
+aparece en el sistema) y corregir las cifras de la landing, que dicen "46+ miembros activos"
+cuando 46 es el numero de resenas de Google.

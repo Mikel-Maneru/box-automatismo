@@ -1,5 +1,49 @@
 # Project Status — Anboto SC
 
+## Horario automatico + telefono nuevo (2026-08-31)
+
+### El horario ya no se escribe a mano
+`GET /api/schedule` devuelve la parrilla semanal leida del proveedor y cacheada 6 h en
+memoria (una visita a la landing no debe disparar un scraping). `Horarios.jsx` la pide al
+montar y **solo sustituye si trae dias con franjas**.
+
+**SCHED en site.js NO se borra**: pasa a ser el horario de RESPALDO y cumple tres papeles —
+es lo que se prerenderiza (Google y el primer pintado ven la parrilla completa sin esperar
+a nada), es lo que se muestra si el proveedor falla, y sirve de referencia para saber
+cuando se ha quedado viejo.
+
+Probados los tres caminos: proveedor respondiendo (12 franjas reales), proveedor caido
+(se queda el respaldo, 0 errores de consola) y prerender (12 franjas en el HTML servido).
+
+**Decision:** el endpoint responde **200 con `schedule:null`**, no 503. Para el cliente no
+es un error sino ausencia de dato, y un 503 pintaba un error rojo en la consola de una
+pagina que funciona perfectamente.
+
+### Como se identifico el horario vigente (util si vuelve a pasar)
+La web publica de WodBuster tiene **TRES tablas** ("Anboto", "Abuztua" y "Anboto SC") y
+ninguna lleva fecha. Se resolvio comparando con las clases realmente reservables que
+devuelve el sistema para varios dias: las horas coincidian **solo con la primera**. Las
+otras dos son el horario de agosto y uno que ademas incluye clases de **ALLUITZ**.
+
+### Bug corregido de paso
+El filtro de Open Box comparaba con el literal `'Open box'` y dejo de funcionar al
+renombrar las clases: como Open Box es lo primero de cada celda, **se perdian todas las
+clases especiales**. Ahora se compara por nombre canonico.
+
+### Telefono
+El `688 661 924` era del socio anterior. Sustituido por el de Xabi (**622 768 134**) en 11
+puntos del codigo **y en Supabase** (`phone` y `faqs`) — esto ultimo importa, porque el
+chatbot lo lee de ahi y habria seguido dando el viejo.
+
+### Correos al interesado
+`EMAIL_ELEGIR_DIA=off`: no se le manda el correo de elegir dia (ni se genera token). El de
+seguimiento y los avisos al box siguen activos. Ojo: el de seguimiento **hoy no llega a
+dispararse**, porque el cron busca reservas `confirmed` en `class_bookings` y ya no se
+crean. Se resolvera solo al migrar a AimHarder.
+
+---
+
+
 ## Migracion a AimHarder — Fase 1 hecha (2026-08-25)
 
 **Estado:** el box sigue en WodBuster (`BOOKING_PROVIDER=wodbuster`, tambien en Vercel).
@@ -29,10 +73,11 @@ ya. Fase 3 (prueba gratuita via pagina publica de AimHarder) — bloqueada por X
 ---
 
 
-## Current Active Branch
-- **Branch**: `feat/react-vite-migration`
-- **Status**: Deployed to Vercel preview + ready for production (`vercel --prod`)
-- **Last commit**: "chore: Prepara deploy automatizado de anbotosc.com cuando DNS se propague"
+## Rama activa
+- **Rama**: `main` (la migracion se mergeo el 2026-08-19 en `a81baca`)
+- **Despliegue**: MANUAL con `vercel --prod`. El push NO despliega.
+- Antes de desplegar: `git pull` (trabajais dos equipos) y despues comprobar que el hash
+  del bundle servido coincide con el de `public/`.
 
 ## Phase 1 — Completed ✅ (2026-08-18)
 
