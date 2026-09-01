@@ -497,3 +497,33 @@ exista; si algun dia se cambia, hay que sustituirlo por algo antes.
 
 Cuando llegue AimHarder esto deja de ser un dilema: el interesado se registra el mismo en la
 pagina publica de prueba gratuita y la reserva queda a su nombre.
+
+## 2026-09-01: La migracion a AimHarder es en OCTUBRE — no se toca nada mas de WodBuster
+
+Mikel lo fija: *"el mes que viene se cambia a AimHarder y con la API sabremos todo"*. Eso
+convierte en temporal el desajuste abierto el 31-08 (la web muestra el horario nuevo, el
+sistema de reservas sigue con el viejo) y cambia dos prioridades:
+
+**1. No se invierte mas en el lado de WodBuster.** Se descarta pedirle a Xabi que sincronice
+alli el horario nuevo: en un mes ese sistema desaparece, asi que seria trabajo tirado. El
+desajuste se resuelve solo al migrar.
+
+**Riesgo asumido a sabiendas durante septiembre:** quien vea en la web una clase de Alluitz
+(Funcional, Tonificacion, Movilidad + Core) o una hora que no coincide (10:30 en vez de
+10:15) puede ir a reservar y no encontrarla. Se acepta porque la ventana es corta y porque el
+horario publicado es el que el box quiere enseñar. La via de contacto sigue abierta: el
+telefono y el WhatsApp estan en la web y el chatbot deriva a ellos.
+
+**2. Las docs de la API de AimHarder pasan a ser la RUTA CRITICA.** Antes eran "pendiente de
+Xabi"; ahora son lo que bloquea todo lo demas, porque `src/lib/booking/aimharder.js` es un
+**esqueleto sin implementar**: la capa de proveedor esta lista y el interruptor es
+`BOOKING_PROVIDER=aimharder`, pero detras no hay nada que hable con ellos. Hay que conseguir
+docs oficiales y credenciales de SERVICIO antes de octubre; lo que circula por internet es
+ingenieria inversa y no se construye sobre eso (ver punto 11 de people.md).
+
+**Lo que la migracion arregla de golpe**, y por eso conviene no parchearlo antes:
+- El desajuste horario web/reservas.
+- La prueba gratuita a nombre del interesado (hoy la reserva automatica esta apagada
+  precisamente porque la cuenta es personal).
+- El correo de seguimiento, que hoy no llega a dispararse porque el cron filtra reservas
+  `confirmed` y ya no se crean.

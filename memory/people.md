@@ -107,6 +107,15 @@ Pendiente de Xabi (lista completa preparada el 2026-08-18):
 
 ## 11. MIGRACION A AIMHARDER — lo que hace falta de Xabi (2026-08-25)
 
+**FECHA: el cambio es en OCTUBRE de 2026** (lo confirmo Mikel el 01-09: "el mes que viene se
+cambia a AimHarder y con la API sabremos todo"). Eso convierte los tres puntos de abajo en la
+**ruta critica del proyecto**: sin ellos no se puede preparar nada antes de la migracion.
+
+Y tiene una consecuencia practica inmediata: **no merece la pena invertir en arreglar nada
+del lado de WodBuster.** El desajuste actual entre el horario que muestra la web y el que
+tiene el sistema de reservas se resuelve solo al migrar, asi que arreglarlo alli seria
+trabajo tirado. Ver la nota de "Web vs reservas" en MEMORY.md.
+
 El box se pasa a **AimHarder**. Sustituye al antiguo punto 11 (pedir la API oficial de
 WodBuster), que ya no aplica. Xabi se reunio con ellos y le dijeron que tienen API y un
 sistema para las pruebas gratuitas.
