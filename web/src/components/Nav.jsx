@@ -93,7 +93,7 @@ export default function Nav() {
           <div className="mm-contact">
             <a href={WHATSAPP_URL} target="_blank" rel="noopener">WhatsApp</a>
             <span>·</span>
-            <a href="tel:+34622768134">622 768 134</a>
+            <a href="tel:+34688606754">688 60 67 54</a>
             <span>·</span>
             <span>Iurreta</span>
           </div>

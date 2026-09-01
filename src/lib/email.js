@@ -143,7 +143,7 @@ async function sendSchedulingEmail(toEmail, nombre, token) {
           <div style="text-align: center; margin: 30px 0;">
             <a href="${schedulingUrl}" style="background-color: #ff6b35; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-size: 18px; font-weight: bold; display: inline-block;">Elige tu clase gratuita</a>
           </div>
-          <p style="color: #666; font-size: 14px;">Este enlace caduca en 7 dias. Si tienes cualquier duda, escribenos por WhatsApp al 622 768 134.</p>
+          <p style="color: #666; font-size: 14px;">Este enlace caduca en 7 dias. Si tienes cualquier duda, escribenos por WhatsApp al 688 60 67 54.</p>
         </div>
       `
     });
@@ -189,7 +189,7 @@ async function sendFollowupEmail(toEmail, nombre, signupId) {
             <a href="${yesUrl}" style="background-color: #4caf50; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-size: 18px; font-weight: bold; display: inline-block; margin-right: 10px;">Si, me quiero apuntar!</a>
             <a href="${noUrl}" style="background-color: #999; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-size: 18px; font-weight: bold; display: inline-block;">No, gracias</a>
           </div>
-          <p style="color: #666; font-size: 14px;">Si tienes cualquier duda, escribenos por WhatsApp al 622 768 134.</p>
+          <p style="color: #666; font-size: 14px;">Si tienes cualquier duda, escribenos por WhatsApp al 688 60 67 54.</p>
         </div>
       `
     });

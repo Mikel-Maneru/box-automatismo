@@ -280,7 +280,7 @@ export function CtaContacto() {
           </div>
           <div className="cta-contact">
             <div className="cc"><Pin /> Polígono Ertzilla, P4 · 48215 Iurreta</div>
-            <div className="cc"><Phone /> <a href="tel:+34622768134">622 768 134</a></div>
+            <div className="cc"><Phone /> <a href="tel:+34688606754">688 60 67 54</a></div>
             <div className="cc"><Mail /> <a href="mailto:anbotocf@gmail.com">anbotocf@gmail.com</a></div>
           </div>
         </div>
@@ -346,7 +346,7 @@ export function Footer() {
             <a href={INSTAGRAM_URL} target="_blank" rel="noopener">Instagram</a>
             <a href="https://maps.google.com/?q=Poligono+Ertzilla+P4+Iurreta+Bizkaia" target="_blank" rel="noopener"><T as="span" k="foot.dir" /></a>
             <a href="mailto:anbotocf@gmail.com">Email</a>
-            <a href="tel:+34622768134">622 768 134</a>
+            <a href="tel:+34688606754">688 60 67 54</a>
           </div>
         </div>
         <div className="foot-bottom">
