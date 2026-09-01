@@ -5,11 +5,20 @@ const reservas = require('../lib/booking');
 const { sendAlerta } = require('../lib/email');
 const clases = require('../lib/clases');
 
-// Reserva automatica en el proveedor. DESACTIVADA a proposito: la sesion es la
-// CUENTA PERSONAL de Mikel, asi que cada clase de prueba quedaba reservada a su nombre.
-// Mientras esta en off no se toca el proveedor: se guarda la peticion como pending y se
-// avisa al box por email para que la reserve a mano. Poner WODBUSTER_AUTOBOOK=on cuando
-// exista una cuenta del box (ver punto 4 de memory/people.md).
+// Reserva automatica en el proveedor. DESACTIVADA, y el 2026-09-01 se confirmo que SIGUE
+// desactivada: no es un pendiente, es la decision. El motivo original es que la sesion del
+// proveedor es la CUENTA PERSONAL de Mikel, asi que cada clase de prueba quedaba reservada
+// a su nombre; eso paso de verdad con gente real.
+//
+// Con esto en off no se toca al proveedor: la peticion se guarda como `pending` y se avisa
+// al box por email para que reserve a mano. Ese aviso es lo unico que hace que la plaza
+// exista, asi que no se toca sin sustituirlo por algo.
+//
+// La variable WODBUSTER_AUTOBOOK **no existe en Vercel**, y es a proposito: el proyecto
+// fuerza las variables a "Sensitive", que las vuelve ILEGIBLES una vez creadas. Una
+// variable ausente se puede auditar de un vistazo (`vercel env ls`); un valor oculto que
+// enciende reservas con una cuenta personal, no. Si algun dia hay cuenta del box y se
+// quiere activar, crearla entonces (ver punto 4 de memory/people.md).
 const AUTOBOOK = process.env.WODBUSTER_AUTOBOOK === 'on';
 
 // Los nombres y descripciones de clase viven en shared/clases.json (fuente unica).
