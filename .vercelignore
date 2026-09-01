@@ -18,3 +18,6 @@ premium-redesign-COMO-USAR.md
 
 # Originales pesados: el sitio sirve public/fotos/, no esta carpeta.
 /fotos/
+
+# Landings antiguas: se conservan en el repo, pero no se despliegan.
+/archive/

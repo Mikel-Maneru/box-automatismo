@@ -156,7 +156,8 @@ Frontend (aqui es donde se edita):
 - `web/src/components/` — un componente por seccion
 - `web/index.html` — `<head>` de SEO y los dos bloques JSON-LD estaticos
 - `public/index.html` — **salida compilada de `web/`, no editar a mano**
-- `public/index.legacy.html` — la landing anterior a React, conservada como referencia
+- `archive/` — landings anteriores, **fuera de `public/` para que no se sirvan**. Sus rutas
+  redirigen 301 a `/`. Ver `archive/README.md`
 - `public/widget/widget.js` — widget de chat embebible en JS vanilla
 - `public/reservar.html` — pagina de reserva de la clase gratuita (sigue siendo HTML a mano)
 - `schema.sql` — DDL de Supabase + datos semilla

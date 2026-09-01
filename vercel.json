@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    { "source": "/alt-1.html", "destination": "/", "permanent": true },
+    { "source": "/alt-2.html", "destination": "/", "permanent": true },
+    { "source": "/alt-3.html", "destination": "/", "permanent": true },
+    { "source": "/index.legacy.html", "destination": "/", "permanent": true },
+    { "source": "/reservar.legacy.html", "destination": "/", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/reservar", "destination": "/reservar.html" }
   ],

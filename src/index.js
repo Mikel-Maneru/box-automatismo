@@ -27,6 +27,21 @@ app.use(cors({
     : '*'
 }));
 app.use(express.json());
+
+// Paginas archivadas que estuvieron publicas SIN querer. Vivian en public/, y como esta
+// carpeta se sirve entera, respondian 200 en produccion con la marca vieja, el telefono del
+// socio anterior y enlaces a un dominio que nunca existio. Se movieron a archive/ (fuera de
+// lo servido) el 2026-09-01.
+// Redirigen a la portada en vez de dar 404 porque `alt-*` e `index.legacy` no llevaban
+// noindex y robots.txt las permitia, asi que pueden estar indexadas: mejor consolidar en la
+// landing buena. Va ANTES del static y esta duplicado en vercel.json a proposito, para que
+// funcione lo sirva quien lo sirva.
+const PAGINAS_ARCHIVADAS = [
+  '/alt-1.html', '/alt-2.html', '/alt-3.html',
+  '/index.legacy.html', '/reservar.legacy.html',
+];
+app.get(PAGINAS_ARCHIVADAS, (_req, res) => res.redirect(301, '/'));
+
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 // Rate limiting

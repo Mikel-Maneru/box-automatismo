@@ -5,7 +5,7 @@ import { WHATSAPP_URL, objetivoPorValor, esMismaClase } from '../data/site.js';
 
 // Página de reserva de la clase gratuita. Se llega SIEMPRE con ?token=... desde el email
 // de scheduling (src/lib/email.js), nunca desde la landing. Sustituye a la antigua
-// public/reservar.html (conservada como reservar.legacy.html), que se quedó con la marca
+// public/reservar.html (conservada como archive/reservar.legacy.html), que se quedó con la marca
 // vieja. Consume los endpoints ya existentes: booking-status, classes y book.
 
 // Fechas seleccionables: los próximos 7 días saltando domingos. El box abre todos los

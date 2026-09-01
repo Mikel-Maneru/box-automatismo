@@ -48,7 +48,7 @@ deploy; the Vite build is deliberately named `web:build`.
 - Do NOT "fix" that slug. `schema.sql` seeds it and `src/lib/email.js` looks the box up by it.
 - **The canonical domain is `anbotosc.com`** (decidido el 2026-08-18). `anbotofitness.com`
   NUNCA llegó a existir: devuelve NXDOMAIN en cualquier resolver. Toda referencia a ese
-  dominio en `public/alt-*.html` e `index.legacy.html` es residuo de archivos archivados.
+  dominio en `archive/alt-*.html` e `index.legacy.html` es residuo de archivos archivados.
 
 ## Architecture
 
@@ -62,7 +62,14 @@ builds a system prompt, and calls Claude.
 `web/` is prerendered with `vite-react-ssg` and built into `public/` with `emptyOutDir: false`,
 so the build does not wipe `fotos/`, `widget/` or `reservar.html`. The compiled output in `public/`
 **is committed**, because that is what gets served. Express (`src/index.js`) serves `public/` plus
-`/api/*` unchanged. The pre-migration landing is kept as `public/index.legacy.html`.
+`/api/*` unchanged.
+
+**Todo lo que hay en `public/` SE SIRVE.** Express sirve la carpeta entera y Vercel también,
+así que ahí no se guarda nada "archivado". El 2026-09-01 se descubrió que cinco páginas
+antiguas (`alt-1/2/3.html`, `index.legacy.html`, `reservar.legacy.html`) llevaban meses
+respondiendo 200 en producción con la marca vieja y el teléfono del socio anterior. Están en
+**`archive/`**, fuera de lo servido, y sus rutas **redirigen 301 a `/`** (en `vercel.json` y
+en `src/index.js`). Ver `archive/README.md`.
 
 **`api/` fue BORRADO el 2026-08-19 — y la nota anterior aquí decía lo contrario de la verdad.**
 Este fichero afirmaba que `api/*` no se usaba en producción. **Era falso:** Vercel enruta
@@ -128,7 +135,8 @@ Frontend (edit here, never the compiled output):
 - `web/src/components/` — one component per section (Hero, Sections, Horarios, Faq, Signup, Nav…)
 - `web/index.html` — SEO `<head>` and the two static JSON-LD blocks
 - `public/index.html` — **compiled output of `web/`. Do not edit by hand.**
-- `public/index.legacy.html` — the pre-React landing, kept for reference
+- `archive/` — landings anteriores, **fuera de `public/` para que no se publiquen**. Sus
+  rutas redirigen 301 a `/`. No devolverlas a `public/`
 - `public/widget/widget.js` — Embeddable vanilla JS chat widget (sessionStorage, floating button)
 - `public/reservar.html` — Free-class booking page (still hand-written)
 - `schema.sql` — Supabase DDL + Anboto seed data
