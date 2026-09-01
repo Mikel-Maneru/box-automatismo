@@ -406,3 +406,29 @@ En el sistema de reservas **no hay ni una clase guiada el domingo** (la API devu
 datos de plantilla, `realData: false`, con un "Kickbox" que ya no existe). Por eso
 `/reservar` sigue saltandose los domingos: ofrecerlos llevaria a la persona a un dia sin nada
 que reservar.
+
+## 2026-09-01: El telefono oficial de Anboto es el 688 60 67 54
+
+Tercer numero en dos dias: `688 661 924` (socio anterior) -> `622 768 134` (el de Xabi,
+puesto el 31-08) -> **`688 60 67 54`**, que Mikel confirmo como el numero OFICIAL del box.
+Formato de presentacion 3-2-2-2 tal y como lo dio el cliente, no el 3-3-3 que se usaba antes.
+
+Cambiado en 13 ficheros (enlaces `tel:`, boton y CTA de WhatsApp, JSON-LD, mensajes de error
+de `/api/book`, correos de scheduling y seguimiento, seed de `schema.sql`) **y en Supabase**
+(`boxes.phone` y la faq "como puedo apuntarme"). Lo de Supabase no es opcional:
+`src/lib/prompt.js` mete `${box.phone}` en el prompt del sistema, asi que el chatbot habria
+seguido dictando el numero viejo aunque la web estuviera perfecta. Verificado con una llamada
+real a `/api/chat` preguntando por precios, que es lo que dispara la mencion del telefono.
+
+**Hallazgo del que salio una regla nueva (trampa nº8):** las paginas archivadas de `public/`
+se sirven en produccion. `/alt-1.html`, `/alt-2.html`, `/alt-3.html`, `/index.legacy.html` y
+`/reservar.legacy.html` devuelven 200 en anbotosc.com y llevaban meses publicando el telefono
+del socio anterior — precisamente lo que el cliente habia pedido retirar. Se corrigio el
+numero en todas.
+**Pendiente de decidir con el cliente:** dejar de publicarlas. Ademas del telefono, llevan la
+marca anterior y referencias a `anbotofitness.com`, un dominio que nunca existio. Mientras
+sigan accesibles, cualquier dato caducado que contengan es dato publico.
+
+Tambien se borro el bundle de la build anterior, que quedaba huerfano pero accesible por su
+URL con el telefono viejo dentro. Ver en la trampa nº8 el criterio para limpiarlos sin
+cargarse un fichero necesario.

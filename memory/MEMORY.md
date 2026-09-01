@@ -21,11 +21,12 @@
 | **Clases de Alluitz** | ✅ **EN PRODUCCION (31-08-2026, `d621f4e`)** | La web muestra el horario titulado "Anboto SC", el unico con Alluitz. 59 franjas con clases del gimnasio |
 | **⚠️ Web vs reservas** | 🔶 **DIFIEREN A PROPOSITO** | La web ya enseña el horario NUEVO; WodBuster sigue con el VIEJO. Web dice 10:30/12:30, reservas 10:15/12:45. Las clases con nombre de Alluitz (Funcional, Tonificacion, Movilidad + Core) **no se pueden reservar**. Xabi tiene que pasar el horario nuevo a WodBuster |
 | **Domingo** | 🔶 Abierto, sin horas publicadas | El box abre todos los dias (lo dijo Mikel el 31-08). Se quito el "Domingo cerrado", pero **el JSON-LD sigue sin domingo** porque no hay horas concretas: falta que Xabi las diga o Google seguira mostrando "cerrado" |
-| **Telefono** | ✅ 622 768 134 (Xabi) | El 688 661 924 era del socio anterior; cambiado en los 11 sitios + Supabase |
+| **Telefono** | ✅ **688 60 67 54 — el OFICIAL del box** (01-09-2026, `45e72a2`) | Ha cambiado dos veces en dos dias: `688 661 924` (socio anterior) → `622 768 134` (Xabi) → **`688 60 67 54`**. En 13 ficheros + Supabase (`phone` y `faqs`, que es de donde lo dicta el chatbot) |
+| **Paginas archivadas** | 🔶 **SE SIRVEN en produccion** | `/alt-1.html`, `/alt-2.html`, `/alt-3.html`, `/index.legacy.html`, `/reservar.legacy.html` dan **200**. Llevaban meses con el telefono del socio anterior. Ya corregido, pero **llevan la marca vieja y `anbotofitness.com`** (dominio que nunca existio): decidir si dejar de publicarlas |
 | **Proveedor de reservas** | 🔄 **Se migra a AimHarder** (aun no) | Capa `src/lib/booking/` lista: cambiar es poner `BOOKING_PROVIDER=aimharder`. Bloqueado por Xabi (URL de prueba gratuita + docs API) |
 | **Próxima acción** | ⚠️ **Pedir a Xabi: pasar el horario nuevo a WodBuster** (si no, la web enseña clases que no se pueden reservar) **y las horas del domingo** · `boxes.name` sigue con la marca vieja "Anboto Fitness" y el chatbot se presenta asi · vaciar `boxes.membership_plans` y revisar `boxes.faqs`/`boxes.extra_info` · rotar `RESEND_API_KEY` **y** `ANTHROPIC_API_KEY` (ambas se pegaron en un chat) · esperar a Xabi (URL de prueba gratuita en AimHarder, docs de su API, fotos y datos del centro) |
 
-### ⚠️ Siete trampas que ya nos costaron horas — no repetir
+### ⚠️ Ocho trampas que ya nos costaron horas — no repetir
 
 1. **Nameservers de Vercel sin zona.** Poner `ns*.vercel-dns-*.com` en el registrador NO funciona
    si Vercel no gestiona el DNS: responden REFUSED → SERVFAIL global y no se arregla esperando.
@@ -71,6 +72,21 @@
    Como se averiguo cual estaba vigente: **contrastando contra la disponibilidad real de
    mañana** por la API. La tabla nueva decia 10:30 Funcional y la API devolvia 10:15 WOD.
    No te fies del titulo ni del orden: **comprueba contra lo que se puede reservar.**
+
+8. **Todo lo que hay en `public/` SE SIRVE, aunque lo llames "archivado" o "legacy".**
+   Express sirve la carpeta entera y Vercel tambien. Descubierto el 01-09-2026 al cambiar el
+   telefono: `/alt-1.html`, `/alt-2.html`, `/alt-3.html`, `/index.legacy.html` y
+   `/reservar.legacy.html` daban **200 en produccion** y llevaban meses enseñando el numero
+   del socio anterior — justo lo que el cliente habia pedido quitar. Nadie los revisaba
+   porque "son ficheros archivados". **Al hacer un cambio global, incluye `public/` entero,
+   no solo `web/src/`.**
+   Lo mismo con los bundles: `emptyOutDir: false` hace que los `assets/*.js` de builds
+   anteriores se acumulen, y **siguen accesibles por su URL con el contenido viejo dentro**.
+   Hay que borrarlos, pero **con cuidado**: `client-*.js` NO aparece en el HTML y aun asi lo
+   importa `app-*.js`. Mirar solo las referencias del HTML se lleva por delante un fichero
+   necesario (paso el 01-09; lo salvo reconstruir y comprobar antes de dar nada por bueno).
+   **Criterio correcto: conservar lo referenciado por el HTML servido _o_ por cualquier JS o
+   manifest que se conserve.**
 
 ---
 

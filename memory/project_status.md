@@ -30,10 +30,20 @@ El filtro de Open Box comparaba con el literal `'Open box'` y dejo de funcionar 
 renombrar las clases: como Open Box es lo primero de cada celda, **se perdian todas las
 clases especiales**. Ahora se compara por nombre canonico.
 
-### Telefono
-El `688 661 924` era del socio anterior. Sustituido por el de Xabi (**622 768 134**) en 11
-puntos del codigo **y en Supabase** (`phone` y `faqs`) — esto ultimo importa, porque el
-chatbot lo lee de ahi y habria seguido dando el viejo.
+### Telefono — **el oficial es el 688 60 67 54** (2026-09-01)
+Ha cambiado DOS veces en dos dias, asi que ojo con las referencias viejas:
+`688 661 924` (socio anterior) -> `622 768 134` (Xabi, 31-08) -> **`688 60 67 54`** (numero
+oficial del box, 01-09). Cambiado en 13 ficheros **y en Supabase** (`phone` y la faq "como
+puedo apuntarme") — esto ultimo importa, porque `src/lib/prompt.js` lo mete en el prompt con
+`${box.phone}` y el chatbot habria seguido dictando el viejo. Verificado con una llamada real
+a `/api/chat`.
+
+**Lo que se descubrio al hacerlo:** las paginas archivadas (`public/alt-1/2/3.html`,
+`index.legacy.html`, `reservar.legacy.html`) **se sirven en produccion** — dan 200 en
+anbotosc.com — y llevaban meses enseñando el numero del socio anterior, que es justo lo que
+el cliente habia pedido quitar. Nadie las miraba porque "son archivos". Ya llevan el oficial.
+**Pendiente de decidir: dejar de publicarlas**, porque ademas llevan la marca vieja y
+referencias a `anbotofitness.com`, un dominio que nunca existio.
 
 ### Correos al interesado
 `EMAIL_ELEGIR_DIA=off`: no se le manda el correo de elegir dia (ni se genera token). El de
