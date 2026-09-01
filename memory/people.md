@@ -54,7 +54,15 @@ asi que ahora el unico canal de aviso es el email via Resend.
 ## 4. Cuenta del sistema de reservas — se resuelve con la migracion a AimHarder
 WodBuster entra con el usuario y la contrasena PERSONALES de Mikel, con una cookie `.WBAuth`
 renovada a mano porque un CAPTCHA impide el login automatico. Por eso la escritura esta
-apagada (`WODBUSTER_AUTOBOOK` off): las pruebas quedaban a nombre de Mikel.
+apagada: las pruebas quedaban a nombre de Mikel.
+
+**Confirmado el 2026-09-01: se queda apagada.** No es un pendiente. Y al comprobarlo se
+descubrio que `WODBUSTER_AUTOBOOK` **SI existia en el entorno de produccion de Vercel**,
+creada 13 dias antes y con el **valor oculto** (el proyecto fuerza "Sensitive"), asi que era
+imposible saber si estaba encendida. Se **borro la variable** en lugar de ponerla a `off`:
+el codigo cae en desactivado cuando no existe, y una ausencia se audita con `vercel env ls`
+mientras que un valor oculto no. Requiere **redesplegar** para que surta efecto.
+
 **Con AimHarder deja de ser un problema:** el interesado se registra el mismo en la pagina
 publica de prueba gratuita, asi que la reserva queda a SU nombre. Ver punto 11.
 

@@ -1,10 +1,10 @@
 # Memory Index — Anboto Project
 
-**READ THIS FIRST** al comenzar cada sesión en este proyecto. Actualizado: **2026-08-31**.
+**READ THIS FIRST** al comenzar cada sesión en este proyecto. Actualizado: **2026-09-01**.
 
 ---
 
-## 📋 Quick Status (2026-08-31)
+## 📋 Quick Status (2026-09-01)
 
 | Item | Status | Notes |
 |------|--------|-------|
@@ -23,10 +23,11 @@
 | **Domingo** | 🔶 Abierto, sin horas publicadas | El box abre todos los dias (lo dijo Mikel el 31-08). Se quito el "Domingo cerrado", pero **el JSON-LD sigue sin domingo** porque no hay horas concretas: falta que Xabi las diga o Google seguira mostrando "cerrado" |
 | **Telefono** | ✅ **688 60 67 54 — el OFICIAL del box** (01-09-2026, `45e72a2`) | Ha cambiado dos veces en dos dias: `688 661 924` (socio anterior) → `622 768 134` (Xabi) → **`688 60 67 54`**. En 13 ficheros + Supabase (`phone` y `faqs`, que es de donde lo dicta el chatbot) |
 | **Paginas archivadas** | ✅ **RETIRADAS del despliegue** (01-09-2026, `cea484a`) | Estaban en `public/` y daban **200** con la marca vieja, `anbotofitness.com` y (hasta ese dia) el telefono del socio anterior. Movidas a **`archive/`** + `/archive/` en `.vercelignore`. Las 5 rutas **redirigen 308 a `/`** (regla en `vercel.json` **y** en `src/index.js`). Verificado en produccion |
+| **Reserva automatica** | 🚫 **DESACTIVADA — decision confirmada (01-09-2026)** | Que el interesado se apunte solo se queda inhabilitado. `WODBUSTER_AUTOBOOK` **borrada de Vercel** (existia con valor oculto: no habia forma de saber si estaba ON). Ausente = off, y asi es auditable. La plaza la crea el **aviso por email al box** |
 | **Proveedor de reservas** | 🔄 **Se migra a AimHarder** (aun no) | Capa `src/lib/booking/` lista: cambiar es poner `BOOKING_PROVIDER=aimharder`. Bloqueado por Xabi (URL de prueba gratuita + docs API) |
 | **Próxima acción** | ⚠️ **Pedir a Xabi: pasar el horario nuevo a WodBuster** (si no, la web enseña clases que no se pueden reservar) **y las horas del domingo** · `boxes.name` sigue con la marca vieja "Anboto Fitness" y el chatbot se presenta asi · vaciar `boxes.membership_plans` y revisar `boxes.faqs`/`boxes.extra_info` · rotar `RESEND_API_KEY` **y** `ANTHROPIC_API_KEY` (ambas se pegaron en un chat) · esperar a Xabi (URL de prueba gratuita en AimHarder, docs de su API, fotos y datos del centro) |
 
-### ⚠️ Ocho trampas que ya nos costaron horas — no repetir
+### ⚠️ Nueve trampas que ya nos costaron horas — no repetir
 
 1. **Nameservers de Vercel sin zona.** Poner `ns*.vercel-dns-*.com` en el registrador NO funciona
    si Vercel no gestiona el DNS: responden REFUSED → SERVFAIL global y no se arregla esperando.
@@ -91,6 +92,20 @@
    necesario (paso el 01-09; lo salvo reconstruir y comprobar antes de dar nada por bueno).
    **Criterio correcto: conservar lo referenciado por el HTML servido _o_ por cualquier JS o
    manifest que se conserve.**
+
+9. **Un interruptor peligroso guardado como "Sensitive" es un interruptor que nadie puede
+   auditar.** El 01-09-2026, al confirmar que la reserva automatica seguia apagada, aparecio
+   `WODBUSTER_AUTOBOOK` **en el entorno de produccion de Vercel**, creada 13 dias antes y con
+   el **valor oculto**. El proyecto fuerza las variables a "Sensitive", asi que ni
+   `vercel env ls` ni `vercel env pull` la revelan (`pull` devuelve `"[SENSITIVE]"`). Es
+   decir: no habia forma de saber si en produccion se estaba apuntando a gente real con la
+   cuenta PERSONAL de Mikel.
+   **Regla: para un flag booleano cuyo estado seguro es "apagado", no lo pongas a `off` —
+   BORRALO.** El codigo ya cae en desactivado cuando la variable no existe, y una ausencia se
+   comprueba de un vistazo; un valor oculto, no. Guarda "Sensitive" para secretos de verdad
+   (claves, tokens), no para banderas de comportamiento.
+   Y **ojo**: cambiar variables de entorno **no surte efecto hasta que se vuelve a
+   desplegar**, aunque no cambie una linea de codigo.
 
 ---
 

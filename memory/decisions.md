@@ -467,3 +467,33 @@ sirve Express entera y Vercel tambien.
 De paso se limpiaron 28 `static-loader-data-manifest-*.json` de builds anteriores que se
 acumulaban en `public/` (estan gitignorados, pero se subian al despliegue igual). Se conserva
 solo el que corresponde al hash del HTML actual.
+
+## 2026-09-01: La reserva automatica de la clase de prueba se queda DESACTIVADA
+
+Mikel lo confirma: que la persona interesada se apunte sola a la clase gratuita sigue
+inhabilitado. **No es un pendiente, es la decision.** El motivo de fondo no ha cambiado: la
+sesion de WodBuster es la cuenta PERSONAL de Mikel, asi que activarlo significa apuntar a
+gente real a su nombre, y eso ya paso.
+
+**Lo que aparecio al ir a comprobarlo (y por lo que no bastaba con mirar el codigo):**
+`WODBUSTER_AUTOBOOK` **si existia en el entorno de produccion de Vercel**, creada 13 dias
+antes, con el **valor oculto**. El proyecto fuerza las variables a tipo "Sensitive", de modo
+que ni `vercel env ls` ni `vercel env pull` lo revelan (`pull` devuelve `"[SENSITIVE]"`).
+Traducido: era imposible saber si la reserva automatica estaba encendida en produccion.
+
+**Decision de implementacion: borrar la variable, no ponerla a `off`.** El codigo evalua
+`process.env.WODBUSTER_AUTOBOOK === 'on'`, asi que una variable ausente ya significa
+desactivado. La diferencia esta en la auditabilidad: una ausencia se comprueba de un vistazo
+con `vercel env ls`; un valor oculto obliga a confiar. Para un flag cuyo estado seguro es
+"apagado", **la ausencia es mejor estado que un `off` ilegible**.
+
+Se volvio a desplegar, porque **cambiar variables de entorno no surte efecto hasta el
+siguiente despliegue** aunque no cambie el codigo. Verificado despues: la variable no existe
+en ningun entorno y la web y las APIs siguen a 200.
+
+**La red de seguridad no se toca:** con esto apagado, `/api/book` guarda la peticion como
+`pending` y manda un aviso por email al box. Ese aviso es lo UNICO que hace que la plaza
+exista; si algun dia se cambia, hay que sustituirlo por algo antes.
+
+Cuando llegue AimHarder esto deja de ser un dilema: el interesado se registra el mismo en la
+pagina publica de prueba gratuita y la reserva queda a su nombre.
