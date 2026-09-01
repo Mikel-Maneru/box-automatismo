@@ -22,7 +22,7 @@
 | **⚠️ Web vs reservas** | 🔶 **DIFIEREN A PROPOSITO** | La web ya enseña el horario NUEVO; WodBuster sigue con el VIEJO. Web dice 10:30/12:30, reservas 10:15/12:45. Las clases con nombre de Alluitz (Funcional, Tonificacion, Movilidad + Core) **no se pueden reservar**. Xabi tiene que pasar el horario nuevo a WodBuster |
 | **Domingo** | 🔶 Abierto, sin horas publicadas | El box abre todos los dias (lo dijo Mikel el 31-08). Se quito el "Domingo cerrado", pero **el JSON-LD sigue sin domingo** porque no hay horas concretas: falta que Xabi las diga o Google seguira mostrando "cerrado" |
 | **Telefono** | ✅ **688 60 67 54 — el OFICIAL del box** (01-09-2026, `45e72a2`) | Ha cambiado dos veces en dos dias: `688 661 924` (socio anterior) → `622 768 134` (Xabi) → **`688 60 67 54`**. En 13 ficheros + Supabase (`phone` y `faqs`, que es de donde lo dicta el chatbot) |
-| **Paginas archivadas** | 🔶 **SE SIRVEN en produccion** | `/alt-1.html`, `/alt-2.html`, `/alt-3.html`, `/index.legacy.html`, `/reservar.legacy.html` dan **200**. Llevaban meses con el telefono del socio anterior. Ya corregido, pero **llevan la marca vieja y `anbotofitness.com`** (dominio que nunca existio): decidir si dejar de publicarlas |
+| **Paginas archivadas** | ✅ **RETIRADAS del despliegue** (01-09-2026, `cea484a`) | Estaban en `public/` y daban **200** con la marca vieja, `anbotofitness.com` y (hasta ese dia) el telefono del socio anterior. Movidas a **`archive/`** + `/archive/` en `.vercelignore`. Las 5 rutas **redirigen 308 a `/`** (regla en `vercel.json` **y** en `src/index.js`). Verificado en produccion |
 | **Proveedor de reservas** | 🔄 **Se migra a AimHarder** (aun no) | Capa `src/lib/booking/` lista: cambiar es poner `BOOKING_PROVIDER=aimharder`. Bloqueado por Xabi (URL de prueba gratuita + docs API) |
 | **Próxima acción** | ⚠️ **Pedir a Xabi: pasar el horario nuevo a WodBuster** (si no, la web enseña clases que no se pueden reservar) **y las horas del domingo** · `boxes.name` sigue con la marca vieja "Anboto Fitness" y el chatbot se presenta asi · vaciar `boxes.membership_plans` y revisar `boxes.faqs`/`boxes.extra_info` · rotar `RESEND_API_KEY` **y** `ANTHROPIC_API_KEY` (ambas se pegaron en un chat) · esperar a Xabi (URL de prueba gratuita en AimHarder, docs de su API, fotos y datos del centro) |
 
@@ -80,6 +80,10 @@
    del socio anterior — justo lo que el cliente habia pedido quitar. Nadie los revisaba
    porque "son ficheros archivados". **Al hacer un cambio global, incluye `public/` entero,
    no solo `web/src/`.**
+   **Resuelto el 01-09:** esas cinco paginas viven ahora en `archive/`, con redireccion 308
+   a `/`. La regla general que queda: **si no debe ser publico, no puede estar en `public/`.**
+   Sacarlo de la carpeta es lo unico que lo garantiza — un `noindex` o un patron en
+   `.vercelignore` dependen de acertar, y aqui ya fallo una vez (ver trampa de `fotos/`).
    Lo mismo con los bundles: `emptyOutDir: false` hace que los `assets/*.js` de builds
    anteriores se acumulen, y **siguen accesibles por su URL con el contenido viejo dentro**.
    Hay que borrarlos, pero **con cuidado**: `client-*.js` NO aparece en el HTML y aun asi lo

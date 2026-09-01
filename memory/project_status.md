@@ -42,8 +42,12 @@ a `/api/chat`.
 `index.legacy.html`, `reservar.legacy.html`) **se sirven en produccion** — dan 200 en
 anbotosc.com — y llevaban meses enseñando el numero del socio anterior, que es justo lo que
 el cliente habia pedido quitar. Nadie las miraba porque "son archivos". Ya llevan el oficial.
-**Pendiente de decidir: dejar de publicarlas**, porque ademas llevan la marca vieja y
-referencias a `anbotofitness.com`, un dominio que nunca existio.
+
+**Y ese mismo dia se retiraron del despliegue** (decision de Mikel). Viven en `archive/`,
+fuera de lo servido y con `/archive/` en `.vercelignore`; las cinco rutas redirigen **308 a
+la portada**, no 404, porque `alt-*` e `index.legacy` **no tenian `noindex`** y robots.txt
+las permitia, asi que podian estar indexadas compitiendo con la landing buena. La regla esta
+duplicada en `vercel.json` y `src/index.js` a proposito. Verificado en produccion.
 
 ### Correos al interesado
 `EMAIL_ELEGIR_DIA=off`: no se le manda el correo de elegir dia (ni se genera token). El de

@@ -432,3 +432,38 @@ sigan accesibles, cualquier dato caducado que contengan es dato publico.
 Tambien se borro el bundle de la build anterior, que quedaba huerfano pero accesible por su
 URL con el telefono viejo dentro. Ver en la trampa nº8 el criterio para limpiarlos sin
 cargarse un fichero necesario.
+
+## 2026-09-01: Las landings antiguas dejan de publicarse (archive/ + 301)
+
+Decision de Mikel el mismo dia que se descubrio que `public/alt-1.html`, `alt-2.html`,
+`alt-3.html`, `index.legacy.html` y `reservar.legacy.html` respondian **200 en produccion**.
+
+**Por que importaba mas de lo que parecia:** ademas del telefono del socio anterior (ya
+corregido ese dia), publicaban la marca previa al rebrand y enlaces a `anbotofitness.com`, un
+dominio que nunca existio. Y `alt-*` e `index.legacy` **no llevaban `noindex`** mientras
+`robots.txt` permitia rastrearlas: eran copias de la landing compitiendo en Google con la
+buena. El sitemap solo declara `/`, pero eso no impide que se indexen.
+
+**Como se retiraron, y por que asi:**
+- **Movidas a `archive/`**, fuera de `public/`. Se eligio mover y no marcar con `noindex` ni
+  filtrar con `.vercelignore` porque esas dos opciones dependen de acertar con un patron o de
+  que el buscador obedezca, y en este repo ya hubo un incidente por eso: `fotos/` sin anclar
+  en `.vercelignore` casaba a cualquier nivel y tumbo TODAS las imagenes del sitio. Sacar el
+  fichero de la carpeta servida es lo unico que lo garantiza. Se añadio ademas `/archive/`
+  (anclado) a `.vercelignore` para que ni se suban.
+- **Redireccion 301/308 a `/`, no 404.** Como podian estar indexadas, se consolidan en la
+  landing buena en vez de dejar paginas muertas.
+- **La regla esta duplicada** en `vercel.json` (`redirects`) y en `src/index.js` (antes del
+  `express.static`), a proposito: asi funciona la sirva la capa de Vercel o el Express, y en
+  local se comporta igual que en produccion.
+
+Verificado en produccion: las cinco rutas devuelven 308 hacia `https://anbotosc.com/` y
+siguiendo la redireccion se llega a la portada con 200; `/`, `/reservar`, `/robots.txt`,
+`/sitemap.xml` y `/widget/widget.js` siguen a 200.
+
+**Regla que queda:** *si no debe ser publico, no puede estar en `public/`.* Esa carpeta la
+sirve Express entera y Vercel tambien.
+
+De paso se limpiaron 28 `static-loader-data-manifest-*.json` de builds anteriores que se
+acumulaban en `public/` (estan gitignorados, pero se subian al despliegue igual). Se conserva
+solo el que corresponde al hash del HTML actual.
