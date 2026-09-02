@@ -574,3 +574,40 @@ o como 24 h) y no todos los consumidores lo tratan igual. La diferencia real es 
 real de apertura. Si el domingo abre de 5:00 a 00:00, lo normal es que entre semana tambien
 abra mas de lo que dicen las clases. Hay que preguntarselo, porque ahora mismo la ficha de
 Google dice que el domingo abris mas horas que un martes.
+
+## 2026-09-02: Fuera la cifra de socios de la landing
+
+Xabi pregunto si hay que publicar el numero de clientes "si o si". No: se retira.
+
+La banda decia **"46+ miembros activos"**, y 46 es el numero de RESEÑAS de Google — el mismo
+dato que ya aparecia dos cifras mas alla como "4,9★ valoracion en Google". Es decir, el
+mismo numero publicado dos veces, una de ellas mintiendo, en un pueblo donde cualquiera nota
+si un box tiene 46 socios o no.
+
+**Decision: quitarla en vez de sustituirla.** Quedan tres cifras y las tres son ciertas: 8+
+años, 6 disciplinas, 4,9★. Si algun dia dan el numero real, se vuelve a poner.
+
+**Ojo con el CSS al tocar esta banda.** `.statband .wrap` era `repeat(4,1fr)`. Al pasarlo a
+`repeat(3,1fr)` aparecio **scroll horizontal a 320px**: las etiquetas largas ("Urteko
+esperientzia", "Google-ko balorazioa") ensanchan la columna por min-content y tres columnas
+dejan de caber. Solucion: en `@media(max-width:900px)` se mantienen **2 columnas** y la
+tercera ocupa la fila entera (`grid-column:1/-1`), que queda centrada sola porque `.stat` ya
+es `text-align:center`. Verificado a 320/390/768/1280 sin desbordes.
+
+## 2026-09-02: Lo que se hara al migrar a AimHarder (octubre)
+
+Mikel: *"Cuando demos el paso a AimHarder hacemos esa automatizacion que teniamos hecha y mas
+cosas como mostrar directamente en la web el horario real de AimHarder y todas las clases
+disponibles"*. Alcance acordado para octubre, con la API oficial ya en la mano (punto 11 de
+people.md):
+
+1. **Reactivar la reserva automatica** de la clase de prueba, ahora si: con
+   `POST /classes/booking/guest` la reserva queda a nombre del interesado, que era el unico
+   motivo por el que se apago. Deja de tener sentido el traspaso a su pagina de bonos.
+2. **Horario real directamente de AimHarder** via `GET /calendar/:fecha`: se acaban el
+   scraping de las tres tablas y el desajuste entre lo que enseña la web y lo reservable.
+3. **Mostrar las clases DISPONIBLES**, no solo la parrilla: el endpoint trae `limit` (aforo)
+   ademas del nombre y la hora, asi que se pueden enseñar plazas libres en la propia web.
+
+Al hacerlo, comprobar si `room_name` separa ANBOTO de ALLUITZ: resolveria de forma limpia lo
+de mostrar los dos espacios, que hoy se apaña por nombre de clase.

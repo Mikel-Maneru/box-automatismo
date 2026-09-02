@@ -160,8 +160,11 @@ export function StatBand() {
   return (
     <section className="statband arch">
       <div className="wrap">
+        {/* La cifra de socios se retiro el 2026-09-02: decia "46+ miembros activos" y 46 era
+            el numero de RESEÑAS de Google, no de socios — el mismo dato que ya aparece aqui
+            al lado como valoracion. Xabi no quiere publicar el numero real, y tres cifras
+            ciertas convencen mas que cuatro con una inventada. */}
         <div className="stat rev-up"><div className="n"><span data-count="8" data-suffix="+">8+</span></div><T as="div" className="t" k="st.l1" /></div>
-        <div className="stat rev-up"><div className="n"><span data-count="46" data-suffix="+">46+</span></div><T as="div" className="t" k="st.l2" /></div>
         <div className="stat rev-up"><div className="n"><span data-count="6">6</span></div><T as="div" className="t" k="st.l3" /></div>
         <div className="stat rev-up"><div className="n">4.9★</div><T as="div" className="t" k="st.l4" /></div>
       </div>

@@ -311,7 +311,7 @@ footer{background:var(--pizarra);color:var(--caliza);padding:46px 0 36px;border-
 .disc p{color:var(--granito);font-size:.9rem;line-height:1.5;font-weight:500}
 /* CIFRAS / STATS BAND */
 .statband{background:var(--pizarra);color:var(--caliza)}
-.statband .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:60px 32px}
+.statband .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:60px 32px}
 .stat{text-align:center}
 .stat .n{font-weight:900;font-size:clamp(2.3rem,5vw,3.4rem);letter-spacing:-.03em;line-height:1;color:var(--brasa)}
 .stat .t{font-family:var(--ff-m);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(246,243,236,.6);margin-top:8px}
@@ -373,7 +373,12 @@ footer{position:relative}
 .footer-ridge svg{width:100%;height:100%;display:block}
 @media(max-width:900px){
   .disc-grid{grid-template-columns:1fr 1fr}
+  /* Con 3 cifras, tres columnas no caben en movil: las etiquetas largas ("Urteko
+     esperientzia", "Google-ko balorazioa") ensanchan la columna por min-content y sacan
+     scroll horizontal a 320px. Se mantienen 2 columnas y la tercera ocupa la fila entera,
+     que ademas queda centrada porque .stat ya es text-align:center. */
   .statband .wrap{grid-template-columns:1fr 1fr;gap:34px 16px}
+  .statband .stat:last-child{grid-column:1 / -1}
   .steps{grid-template-columns:1fr}
   .step::after{content:"↓";right:50%;top:auto;bottom:-17px;transform:translateX(50%)}
 }

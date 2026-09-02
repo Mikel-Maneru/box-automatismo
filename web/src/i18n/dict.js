@@ -30,7 +30,8 @@ export const I18N = {
   'obj.grasa.d':['Alto gasto calórico y trabajo metabólico, con entrenos que se sostienen en el tiempo.','Kaloria-gastu handia eta lan metabolikoa, denboran eusten diren entrenamenduekin.'],
   'obj.emp':['Empezar de cero','Hutsetik hasi'],
   'obj.emp.d':['Sin experiencia y sin agobios. Aprendes la técnica base a tu ritmo.','Esperientziarik gabe eta presarik gabe. Oinarrizko teknika zure erritmoan ikasiko duzu.'],
-  'st.l1':['Años de experiencia','Urteko esperientzia'],'st.l2':['Miembros activos','Kide aktiboak'],'st.l3':['Disciplinas','Diziplinak'],'st.l4':['Valoración en Google','Google-ko balorazioa'],
+  // st.l2 ("Miembros activos") retirado el 2026-09-02 junto con su cifra: eran las reseñas de Google.
+  'st.l1':['Años de experiencia','Urteko esperientzia'],'st.l3':['Disciplinas','Diziplinak'],'st.l4':['Valoración en Google','Google-ko balorazioa'],
   'step.idx':['09 — Hasi · Tu primera semana','09 — Hasi · Zure lehen astea'],'step.title':['Empezar es <em>fácil</em>','Hastea <em>erraza</em> da'],
   'step.lead':['Sin experiencia, sin compromiso. En tres pasos estás dentro.','Esperientziarik eta konpromisorik gabe. Hiru urratsetan barruan zaude.'],
   'step.h1':['Reserva tu clase gratis','Erreserbatu doako klasea'],'step.p1':['Rellena el formulario o escríbenos por WhatsApp. Te respondemos enseguida.','Bete formularioa edo idatzi WhatsApp bidez. Berehala erantzungo dizugu.'],
