@@ -611,3 +611,32 @@ people.md):
 
 Al hacerlo, comprobar si `room_name` separa ANBOTO de ALLUITZ: resolveria de forma limpia lo
 de mostrar los dos espacios, que hoy se apaña por nombre de clase.
+
+**4. Los TIPOS DE CLASE tambien automaticos** (pedido por Mikel el 02-09: *"los tipos de clase
+que hay, el horario, me gustaria que eso viniese de AimHarder, por si Xabi cambia el horario
+que se refleje en la web sin tocar nada"*).
+
+Hoy solo la PARRILLA es automatica. La seccion "Una clase para cada objetivo" es una lista
+escrita a mano de 6 disciplinas en `web/src/data/site.js` (`DISCIPLINAS`), y **ya se ha
+quedado corta**: el horario real muestra 12 tipos de clase, asi que faltan 6 —Funcional,
+Tonificacion, Movilidad + Core, Team WOD, Gymnastics y Gimnasio + Open—. Medido el 02-09.
+
+**El matiz que hay que decidir ANTES de implementarlo:** esa seccion no es solo una lista de
+nombres. Cada clase lleva dos cosas que la API NO puede dar:
+- Una **descripcion bilingue** ES/EU escrita a mano (`disc.d1`..`disc.d6` en `dict.js`).
+  AimHarder devuelve `description`, pero en un solo idioma y con el texto que haya escrito el
+  box. Automatizarla a secas **perderia el euskera**.
+- El **objetivo** al que pertenece (salud / rendimiento / musculacion / grasa / empezar).
+  Eso es criterio nuestro: la API no sabe que Hyrox sirve para "rendimiento". Y no es
+  decorativo — `OBJETIVOS` alimenta el filtro de la seccion, la recomendacion del formulario
+  y la de `/reservar`. Si una clase nueva entra sin objetivo, entra sin recomendacion.
+
+**Diseño propuesto:** que la API decida QUE CLASES EXISTEN y que `shared/clases.json` siga
+siendo nuestra capa encima (nombre canonico, descripcion bilingue, objetivo). Una clase que
+aparezca en AimHarder y no conozcamos **se muestra igualmente**, con el nombre y la
+descripcion que de el proveedor y sin objetivo asignado, en vez de desaparecer. Asi se cumple
+lo pedido —Xabi añade una clase y sale sola— sin inventar a que objetivo pertenece ni perder
+el euskera de las que ya estan.
+
+**Efecto secundario a revisar:** la cifra "6 disciplinas" de la banda quedaria desfasada si la
+lista pasa a ser automatica; habria que calcularla o quitarla.
