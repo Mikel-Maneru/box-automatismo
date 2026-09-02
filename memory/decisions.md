@@ -640,3 +640,9 @@ el euskera de las que ya estan.
 
 **Efecto secundario a revisar:** la cifra "6 disciplinas" de la banda quedaria desfasada si la
 lista pasa a ser automatica; habria que calcularla o quitarla.
+
+**Decidido el 02-09: NO se parchea a mano mientras tanto.** Se ofrecio añadir las 6 clases
+que faltan a la seccion pidiendole a Xabi una frase y un objetivo por clase, y Mikel prefiere
+esperar al cambio a AimHarder. **Consecuencia asumida:** hasta octubre la seccion "Una clase
+para cada objetivo" seguira mostrando 6 de las 12 clases que el box da de verdad. No es un
+descuido: si un futuro yo lo ve, que NO lo arregle a mano — se resuelve al automatizarlo.
