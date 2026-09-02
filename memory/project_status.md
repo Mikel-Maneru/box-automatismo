@@ -1,5 +1,43 @@
 # Project Status — Anboto SC
 
+## Sesion del 2026-09-01 / 02 — resumen
+
+Todo lo de abajo esta **desplegado y verificado en produccion**. Detalle y motivos en
+`decisions.md`; lo que hay que pedir a Xabi, en `people.md`.
+
+1. **Clases de Alluitz en la web** (`d621f4e`). La web publica de WodBuster servia TRES
+   tablas y el scraper cogia la primera por posicion, la unica sin Alluitz. Ahora elige por
+   TITULO ("Anboto SC") y muestra todas las guiadas de cada franja separadas por " · ".
+   Los dos usos de la tabla estan separados: el emparejamiento con la API sigue leyendo la
+   que casa con lo reservable, para no degradar `/api/classes`.
+2. **Telefono oficial 688 60 67 54** (`45e72a2`). Tercero en dos dias. 13 ficheros +
+   Supabase (`phone` y `faqs`, de donde lo dicta el chatbot). Verificado con una llamada
+   real a `/api/chat`.
+3. **Landings antiguas retiradas del despliegue** (`cea484a`). Cinco paginas en `public/`
+   respondian 200 con la marca vieja y el telefono del socio anterior. Movidas a `archive/`
+   y redirigidas 301/308 a `/`.
+4. **La reserva automatica se queda apagada** (`1c037e3`). Al confirmarlo aparecio que
+   `WODBUSTER_AUTOBOOK` SI existia en produccion con **valor oculto** (Vercel la fuerza a
+   "Sensitive"): no habia forma de saber si estaba encendida. Se **borro** la variable —
+   ausente = off, y ademas auditable.
+5. **Domingo publicado** (`0972fd5`): 5:00–00:00, solo entreno libre. Google deja de
+   mostrar el box como cerrado.
+6. **Cifra de socios retirada** (`b3f2b45`): decia "46+ miembros activos" y 46 eran las
+   reseñas de Google. Quedan tres cifras ciertas.
+
+**Lo que cambia el rumbo:** Xabi mando la **API oficial de AimHarder**
+(https://aimharder.com/api_doc/aimharder/index.html). Deja obsoleto el plan de la Fase 3
+—`POST /classes/booking/guest` reserva a nombre del invitado— y unifica horario y
+disponibilidad en `GET /calendar/:fecha`. La migracion es en **octubre**; lo unico que
+bloquea empezar son los **tokens**, que genera Xabi en Configuracion > API.
+
+**Decisiones de "no hacer" que conviene respetar:**
+- No invertir mas en el lado de WodBuster: se migra en octubre.
+- No parchear a mano las 6 clases que faltan en la seccion de objetivos (se automatiza).
+- No arreglar el desajuste horario web/reservas: se resuelve al migrar.
+
+---
+
 ## Horario automatico + telefono nuevo (2026-08-31)
 
 ### El horario ya no se escribe a mano
@@ -83,6 +121,10 @@ keep-alive del cron; la escritura lleva apagada desde el 19-08.
 
 **Siguiente:** Fase 2 (horario automatico con fallback al `SCHED` estatico) — se puede hacer
 ya. Fase 3 (prueba gratuita via pagina publica de AimHarder) — bloqueada por Xabi.
+
+> **NOTA (2026-09-02): la Fase 3 ya NO se hara asi.** Con la API oficial en la mano,
+> `POST /classes/booking/guest` reserva a nombre del invitado desde nuestra propia web, asi
+> que el traspaso a su pagina publica de bonos sobra. Ver la seccion del 02-09 arriba.
 
 ---
 

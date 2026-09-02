@@ -66,11 +66,30 @@ mientras que un valor oculto no. Requiere **redesplegar** para que surta efecto.
 **Con AimHarder deja de ser un problema:** el interesado se registra el mismo en la pagina
 publica de prueba gratuita, asi que la reserva queda a SU nombre. Ver punto 11.
 
-## 5. Cifras falsas en la landing
-La banda de cifras muestra **"5+ MIEMBROS ACTIVOS"**, **"1 DISCIPLINAS"** y
-**"1+ ANOS DE EXPERIENCIA"**. Son valores de relleno y hacen dano: la propia pagina lista 8
-disciplinas y presume de 46 resenas con 4.9 estrellas. Hacen falta los numeros reales.
-Se corrigen en `web/src/data/site.js`.
+## 5. Cifras de la landing — RESUELTO EN PARTE (2026-09-02)
+
+Esta nota describia un estado ya viejo ("5+ MIEMBROS ACTIVOS", "1 DISCIPLINAS", "1+ ANOS").
+Situacion real a 02-09, despues de corregirlo:
+
+- **La cifra de socios se RETIRO** (`b3f2b45`). Decia "46+ miembros activos" y 46 era el
+  numero de **reseñas de Google** — el mismo dato que ya aparecia al lado como "4,9★
+  valoracion en Google". Xabi pregunto si habia que publicar el numero de clientes "si o si"
+  y se decidio que no: mejor tres cifras ciertas que cuatro con una inventada.
+- **Quedan tres:** `8+ años de experiencia` · `6 disciplinas` · `4,9★ valoracion en Google`.
+- **Pendiente:** "6 disciplinas" **se queda corta**. El horario real tiene **12 tipos de
+  clase**. Se revisa en octubre, cuando la lista de clases pase a ser automatica (ver la
+  fila "Tipos de clase" en MEMORY.md). Si algun dia dan el numero real de socios, se
+  puede volver a poner.
+
+Se toca en `web/src/components/Sections.jsx` (`StatBand`), no en `site.js`. **Ojo con el CSS
+al añadir o quitar una cifra:** pasar la rejilla a 3 columnas saco scroll horizontal a 320px
+porque las etiquetas largas en euskera ensanchan la columna. Ver `decisions.md`.
+
+## 5b. No tenemos contacto directo de Xabi
+En el proyecto solo consta `anbotocf@gmail.com`, que es el **correo del box** (el que recibe
+los avisos automaticos), no uno personal suyo. Y WhatsApp se elimino del codigo. Es decir:
+**no hay forma de escribirle desde aqui.** Los mensajes se le redactan a Mikel para que los
+mande el. Si algun dia hace falta automatizar avisos hacia Xabi, hay que pedirle una via.
 
 ## 6. Tarifas anuales en el prompt del chatbot — RESUELTO (2026-08-19)
 Se borraron los 4 planes anuales del JSONB `boxes.membership_plans` en Supabase. El bot ya solo

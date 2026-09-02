@@ -1,10 +1,10 @@
 # Memory Index — Anboto Project
 
-**READ THIS FIRST** al comenzar cada sesión en este proyecto. Actualizado: **2026-09-01**.
+**READ THIS FIRST** al comenzar cada sesión en este proyecto. Actualizado: **2026-09-02**.
 
 ---
 
-## 📋 Quick Status (2026-09-01)
+## 📋 Quick Status (2026-09-02)
 
 | Item | Status | Notes |
 |------|--------|-------|
@@ -20,12 +20,16 @@
 | **Horario** | ✅ **AUTOMATICO desde el proveedor** (2026-08-31) | `GET /api/schedule`, cache 6h, con el estatico como red de seguridad |
 | **Clases de Alluitz** | ✅ **EN PRODUCCION (31-08-2026, `d621f4e`)** | La web muestra el horario titulado "Anboto SC", el unico con Alluitz. 59 franjas con clases del gimnasio |
 | **⚠️ Web vs reservas** | 🔶 **DIFIEREN — y se acepta hasta octubre** | La web enseña el horario NUEVO; WodBuster sigue con el VIEJO (web 10:30/12:30, reservas 10:15/12:45; Funcional, Tonificacion y Movilidad + Core **no se pueden reservar**). **NO se arregla en WodBuster**: en octubre se migra a AimHarder y se resuelve solo. Riesgo asumido durante septiembre: quien vea una clase en la web puede no encontrarla para reservar |
-| **Domingo** | 🔶 Abierto, sin horas publicadas | El box abre todos los dias (lo dijo Mikel el 31-08). Se quito el "Domingo cerrado", pero **el JSON-LD sigue sin domingo** porque no hay horas concretas: falta que Xabi las diga o Google seguira mostrando "cerrado" |
+| **Domingo** | ✅ **PUBLICADO (02-09-2026)** | Xabi: **5:00–00:00, sin clases guiadas, solo entreno libre arriba**. Ya esta en la nota de horarios y en el JSON-LD (`closes: "23:59"`, no `"00:00"`, que es ambiguo). Google deja de mostrar "cerrado" |
+| **⚠️ Horas L–S** | 🔶 **Son las de las CLASES, no las de apertura** | Las que publica el JSON-LD (L–V 6:30–21:15, Sab 9:00–13:00) se dedujeron de la primera y la ultima clase. Si el domingo abre 5:00–00:00, entre semana tambien abrira mas. **Ahora mismo Google dice que abren mas horas un domingo que un martes.** Preguntar a Xabi |
 | **Telefono** | ✅ **688 60 67 54 — el OFICIAL del box** (01-09-2026, `45e72a2`) | Ha cambiado dos veces en dos dias: `688 661 924` (socio anterior) → `622 768 134` (Xabi) → **`688 60 67 54`**. En 13 ficheros + Supabase (`phone` y `faqs`, que es de donde lo dicta el chatbot) |
 | **Paginas archivadas** | ✅ **RETIRADAS del despliegue** (01-09-2026, `cea484a`) | Estaban en `public/` y daban **200** con la marca vieja, `anbotofitness.com` y (hasta ese dia) el telefono del socio anterior. Movidas a **`archive/`** + `/archive/` en `.vercelignore`. Las 5 rutas **redirigen 308 a `/`** (regla en `vercel.json` **y** en `src/index.js`). Verificado en produccion |
 | **Reserva automatica** | 🚫 **DESACTIVADA — decision confirmada (01-09-2026)** | Que el interesado se apunte solo se queda inhabilitado. `WODBUSTER_AUTOBOOK` **borrada de Vercel** (existia con valor oculto: no habia forma de saber si estaba ON). Ausente = off, y asi es auditable. La plaza la crea el **aviso por email al box** |
-| **Proveedor de reservas** | 🔄 **A AimHarder en OCTUBRE 2026** | Fecha confirmada por Mikel el 01-09. Capa `src/lib/booking/` lista: el interruptor es `BOOKING_PROVIDER=aimharder`, pero `aimharder.js` es un **esqueleto sin implementar**. Ruta critica: hacen falta las **docs de su API y la URL de prueba gratuita**, que tiene que dar Xabi |
-| **Próxima acción** | ⚠️ **RUTA CRITICA: conseguir de Xabi las docs de la API de AimHarder y la URL de prueba gratuita** — la migracion es en octubre y `aimharder.js` esta sin implementar · pedirle tambien **las horas del domingo**, las **cifras reales** de la landing (el "46+" son reseñas, no socios) y que confirme si **HYCROSS = Hyrox** · que cambie el telefono en Google/WodBuster/Instagram · **NO pedirle que sincronice WodBuster**: se migra en octubre y seria trabajo tirado · `boxes.name` sigue con la marca vieja "Anboto Fitness" y el chatbot se presenta asi · rotar `RESEND_API_KEY` **y** `ANTHROPIC_API_KEY` (ambas se pegaron en un chat) |
+| **Proveedor de reservas** | 🔄 **A AimHarder en OCTUBRE 2026** | Fecha confirmada por Mikel el 01-09. Capa `src/lib/booking/` lista: el interruptor es `BOOKING_PROVIDER=aimharder`, pero `aimharder.js` es un **esqueleto sin implementar**. **Las docs oficiales YA estan** (02-09): https://aimharder.com/api_doc/aimharder/index.html — ver punto 11 de `people.md`. Lo unico que falta son **los TOKENS**, que genera Xabi en Configuracion > API |
+| **API de AimHarder** | ✅ **OFICIAL y documentada** (02-09-2026) | `api.aimharder.com`, Bearer + refresh. **`GET /calendar/:fecha`** da nombre, hora, aforo y sala; **`POST /classes/booking/guest`** reserva A NOMBRE DEL INVITADO — eso elimina de raiz el problema de la cuenta personal y deja obsoleto el plan de traspaso a su pagina de bonos. Trampas: **solo HTTP/1.1** (con h2 da 403) y el **refresh token ROTA** |
+| **Cifras de la landing** | ✅ Socios retirado (02-09-2026, `b3f2b45`) | Decia "46+ miembros activos" y 46 eran las RESEÑAS de Google. Quedan 8+ años · 6 disciplinas · 4,9★. **Ojo: "6 disciplinas" se queda corta** — el horario real tiene 12 tipos de clase |
+| **Tipos de clase** | 🔶 **6 de 12, a proposito hasta octubre** | La seccion "Una clase para cada objetivo" es una lista a mano; faltan Funcional, Tonificacion, Movilidad + Core, Team WOD, Gymnastics y Gimnasio + Open. Mikel decidio **NO parchearlo a mano**: se automatiza al migrar. **No lo arregles a mano.** El matiz de diseño (descripcion bilingue + objetivo por clase, que la API no da) esta en `decisions.md` |
+| **Próxima acción** | ⚠️ **RUTA CRITICA: que Xabi genere los TOKENS de AimHarder** (Configuracion > API, necesita ser admin) — es lo unico que bloquea empezar, y la migracion es en octubre · pedirle tambien las **horas reales de apertura de L–S**, las **fotos de los 4 coaches** y que confirme si **HYCROSS = Hyrox** · que cambie el telefono en **Google / WodBuster / Instagram** · **NO pedirle que sincronice WodBuster** (se migra en octubre, seria trabajo tirado) · `boxes.name` sigue con la marca vieja "Anboto Fitness" y el chatbot se presenta asi · rotar `RESEND_API_KEY` **y** `ANTHROPIC_API_KEY` (ambas se pegaron en un chat) |
 
 ### ⚠️ Nueve trampas que ya nos costaron horas — no repetir
 
