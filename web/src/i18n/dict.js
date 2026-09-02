@@ -36,7 +36,7 @@ export const I18N = {
   'step.h1':['Reserva tu clase gratis','Erreserbatu doako klasea'],'step.p1':['Rellena el formulario o escríbenos por WhatsApp. Te respondemos enseguida.','Bete formularioa edo idatzi WhatsApp bidez. Berehala erantzungo dizugu.'],
   'step.h2':['Ven y prueba','Etorri eta probatu'],'step.p2':['Te recibimos, te explicamos todo y entrenas tu primer WOD a tu ritmo.','Hartuko zaitugu, dena azaldu eta zure lehen WODa egingo duzu zure erritmoan.'],
   'step.h3':['Elige tu plan','Aukeratu zure plana'],'step.p3':['Si te gusta (te gustará), eliges tarifa. Sin compromiso de permanencia.','Gustatzen bazaizu (gustatuko zaizu), tarifa aukeratzen duzu. Iraunkortasun konpromisorik gabe.'],
-  'h.note2':['Además de las clases guiadas, tienes Open Box (entrenamiento libre) durante casi toda la jornada · L–V 6:30–21:15 · Sáb 9:00–13:00 · Abierto todos los días del año.','Klase gidatuez gain, Open Box duzu (entrenamendu librea) ia egun osoan · A–O 6:30–21:15 · Lr 9:00–13:00 · Urteko egun guztietan zabalik.'],
+  'h.note2':['Además de las clases guiadas, tienes Open Box (entrenamiento libre) durante casi toda la jornada. Abierto todos los días del año · L–V 6:30–21:15 · Sáb 9:00–13:00 · Dom 5:00–00:00, solo entreno libre.','Klase gidatuez gain, Open Box duzu (entrenamendu librea) ia egun osoan. Urteko egun guztietan zabalik · A–O 6:30–21:15 · Lr 9:00–13:00 · Ig 5:00–00:00, entrenamendu librea soilik.'],
   'h.book':['Reserva tu plaza en WodBuster →','Erreserbatu plaza WodBuster-en →'],
   'trust.google':['Google · 46 reseñas','Google · 46 iritzi'],'trust.members':['Miembros','Kideak'],'trust.freeword':['Gratis','Doan'],'trust.freelbl':['1ª clase','1. klasea'],
   'p.idx':['01 — Esentzia · Sobre nosotros','01 — Esentzia · Guri buruz'],

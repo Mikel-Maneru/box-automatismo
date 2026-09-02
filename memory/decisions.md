@@ -527,3 +527,50 @@ ingenieria inversa y no se construye sobre eso (ver punto 11 de people.md).
   precisamente porque la cuenta es personal).
 - El correo de seguimiento, que hoy no llega a dispararse porque el cron filtra reservas
   `confirmed` y ya no se crean.
+
+## 2026-09-02: AimHarder SI tiene API oficial — cambia el plan de la Fase 3
+
+Xabi mando la documentacion: **https://aimharder.com/api_doc/aimharder/index.html**, "API
+Publica de AimHarder". Es oficial y documentada, no ingenieria inversa. Detalle tecnico
+completo en el punto 11 de `people.md`.
+
+**Lo que deja obsoleto:** el plan de la Fase 3 preveia que `/reservar` fuese un simple
+traspaso a la pagina publica de bonos de AimHarder, porque se dio por hecho que no habria API
+oficial y no se queria construir la escritura sobre ingenieria inversa. **Ya no hace falta:**
+`POST /classes/booking/guest` reserva una clase a nombre de un INVITADO pasando nombre,
+email y telefono. La reserva queda a nombre de la persona, que era el problema de fondo, y
+sin salir de nuestra web.
+
+**Lo que tambien se simplifica:** `GET /calendar/:fecha` devuelve nombre de clase, hora,
+aforo (`limit`), sala y `schedule_id` en una sola llamada. Hoy eso son dos mecanismos
+distintos y fragiles: scraping de la web publica (tres tablas, elegida por titulo) para los
+nombres, y la API para la disponibilidad. Con AimHarder se unifican.
+
+**Decision:** cuando se implemente `src/lib/booking/aimharder.js`, hacerlo contra la API
+oficial y **retirar el plan del traspaso a la pagina de bonos**. La reserva automatica
+(`AUTOBOOK`) podra volver a activarse, porque el motivo para apagarla —que la sesion era una
+cuenta personal— desaparece: los tokens son de servicio y el endpoint es explicitamente para
+invitados.
+
+**Ojo con dos cosas al implementar:**
+- **Solo HTTP/1.1**: con HTTP/2 la API responde 403.
+- **El refresh token ROTA**: `GET /auth/tokens/refresh` devuelve un access Y un refresh
+  nuevos. Hay que persistir el nuevo refresh en cada renovacion o se pierde el acceso y hay
+  que regenerarlo a mano desde el panel.
+
+## 2026-09-02: Horario del domingo — 5:00 a 00:00, solo entreno libre
+
+Xabi: *"Los domingos abierto de 5:00 a 00:00 pero entreno libre arriba"*. Es decir, el box
+abre pero **no hay clases guiadas**, solo entrenamiento libre en la planta de arriba.
+
+Se publica en la nota de horarios y se añade el domingo al `openingHoursSpecification`, que
+era el cabo suelto del 31-08: hasta ahora Google mostraba "cerrado los domingos".
+**Se pone `closes: "23:59"` y no `"00:00"`**: en schema.org un cierre menor que la apertura
+se interpreta como el dia siguiente, pero `00:00` es ambiguo (puede leerse como duracion cero
+o como 24 h) y no todos los consumidores lo tratan igual. La diferencia real es de un minuto.
+
+**Queda una incoherencia por resolver con Xabi:** las horas de lunes a sabado del JSON-LD
+(L-V 6:30-21:15, Sab 9:00-13:00) se dedujeron de la PRIMERA y la ULTIMA clase, no de la hora
+real de apertura. Si el domingo abre de 5:00 a 00:00, lo normal es que entre semana tambien
+abra mas de lo que dicen las clases. Hay que preguntarselo, porque ahora mismo la ficha de
+Google dice que el domingo abris mas horas que un martes.

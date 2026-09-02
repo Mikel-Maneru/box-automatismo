@@ -128,7 +128,57 @@ sistema para las pruebas gratuitas.
    persona), confirmando si permiten leer la parrilla semanal.
 3. El **subdominio** del box en AimHarder y su **boxId**.
 
-**Lo investigado (2026-08-25), para no repetirlo:**
+### ✅ RESUELTO (2026-09-02): Xabi mando la API OFICIAL y lo cambia todo
+
+**https://aimharder.com/api_doc/aimharder/index.html** — "API Publica de AimHarder", oficial y
+documentada. **Deja obsoleto todo el apartado "Lo investigado" de mas abajo**: ya no hay que
+hacer ingenieria inversa NI recurrir a la pagina publica de bonos.
+
+- **Base:** `https://api.aimharder.com`
+- **Solo HTTP/1.1.** Con HTTP/2 responde **403**. En cURL hay que pasar `--http1.1`; Postman
+  y Bruno tambien negocian h2 por defecto y fallan. (Node hace HTTP/1.1 por defecto, ok.)
+- **Auth:** `Authorization: Bearer <access_token>`. Los tokens se generan desde
+  **Configuracion > API** en la web de AimHarder y hace falta **permiso de administrador**.
+  Son tokens de SERVICIO: no es la contrasena de nadie, que era justo lo que se pedia.
+- **`410` = token caducado** -> `GET /auth/tokens/refresh` con `Authorization: Bearer
+  <refresh_token>`. **OJO: devuelve un access token Y un refresh token NUEVOS**, cada uno con
+  su fecha de caducidad. El refresh token ROTA, asi que hay que **persistirlo** (Supabase,
+  como se hacia con la cookie de WodBuster). Si se pierde, hay que volver a generarlo a mano.
+
+**Los dos endpoints que resuelven lo que teniamos pendiente:**
+
+1. **Horario real:** `GET /calendar/:YYYY-MM-DD` -> lista con `schedule_id`, `time` (HH:MM),
+   `name`, `description`, `duration`, `limit` (aforo), `class_id`, `room_id` / `room_name` /
+   `room_capacity`, `staff_name`, `cancelled`, `is_public`. Da nombre Y aforo de una sola
+   llamada: sustituye al scraping de las tres tablas y a la API de disponibilidad a la vez.
+   **`room_name` es probablemente lo que separa ANBOTO de ALLUITZ** — comprobarlo al migrar,
+   porque resolveria de forma limpia lo de mostrar los dos espacios.
+2. **Prueba gratuita a nombre del interesado:** `POST /classes/booking/guest` con
+   `schedule_id`, `booking_date` (YYYY-MM-DD), `name` y, opcionales, `first_surname`,
+   `second_surname`, `email`, `phone`, `booking_notes`. Devuelve
+   `{"data":{"message":"...","id":8989}}`, y ese `id` **hace falta para cancelar**.
+   **Esto elimina el problema de raiz:** la reserva queda a nombre del invitado, no de una
+   cuenta personal. Errores 422 previstos: sin tarifa, ya tiene reserva ese dia/hora, supera
+   la antelacion permitida, pagos pendientes.
+
+**Dos avisos de la propia documentacion, para no perder tiempo:**
+- En el ejemplo, `booking_date` va **sin comillas** (`2025-10-25`, JSON invalido) y la tabla
+  lo tipa como `Number` aunque describe `YYYY-MM-DD`. **Enviarlo como string.**
+- El ejemplo incluye `personal_id` pero **ese campo NO aparece en la tabla del body**.
+  Verificar si hace falta antes de dar por bueno el alta.
+
+**Otros endpoints utiles:** `POST /classes/booking/cancel`, `GET /bookings/:id`,
+`GET /classes`, `GET /classes/:id/schedule`, `GET /guests`, `GET /leads` (se podrian volcar
+ahi las altas del formulario), `GET /clients`, `GET /clients/no-booking/:date` (gente que
+lleva sin venir desde una fecha — util para retencion), `GET /memberships` (tarifas),
+`GET /staff`, `GET /training-rooms`.
+
+**Lo unico que falta de Xabi:** que genere los tokens en Configuracion > API (necesita ser
+admin) y los pase. Con eso se puede empezar a implementar `src/lib/booking/aimharder.js`.
+
+---
+
+**Lo investigado (2026-08-25) — YA NO APLICA, se conserva por historico:**
 - **La API de AimHarder que circula por internet es INGENIERIA INVERSA**, igual que la de
   WodBuster: `POST login.aimharder.com/api/login` (email, password, fingerprint),
   `GET {box}.aimharder.com/api/bookings?day=YYYYMMDD&box={id}`, `POST .../api/book`. No hay
