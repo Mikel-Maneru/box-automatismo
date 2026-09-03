@@ -689,3 +689,37 @@ del final de `schema.sql`.
 
 **Para futuros proyectos:** checklist en `CLAUDE.md` y en `memory/preferences.md`. Lo
 importante no es la lista, es cuando se aplica: desde el primer dia.
+
+## 2026-09-03: El horario pasa a estar por SALAS, y vuelve a ser estatico
+
+Xabi mando el horario nuevo en **dos carteles, uno por sala**. Son programaciones distintas y
+hasta ahora se mezclaban en una sola parrilla:
+- **Sala Anboto** — cross training, halterofilia, iniciacion y endurance. Open Box de 6:15 a
+  21:15, mientras haya clases en marcha.
+- **Sala Alluitz** — salud, funcional, tonificacion y gimnasio libre. Abierta de **5:00 a
+  00:00 todos los dias del año**.
+
+La web ahora pide elegir SALA y luego dia. El sabado la Sala Alluitz no tiene clases guiadas:
+se dice explicitamente, porque un panel vacio parece un fallo de carga.
+
+**Las horas del box han cambiado OTRA VEZ:** de 06:30/07:30 a **06:15/07:15**, y el sabado
+pasa de WOD a **Team WOD**. Van ya tres cambios de horario en dos semanas; darlo por estable
+es un error.
+
+**Decision que hay que entender antes de tocar `Horarios.jsx`: se QUITO la llamada a
+`/api/schedule`.** No es un descuido ni una regresion. El horario automatico leia WodBuster, y
+WodBuster tiene el horario VIEJO: dejar la llamada habria sobrescrito el horario bueno con el
+caducado en cuanto cargase la pagina. Verificado que el bundle no tiene ni una referencia. El
+endpoint sigue existiendo y funcionando; simplemente no se consume.
+**En octubre, con AimHarder, la carga automatica vuelve** — pero contra
+`GET /calendar/:fecha`, que ademas da el aforo.
+
+**Los nombres se muestran en el vocabulario de la web, no en el del cartel** (Iniciacion ->
+Oinarriak, Haltero -> Halterofilia, Hycross -> Hyrox, Strength -> Total Strength). Se
+mantiene la decision del 31-08: si se cambiaran, la seccion de clases y la recomendacion por
+objetivo dejarian de casar. Si el cliente prefiere los nombres del cartel, se tocan los alias
+de `shared/clases.json` y se revisa `DISCIPLINAS` a la vez.
+
+**Se cierra de paso el cabo suelto de las horas de apertura.** Ya no se deducen de la primera
+y la ultima clase: el JSON-LD declara **5:00–23:59 los siete dias**, que es lo que abre de
+verdad la Sala Alluitz. Google deja de ver un horario inventado.

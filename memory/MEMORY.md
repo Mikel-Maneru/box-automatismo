@@ -12,23 +12,23 @@
 | **Dominio** | ✅ **https://anbotosc.com EN PRODUCCIÓN** | `A 76.76.21.21` en IONOS + cert TLS. `www` redirige 308 |
 | **Fase 1** | ✅ COMPLETA | Dominio, widget con marca, favicon según tema |
 | **Fase 2** | ✅ **DESPLEGADA Y VERIFICADA EN VIVO** | Clases por objetivo, formulario guiado, `/reservar` en React |
-| **Email propio** | ✅ **FUNCIONANDO** | Envío real comprobado a `anbotocf@gmail.com` desde `hola@send.anbotosc.com` |
+| **Email propio** | ✅ **FUNCIONANDO** | Envío real comprobado a `anbotocfügmail.com` desde `holaüsend.anbotosc.com` |
 | **WhatsApp** | ❌ Eliminado (`017f05c`) y **desplegado** | Los 2 avisos que importaban pasaron a email |
 | **Chat** | ✅ **En la cuenta de Anthropic de Xabi** (2026-08-19) | Mikel es admin. Verificado en vivo. Paga Xabi |
 | **Limpieza** | ✅ `api/` borrado (`ff330ef`) | Queda solo el dominio `send.anboto.sc` en Resend |
 | **Tarifas** | 🚫 **NO se publican precios** — ✅ **EN PRODUCCIÓN (25-08-2026)** | Petición del cliente. Fuera de la landing, del JSON-LD y del prompt del chatbot. Ver `decisions.md` |
-| **Horario** | ✅ **AUTOMATICO desde el proveedor** (2026-08-31) | `GET /api/schedule`, cache 6h, con el estatico como red de seguridad |
+| **Horario** | 🔶 **ESTATICO y por SALAS** (03-09-2026, `17ed23e`) | Xabi mando el horario nuevo en dos carteles: **Sala Anboto** y **Sala Alluitz**, con programacion distinta. La llamada a `/api/schedule` esta **QUITADA** de `Horarios.jsx` a proposito: WodBuster tiene el horario VIEJO y reactivarla pisaria el bueno. **Vuelve a ser automatico en octubre**, contra `GET /calendar/:fecha` de AimHarder |
 | **Clases de Alluitz** | ✅ **EN PRODUCCION (31-08-2026, `d621f4e`)** | La web muestra el horario titulado "Anboto SC", el unico con Alluitz. 59 franjas con clases del gimnasio |
-| **⚠️ Web vs reservas** | 🔶 **DIFIEREN — y se acepta hasta octubre** | La web enseña el horario NUEVO; WodBuster sigue con el VIEJO (web 10:30/12:30, reservas 10:15/12:45; Funcional, Tonificacion y Movilidad + Core **no se pueden reservar**). **NO se arregla en WodBuster**: en octubre se migra a AimHarder y se resuelve solo. Riesgo asumido durante septiembre: quien vea una clase en la web puede no encontrarla para reservar |
+| **⚠️ Web vs reservas** | 🔶 **DIFIEREN MAS AUN — y se acepta hasta octubre** | La web enseña el horario NUEVO; WodBuster sigue con el VIEJO (web 10:30/12:30, reservas 10:15/12:45; Funcional, Tonificacion y Movilidad + Core **no se pueden reservar**). **NO se arregla en WodBuster**: en octubre se migra a AimHarder y se resuelve solo. Riesgo asumido durante septiembre: quien vea una clase en la web puede no encontrarla para reservar |
 | **Domingo** | ✅ **PUBLICADO (02-09-2026)** | Xabi: **5:00–00:00, sin clases guiadas, solo entreno libre arriba**. Ya esta en la nota de horarios y en el JSON-LD (`closes: "23:59"`, no `"00:00"`, que es ambiguo). Google deja de mostrar "cerrado" |
-| **⚠️ Horas L–S** | 🔶 **Son las de las CLASES, no las de apertura** | Las que publica el JSON-LD (L–V 6:30–21:15, Sab 9:00–13:00) se dedujeron de la primera y la ultima clase. Si el domingo abre 5:00–00:00, entre semana tambien abrira mas. **Ahora mismo Google dice que abren mas horas un domingo que un martes.** Preguntar a Xabi |
+| **Horas de apertura** | ✅ **RESUELTO (03-09-2026)** | Ya no se deducen de las clases: el JSON-LD declara **5:00–23:59 los SIETE dias**, que es lo que abre de verdad la Sala Alluitz segun el cartel de Xabi. Anboto tiene Open Box 6:15–21:15 mientras haya clases |
 | **Telefono** | ✅ **688 60 67 54 — el OFICIAL del box** (01-09-2026, `45e72a2`) | Ha cambiado dos veces en dos dias: `688 661 924` (socio anterior) → `622 768 134` (Xabi) → **`688 60 67 54`**. En 13 ficheros + Supabase (`phone` y `faqs`, que es de donde lo dicta el chatbot) |
 | **Paginas archivadas** | ✅ **RETIRADAS del despliegue** (01-09-2026, `cea484a`) | Estaban en `public/` y daban **200** con la marca vieja, `anbotofitness.com` y (hasta ese dia) el telefono del socio anterior. Movidas a **`archive/`** + `/archive/` en `.vercelignore`. Las 5 rutas **redirigen 308 a `/`** (regla en `vercel.json` **y** en `src/index.js`). Verificado en produccion |
 | **Reserva automatica** | 🚫 **DESACTIVADA — decision confirmada (01-09-2026)** | Que el interesado se apunte solo se queda inhabilitado. `WODBUSTER_AUTOBOOK` **borrada de Vercel** (existia con valor oculto: no habia forma de saber si estaba ON). Ausente = off, y asi es auditable. La plaza la crea el **aviso por email al box** |
 | **Proveedor de reservas** | 🔄 **A AimHarder en OCTUBRE 2026** | Fecha confirmada por Mikel el 01-09. Capa `src/lib/booking/` lista: el interruptor es `BOOKING_PROVIDER=aimharder`, pero `aimharder.js` es un **esqueleto sin implementar**. **Las docs oficiales YA estan** (02-09): https://aimharder.com/api_doc/aimharder/index.html — ver punto 11 de `people.md`. Lo unico que falta son **los TOKENS**, que genera Xabi en Configuracion > API |
 | **API de AimHarder** | ✅ **OFICIAL y documentada** (02-09-2026) | `api.aimharder.com`, Bearer + refresh. **`GET /calendar/:fecha`** da nombre, hora, aforo y sala; **`POST /classes/booking/guest`** reserva A NOMBRE DEL INVITADO — eso elimina de raiz el problema de la cuenta personal y deja obsoleto el plan de traspaso a su pagina de bonos. Trampas: **solo HTTP/1.1** (con h2 da 403) y el **refresh token ROTA** |
 | **Cifras de la landing** | ✅ Socios retirado (02-09-2026, `b3f2b45`) | Decia "46+ miembros activos" y 46 eran las RESEÑAS de Google. Quedan 8+ años · 6 disciplinas · 4,9★. **Ojo: "6 disciplinas" se queda corta** — el horario real tiene 12 tipos de clase |
-| **Tipos de clase** | 🔶 **6 de 12, a proposito hasta octubre** | La seccion "Una clase para cada objetivo" es una lista a mano; faltan Funcional, Tonificacion, Movilidad + Core, Team WOD, Gymnastics y Gimnasio + Open. Mikel decidio **NO parchearlo a mano**: se automatiza al migrar. **No lo arregles a mano.** El matiz de diseño (descripcion bilingue + objetivo por clase, que la API no da) esta en `decisions.md` |
+| **Tipos de clase** | 🔶 En la PARRILLA salen todos; en la seccion de objetivos, 6 | La parrilla por salas ya muestra WOD, Oinarriak, Halterofilia, Hyrox, Endurance, Total Strength, Team WOD, Gymnastics, Funcional, Tonificacion y Movilidad + Core. La seccion "Una clase para cada objetivo" sigue con 6 **a proposito**: añadir las demas necesita una descripcion bilingüe y un objetivo por clase, que tiene que dar el cliente. **No lo inventes.** |
 | **Legal / RGPD** | ✅ **EN PRODUCCION (02-09-2026)** | `/privacidad`, `/cookies`, `/aviso-legal` + casilla de consentimiento (sin marcar, validada en SERVIDOR) + aviso en el chat. Comprobado en produccion: **0 peticiones a terceros, 0 cookies** |
 | **Datos expuestos** | 🔶 **2 de 3 corregidos** | ✅ Fuera el `console.log(req.body)` que metia nombre/telefono/email en los logs · ✅ escapado de HTML en 7 sitios · ⚠️ **la SUPABASE_SERVICE_KEY SIGUE SIN ROTAR** desde el 18-08: es el punto mas grave, da acceso total a datos de personas reales y no caduca hasta 2036 |
 | **SQL pendiente** | ⚠️ **Ejecutar el final de `schema.sql` en Supabase** | RLS en las 7 tablas + columnas `consentimiento_at` y `politica_version`. Mientras no se ejecute, el alta funciona igual (hay reintento) pero **NO se guarda la prueba del consentimiento**, y el log lo grita en cada alta |
@@ -199,7 +199,7 @@ Las 4 preguntas que bloqueaban esta fase se resolvieron implementando. Lo que ha
 2. **Formulario** con `objetivo` y `comoConocio`, que recomienda clases **antes** de enviar.
 3. **`/reservar` en React** (`web/src/pages/Reservar.jsx`), que recomienda el hueco del día
    según el objetivo elegido en el formulario.
-4. **Avisos por email** a `anbotocf@gmail.com`, WhatsApp eliminado.
+4. **Avisos por email** a `anbotocfügmail.com`, WhatsApp eliminado.
 
 Sigue pendiente de la fase original: usar la **API oficial de WodBuster** (la pide Xabi) y pasar
 el chat a la **cuenta de Anthropic de Xabi**.
@@ -273,9 +273,9 @@ Ese hash debe coincidir con el de `public/assets/`. Si no coincide, producción 
   la integración Git↔Vercel está inactiva desde el 12-may, hacer push NO despliega.
 - **Supabase**: tgbpgxakctedvlyepppu.supabase.co
 - **WodBuster**: anboto.wodbuster.com (login manual con credenciales de Mikel, CAPTCHA)
-- **Registrador**: IONOS — cuenta **anbotocf@gmail.com** (¡no la personal de Mikel!)
+- **Registrador**: IONOS — cuenta **anbotocfügmail.com** (¡no la personal de Mikel!)
 - **Email**: Resend, **cuenta `anbotocf`** (¡NO la personal de Mikel — ver trampa 3!).
-  Dominio de envío `send.anbotosc.com` (eu-west-1) ✅ · `MAIL_FROM=Anboto SC <hola@send.anbotosc.com>`
+  Dominio de envío `send.anbotosc.com` (eu-west-1) ✅ · `MAIL_FROM=Anboto SC <holaüsend.anbotosc.com>`
   - La `RESEND_API_KEY` es **solo de envío**: no sirve para leer ni crear dominios por API
     (devuelve `restricted_api_key`). Para inspeccionar dominios hay que mirar el panel.
 - ~~WhatsApp API: Kapso~~ — **eliminado el 2026-08-19**, los avisos van solo por email
