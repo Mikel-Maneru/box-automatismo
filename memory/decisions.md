@@ -752,7 +752,11 @@ con Strength marcada como puerta de entrada.
   "arregle".
 - **El SEO y la prosa siguen diciendo "Hyrox"** (titulo, meta description, cejilla del hero,
   `disc.lead`). "Hyrox" es marca registrada y termino de busqueda real; **"Hycross" no lo
-  busca nadie**. Cambiarlo costaria trafico a cambio de nada. Queda pendiente de que Mikel
-  decida si quiere coherencia total tambien ahi.
+  busca nadie**. Cambiarlo costaria trafico a cambio de nada.
+  **CONFIRMADO por Mikel el 03-09: "Deja Hyrox en el SEO".** Es decir, la incoherencia
+  entre el titulo ("Hyrox") y la etiqueta de la clase ("Hycross") es DELIBERADA. No la
+  "arregles": el titulo y la meta description buscan trafico, la etiqueta busca que el
+  socio reconozca su clase. Son dos trabajos distintos y cada uno usa la palabra que le
+  sirve.
 - **"Movilidad + Core"** se escribe bien, aunque el cartel pone "Mobilidad+Core". No se
   reproduce una falta de ortografia en la web publica.
