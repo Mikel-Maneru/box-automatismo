@@ -189,3 +189,38 @@ CREATE TABLE wodbuster_config (
   value TEXT NOT NULL,
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- =====================================================================
+-- PROTECCION DE DATOS (2026-09-02)
+-- =====================================================================
+
+-- ROW LEVEL SECURITY
+--
+-- Se activa en TODAS las tablas y a proposito NO se crea ninguna politica.
+-- Sin politicas, RLS deniega todo por defecto.
+--
+-- Por que esto no rompe nada: la aplicacion entra siempre con la
+-- SUPABASE_SERVICE_KEY (ver src/lib/supabase.js), y la service key se salta el
+-- RLS por diseño. El frontend NUNCA habla con Supabase: todo pasa por Express.
+-- Comprobado el 2026-09-02 — no hay ninguna clave de Supabase en el bundle.
+--
+-- Que gana: hoy la unica barrera es que la service key no se filtre. Con RLS
+-- activo, la clave publica (anon) del proyecto no puede leer NADA aunque
+-- alguien la consiga o la adivine. Es la segunda barrera que faltaba, y en
+-- estas tablas hay nombres, telefonos y correos de personas reales.
+ALTER TABLE boxes             ENABLE ROW LEVEL SECURITY;
+ALTER TABLE conversations     ENABLE ROW LEVEL SECURITY;
+ALTER TABLE messages          ENABLE ROW LEVEL SECURITY;
+ALTER TABLE signups           ENABLE ROW LEVEL SECURITY;
+ALTER TABLE signup_tokens     ENABLE ROW LEVEL SECURITY;
+ALTER TABLE class_bookings    ENABLE ROW LEVEL SECURITY;
+ALTER TABLE wodbuster_config  ENABLE ROW LEVEL SECURITY;
+
+-- PRUEBA DEL CONSENTIMIENTO (RGPD art. 7.1)
+--
+-- No basta con pedir el consentimiento: hay que poder DEMOSTRAR que se dio, y
+-- con que texto. Se guardan el momento exacto y la version de la politica que
+-- la persona acepto, para que un cambio posterior del texto no reescriba la
+-- historia de lo que acepto en su dia.
+ALTER TABLE signups ADD COLUMN IF NOT EXISTS consentimiento_at   TIMESTAMPTZ;
+ALTER TABLE signups ADD COLUMN IF NOT EXISTS politica_version    TEXT;

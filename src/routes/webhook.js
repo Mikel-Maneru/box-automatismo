@@ -2,14 +2,18 @@ const express = require('express');
 const router = express.Router();
 const supabase = require('../lib/supabase');
 const { sendAlerta } = require('../lib/email');
+const { escapeHtml } = require('../lib/html');
 
 function thankYouPage(nombre, wantsToJoin) {
+  // El nombre viene del formulario y se sirve dentro de una pagina de NUESTRO dominio, asi
+  // que se escapa antes de tocar la plantilla. `signup.js` solo valida la longitud.
+  const n = escapeHtml(nombre);
   const title = wantsToJoin
     ? 'Bienvenido a la familia Anboto!'
     : 'Gracias por visitarnos';
   const message = wantsToJoin
-    ? `En breve nos pondremos en contacto contigo, ${nombre}. Mientras tanto, si tienes cualquier duda escribenos por WhatsApp al 688 60 67 54.`
-    : `Esperamos verte de nuevo por Anboto, ${nombre}. La puerta siempre esta abierta!`;
+    ? `En breve nos pondremos en contacto contigo, ${n}. Mientras tanto, si tienes cualquier duda escribenos por WhatsApp al 688 60 67 54.`
+    : `Esperamos verte de nuevo por Anboto, ${n}. La puerta siempre esta abierta!`;
 
   return `<!DOCTYPE html>
 <html lang="es">
@@ -66,11 +70,13 @@ router.get('/yes', async (req, res) => {
 
     // Aviso al box: es el lead mas caliente del sistema, ha probado y quiere entrar.
     await sendAlerta(
+      // El ASUNTO es texto plano, no HTML: aqui NO se escapa a proposito. Si se escapara,
+      // un nombre con un apostrofo llegaria al box como "Mikel &#39;..." en la bandeja.
       `\u{1F525} ${signup.nombre} quiere apuntarse a Anboto SC`,
-      `<h2>${signup.nombre} quiere apuntarse</h2>
+      `<h2>${escapeHtml(signup.nombre)} quiere apuntarse</h2>
        <p>Ha hecho la clase de prueba y ha dicho que si.</p>
-       <p><strong>Telefono:</strong> ${signup.telefono || 'No indicado'}</p>
-       <p><strong>Email:</strong> ${signup.email || 'No indicado'}</p>
+       <p><strong>Telefono:</strong> ${escapeHtml(signup.telefono) || 'No indicado'}</p>
+       <p><strong>Email:</strong> ${escapeHtml(signup.email) || 'No indicado'}</p>
        <hr><p>Llamale para formalizar la inscripcion.</p>`
     );
 

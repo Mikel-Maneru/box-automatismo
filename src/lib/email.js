@@ -1,5 +1,7 @@
 const { Resend } = require('resend');
 const supabase = require('./supabase');
+// Todo lo que escribe la persona y acaba dentro de un correo HTML pasa por aqui.
+const { escapeHtml } = require('./html');
 
 let resend = null;
 if (process.env.RESEND_API_KEY) {
@@ -60,13 +62,13 @@ async function createSignup({ nombre, telefono, email, nivel, objetivo, comoCono
         subject: '\u{1F525} Nueva inscripción - Anboto SC',
         html: `
           <h2>Nueva inscripción en Anboto SC</h2>
-          <p><strong>Nombre:</strong> ${nombre}</p>
-          <p><strong>Teléfono:</strong> ${telefono || 'No indicado'}</p>
-          <p><strong>Email:</strong> ${email || 'No indicado'}</p>
-          <p><strong>Nivel:</strong> ${nivel || 'No indicado'}</p>
-          <p><strong>Objetivo:</strong> ${objetivo || 'No indicado'}</p>
-          <p><strong>Cómo nos conoció:</strong> ${comoConocio || 'No indicado'}</p>
-          <p><strong>Origen:</strong> ${origen}</p>
+          <p><strong>Nombre:</strong> ${escapeHtml(nombre)}</p>
+          <p><strong>Teléfono:</strong> ${escapeHtml(telefono) || 'No indicado'}</p>
+          <p><strong>Email:</strong> ${escapeHtml(email) || 'No indicado'}</p>
+          <p><strong>Nivel:</strong> ${escapeHtml(nivel) || 'No indicado'}</p>
+          <p><strong>Objetivo:</strong> ${escapeHtml(objetivo) || 'No indicado'}</p>
+          <p><strong>Cómo nos conoció:</strong> ${escapeHtml(comoConocio) || 'No indicado'}</p>
+          <p><strong>Origen:</strong> ${escapeHtml(origen)}</p>
           <p><strong>Fecha:</strong> ${fecha}</p>
           <hr>
           <p><strong>Hay que contactar con esta persona.</strong> No recibe ningun correo
@@ -137,7 +139,7 @@ async function sendSchedulingEmail(toEmail, nombre, token) {
       subject: 'Elige tu clase gratuita en Anboto SC',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #1a1a1a;">Hola ${nombre}!</h2>
+          <h2 style="color: #1a1a1a;">Hola ${escapeHtml(nombre)}!</h2>
           <p>Gracias por querer probar una clase en Anboto SC.</p>
           <p>Elige el dia y la hora que mejor te vengan para tu clase gratuita:</p>
           <div style="text-align: center; margin: 30px 0;">
@@ -182,7 +184,7 @@ async function sendFollowupEmail(toEmail, nombre, signupId) {
       subject: 'Como te fue en tu clase en Anboto SC?',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #1a1a1a;">Hola ${nombre}!</h2>
+          <h2 style="color: #1a1a1a;">Hola ${escapeHtml(nombre)}!</h2>
           <p>Esperamos que disfrutaras tu clase en Anboto SC!</p>
           <p>Te ha gustado? Quieres formar parte de la familia Anboto?</p>
           <div style="text-align: center; margin: 30px 0;">
