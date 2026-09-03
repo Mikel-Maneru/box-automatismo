@@ -75,7 +75,7 @@ function ReservarInner() {
   const idxRecomendado = useMemo(() => {
     const orden = obj
       ? obj.clases
-      : (nivel === 'Sin experiencia' ? ['Oinarriak'] : []);
+      : (nivel === 'Sin experiencia' ? ['Iniciación'] : []);
     if (!orden.length || !clases.length) return -1;
     for (const clase of orden) {
       const i = clases.findIndex((c) => esMismaClase(c.name, clase) && c.canBook);

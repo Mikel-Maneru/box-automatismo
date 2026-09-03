@@ -7,7 +7,7 @@ import {
 } from '../data/site.js';
 
 /* ---------- Marquee (claims/disciplinas) ---------- */
-const MARQUEE = ['WOD', 'Oinarriak', 'Indarra', 'Open Box', 'Total Strength', 'Haltero', 'Endurance', 'Hyrox'];
+const MARQUEE = ['WOD', 'Iniciación', 'Indarra', 'Open Box', 'Strength', 'Haltero', 'Endurance', 'Hycross'];
 export function Marquee() {
   return (
     <div className="marquee" aria-hidden="true">

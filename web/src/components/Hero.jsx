@@ -4,7 +4,7 @@ import { useMagnet } from '../hooks/useMagnet.js';
 import { HERO_SLIDES } from '../data/site.js';
 
 // Palabra kinética: rota las disciplinas como acento vivo del hero.
-const KWORDS = ['CrossFit', 'Halterofilia', 'Hyrox', 'Endurance', 'Oinarriak', 'Komunitatea'];
+const KWORDS = ['CrossFit', 'Haltero', 'Hycross', 'Endurance', 'Iniciación', 'Komunitatea'];
 function KineticWord() {
   const [i, setI] = useState(0);
   useEffect(() => {

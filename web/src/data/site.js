@@ -47,22 +47,22 @@ export const SALAS = [
 
 // Sala Anboto — cross training, halterofilia, iniciacion y endurance.
 export const SCHED_ANBOTO = {
-  mon: [['06:15','WOD'],['07:15','WOD'],['10:30','WOD'],['12:30','WOD'],['14:30','WOD'],['17:15','Hyrox'],['18:15','WOD'],['19:15','WOD'],['20:15','WOD']],
-  tue: [['06:15','WOD'],['07:15','Oinarriak'],['10:30','WOD'],['12:30','WOD'],['14:30','WOD'],['17:15','WOD'],['18:15','WOD'],['19:15','Halterofilia'],['20:15','Oinarriak']],
-  wed: [['06:15','WOD'],['07:15','WOD'],['10:30','WOD'],['12:30','Oinarriak'],['14:30','WOD'],['17:15','Endurance'],['18:15','WOD'],['19:15','WOD'],['20:15','WOD']],
-  thu: [['06:15','WOD'],['07:15','WOD'],['10:30','Total Strength'],['12:30','WOD'],['14:30','WOD'],['17:15','WOD'],['18:15','Total Strength'],['19:15','WOD'],['20:15','Gymnastics']],
-  fri: [['06:15','WOD'],['07:15','WOD'],['10:30','WOD'],['12:30','WOD'],['14:30','WOD'],['17:15','WOD'],['18:15','WOD'],['19:15','Oinarriak']],
+  mon: [['06:15','WOD'],['07:15','WOD'],['10:30','WOD'],['12:30','WOD'],['14:30','WOD'],['17:15','Hycross'],['18:15','WOD'],['19:15','WOD'],['20:15','WOD']],
+  tue: [['06:15','WOD'],['07:15','Iniciación'],['10:30','WOD'],['12:30','WOD'],['14:30','WOD'],['17:15','WOD'],['18:15','WOD'],['19:15','Haltero'],['20:15','Iniciación']],
+  wed: [['06:15','WOD'],['07:15','WOD'],['10:30','WOD'],['12:30','Iniciación'],['14:30','WOD'],['17:15','Endurance'],['18:15','WOD'],['19:15','WOD'],['20:15','WOD']],
+  thu: [['06:15','WOD'],['07:15','WOD'],['10:30','Strength'],['12:30','WOD'],['14:30','WOD'],['17:15','WOD'],['18:15','Strength'],['19:15','WOD'],['20:15','Gymnastics']],
+  fri: [['06:15','WOD'],['07:15','WOD'],['10:30','WOD'],['12:30','WOD'],['14:30','WOD'],['17:15','WOD'],['18:15','WOD'],['19:15','Iniciación']],
   sat: [['09:00','Team WOD'],['10:00','Team WOD'],['11:00','Team WOD']],
 };
 
 // Sala Alluitz — salud, funcional, tonificacion y gimnasio libre.
 // Martes y jueves solo tienen tarde; el sabado no tiene clases guiadas, pero la sala abre.
 export const SCHED_ALLUITZ = {
-  mon: [['06:30','Funcional'],['07:30','Funcional'],['10:15','Funcional'],['17:30','Total Strength'],['18:30','Funcional']],
-  tue: [['17:30','Funcional'],['18:30','Hyrox']],
-  wed: [['06:30','Tonificación'],['07:30','Funcional'],['10:15','Hyrox'],['17:30','Total Strength'],['18:30','Funcional']],
+  mon: [['06:30','Funcional'],['07:30','Funcional'],['10:15','Funcional'],['17:30','Strength'],['18:30','Funcional']],
+  tue: [['17:30','Funcional'],['18:30','Hycross']],
+  wed: [['06:30','Tonificación'],['07:30','Funcional'],['10:15','Hycross'],['17:30','Strength'],['18:30','Funcional']],
   thu: [['17:30','Funcional'],['18:30','Movilidad + Core']],
-  fri: [['06:30','Funcional'],['07:30','Hyrox'],['10:15','Funcional'],['17:30','Tonificación'],['18:30','Funcional']],
+  fri: [['06:30','Funcional'],['07:30','Hycross'],['10:15','Funcional'],['17:30','Tonificación'],['18:30','Funcional']],
   sat: [],
 };
 
@@ -74,22 +74,22 @@ export const TODAY_KEYS = ['mon','mon','tue','wed','thu','fri','sat'];
 // Disciplinas (6). eu = etiqueta euskera·categoría, name = título, dk = clave i18n descripción.
 export const DISCIPLINAS = [
   { eu: 'Eguneroko · Todos',   name: 'WOD',            dk: 'disc.d1' },
-  { eu: 'Hasiberriak · Inicio', name: 'Oinarriak',      dk: 'disc.d2' },
-  { eu: 'Indarra · Técnica',   name: 'Halterofilia',    dk: 'disc.d3' },
-  { eu: 'Lehiakorra · Híbrido', name: 'Hyrox',          dk: 'disc.d4' },
+  { eu: 'Hasiberriak · Inicio', name: 'Iniciación',      dk: 'disc.d2' },
+  { eu: 'Indarra · Técnica',   name: 'Haltero',    dk: 'disc.d3' },
+  { eu: 'Lehiakorra · Híbrido', name: 'Hycross',          dk: 'disc.d4' },
   { eu: 'Aerobikoa · Fondo',   name: 'Endurance',       dk: 'disc.d5' },
-  { eu: 'Indarra · Fuerza',    name: 'Total Strength',  dk: 'disc.d6' },
+  { eu: 'Indarra · Fuerza',    name: 'Strength',  dk: 'disc.d6' },
 ];
 
 // Objetivos (5). Única fuente de verdad: la sección de clases filtra con esto y el
 // formulario recomienda con esto, así web y alta nunca se contradicen.
 // `clases` referencia DISCIPLINAS[].name; el primero es la puerta de entrada recomendada.
 export const OBJETIVOS = [
-  { id: 'salud',       k: 'obj.salud', dk: 'obj.salud.d', clases: ['WOD', 'Oinarriak', 'Endurance'] },
-  { id: 'rendimiento', k: 'obj.rend',  dk: 'obj.rend.d',  clases: ['Hyrox', 'WOD', 'Endurance'] },
-  { id: 'musculacion', k: 'obj.musc',  dk: 'obj.musc.d',  clases: ['Total Strength', 'Halterofilia'] },
-  { id: 'grasa',       k: 'obj.grasa', dk: 'obj.grasa.d', clases: ['WOD', 'Endurance', 'Hyrox'] },
-  { id: 'empezar',     k: 'obj.emp',   dk: 'obj.emp.d',   clases: ['Oinarriak', 'WOD'] },
+  { id: 'salud',       k: 'obj.salud', dk: 'obj.salud.d', clases: ['WOD', 'Iniciación', 'Endurance'] },
+  { id: 'rendimiento', k: 'obj.rend',  dk: 'obj.rend.d',  clases: ['Hycross', 'WOD', 'Endurance'] },
+  { id: 'musculacion', k: 'obj.musc',  dk: 'obj.musc.d',  clases: ['Strength', 'Haltero'] },
+  { id: 'grasa',       k: 'obj.grasa', dk: 'obj.grasa.d', clases: ['WOD', 'Endurance', 'Hycross'] },
+  { id: 'empezar',     k: 'obj.emp',   dk: 'obj.emp.d',   clases: ['Iniciación', 'WOD'] },
 ];
 
 // Valores que viajan al backend (castellano fijo, como `nivel`): el backend valida

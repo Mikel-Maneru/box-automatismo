@@ -558,6 +558,10 @@ function matchApiEntry(apiClasses, scheduleTime, scheduleName, usedIndices) {
   const [sh, sm] = scheduleTime.split(':').map(Number);
   const scheduleMinutes = sh * 60 + sm;
 
+  // OJO: estos son los nombres que usa WODBUSTER, no los de la web. NO renombrarlos cuando
+  // cambien los nuestros (el 2026-09-03 la web paso a Iniciacion/Haltero/Hycross/Strength):
+  // aqui se compara contra lo que devuelve el proveedor, y traducirlos romperia el
+  // emparejamiento. La conversion a nuestro vocabulario la hace clases.canonica().
   const wodNames = ['Wod', 'Hyrox', 'Endurance', 'Haltero', 'Total Strength'];
 
   for (const preferNameMatch of [true, false]) {

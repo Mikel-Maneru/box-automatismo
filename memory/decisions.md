@@ -723,3 +723,36 @@ de `shared/clases.json` y se revisa `DISCIPLINAS` a la vez.
 **Se cierra de paso el cabo suelto de las horas de apertura.** Ya no se deducen de la primera
 y la ultima clase: el JSON-LD declara **5:00–23:59 los siete dias**, que es lo que abre de
 verdad la Sala Alluitz. Google deja de ver un horario inventado.
+
+## 2026-09-03: La web usa los nombres de los CARTELES (revierte la decision del 31-08)
+
+Mikel: *"Deja los nombres del cartel, que coincidan"*. Se cambia el vocabulario de la web
+para que diga lo mismo que los carteles que ve la gente en el box:
+
+  Oinarriak -> **Iniciación** · Halterofilia -> **Haltero**
+  Hyrox -> **Hycross** · Total Strength -> **Strength**
+
+Esto **revierte** la decision del 31-08, que mapeaba los nombres del box a los de la web. El
+motivo de aquella era mantener "Hyrox" por SEO y no romper la recomendacion; ahora pesa mas
+que el socio vea lo mismo en el cartel y en la web.
+
+**Lo que habia que tocar a la vez, y por que no es solo la parrilla:** esos nombres son la
+junta entre tres cosas — `SCHED_*` (parrilla), `DISCIPLINAS` (seccion de clases) y
+`OBJETIVOS[].clases` (filtro y recomendacion del formulario y de /reservar). Cambiar solo una
+rompe la recomendacion **en silencio**, que es exactamente la trampa nº4. Se cambiaron a la
+vez `shared/clases.json` (canonicas, valores de alias y claves de descripciones), `site.js`,
+`Reservar.jsx`, el marquee y la palabra rotativa del hero.
+Verificado con 10 pares proveedor->web (`INICIACION (ANBOTO)` == `Iniciación`, `Hyrox` ==
+`Hycross`, …) y en navegador: el objetivo "Musculacion" sigue mostrando Haltero y Strength,
+con Strength marcada como puerta de entrada.
+
+**Lo que NO se cambio, a proposito:**
+- **`wodNames` en `wodbuster.js`**: son los nombres del PROVEEDOR, no los nuestros.
+  Traducirlos romperia el emparejamiento con la API. Lleva comentario para que nadie los
+  "arregle".
+- **El SEO y la prosa siguen diciendo "Hyrox"** (titulo, meta description, cejilla del hero,
+  `disc.lead`). "Hyrox" es marca registrada y termino de busqueda real; **"Hycross" no lo
+  busca nadie**. Cambiarlo costaria trafico a cambio de nada. Queda pendiente de que Mikel
+  decida si quiere coherencia total tambien ahi.
+- **"Movilidad + Core"** se escribe bien, aunque el cartel pone "Mobilidad+Core". No se
+  reproduce una falta de ortografia en la web publica.
