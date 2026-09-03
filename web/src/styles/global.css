@@ -81,7 +81,11 @@ section{position:relative}
 .dark::before{content:"";position:absolute;right:-30px;bottom:-44px;width:min(42vw,400px);aspect-ratio:1;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 702 665'%3E%3Cpath fill='%23EFE6D8' fill-rule='evenodd' d='M333.5,10L369.5,92L389.5,111L411.5,175L446.5,198L476.5,282L528.5,323L551.5,398L586.5,428L605.5,478L632.5,509L653.5,563L693,655.5L620,655.5L617,653.5L471,525.5L339,412.5L142,582.5L60,655.5L8.5,655L101.5,473L127.5,437L153.5,362L192.5,330L227.5,236L255.5,208ZM337.5,454L340,453.5L344,456.5L378,487.5L571.5,655L107,655.5L127,636.5Z'/%3E%3C/svg%3E") no-repeat center/contain;opacity:.05;pointer-events:none;z-index:0}
 .dark .wrap{position:relative;z-index:1}
 /* grano sutil: textura de papel/piedra (anti-plantilla) */
-body::after{content:"";position:fixed;inset:0;z-index:400;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* `transform:translateZ(0)` no es decorativo: sube esta capa a su propia capa de
+   composicion. Sin eso, al ser `fixed` y cubrir TODA la pantalla por encima del resto,
+   el navegador la repinta en cada fotograma mientras se hace scroll. Promocionada se
+   rasteriza una vez y solo se recompone, que es practicamente gratis. */
+body::after{content:"";position:fixed;inset:0;z-index:400;pointer-events:none;opacity:.05;transform:translateZ(0);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 /* curvas de nivel (mapa topográfico) en la sección del monte */
 #sobre-nosotros{background:repeating-radial-gradient(circle at 88% 16%,transparent 0 46px,rgba(110,105,96,.05) 46px 47px)}
 .dark .mono,.dark .sec-index{color:var(--bruma)}
@@ -518,7 +522,11 @@ body::after{opacity:.035}
 .bg-blobs span:nth-child(1){width:44vw;height:44vw;left:-12vw;top:-8vw;background:radial-gradient(circle,rgba(169,120,79,.40),transparent 68%);animation:floaty 20s ease-in-out infinite}
 .bg-blobs span:nth-child(2){width:34vw;height:34vw;right:-10vw;top:38vh;background:radial-gradient(circle,rgba(95,107,77,.13),transparent 72%);animation:floaty 26s ease-in-out -8s infinite}
 .bg-blobs span:nth-child(3){width:32vw;height:32vw;left:24vw;bottom:-12vw;background:radial-gradient(circle,rgba(169,120,79,.22),transparent 70%);animation:floaty 23s ease-in-out -14s infinite}
-@keyframes floaty{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(4vw,-3vh) scale(1.1)}66%{transform:translate(-3vw,3vh) scale(.94)}}
+/* SIN scale(), y es a proposito. Estos blobs llevan filter:blur(90px), y escalar algo
+   desenfocado obliga al navegador a RECALCULAR el desenfoque en cada fotograma, para
+   siempre. Con solo translate, la capa se rasteriza una vez y despues solo se mueve.
+   El movimiento se mantiene; lo que desaparece es el coste. NO devolver el scale. */
+@keyframes floaty{0%,100%{transform:translate(0,0)}33%{transform:translate(4vw,-3vh)}66%{transform:translate(-3vw,3vh)}}
 
 /* Contenido por encima de los blobs; secciones transparentes para que el glow respire */
 header.hero,section,footer{position:relative;z-index:1}
