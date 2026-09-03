@@ -7,7 +7,10 @@
     { "source": "/reservar.legacy.html", "destination": "/", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/reservar", "destination": "/reservar.html" }
+    { "source": "/reservar", "destination": "/reservar.html" },
+    { "source": "/privacidad", "destination": "/privacidad.html" },
+    { "source": "/cookies", "destination": "/cookies.html" },
+    { "source": "/aviso-legal", "destination": "/aviso-legal.html" }
   ],
   "crons": [
     {

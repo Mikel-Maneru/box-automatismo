@@ -82,6 +82,15 @@ app.get('/reservar', (_req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'reservar.html'));
 });
 
+// Paginas legales. El build las deja como privacidad.html, cookies.html y
+// aviso-legal.html, pero `express.static` no prueba a añadir la extension, asi que sin esto
+// /privacidad daria 404 en local (en Vercel lo resuelve la regla de vercel.json).
+for (const pagina of ['privacidad', 'cookies', 'aviso-legal']) {
+  app.get('/' + pagina, (_req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', pagina + '.html'));
+  });
+}
+
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Box Automatismo escuchando en puerto ${PORT}`);
 });

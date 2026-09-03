@@ -774,3 +774,52 @@ nav:not(.scrolled) .logo{text-shadow:none}
 .rsv-obj .o{font-family:var(--ff-m);font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.11em;color:var(--brasa)}
 .rsv-obj .r{font-size:.92rem;color:var(--txt-2);line-height:1.5}
 .rsv-obj .r b{color:var(--caliza);font-weight:800}
+
+/* ============================================================================
+   PAGINAS LEGALES (/privacidad, /cookies, /aviso-legal)
+   Texto largo para leer, no una seccion de landing: columna estrecha, mas
+   interlineado y jerarquia sobria. Reutiliza los tokens de la marca.
+   ============================================================================ */
+.foot-legal{display:flex;gap:24px;flex-wrap:wrap;padding-top:20px}
+.foot-legal a{font-family:var(--ff-m);font-size:.72rem;font-weight:700;letter-spacing:.07em;
+  text-transform:uppercase;color:rgba(246,243,236,.45);transition:color .2s}
+.foot-legal a:hover{color:var(--brasa)}
+
+.legal-wrap{max-width:760px;margin:0 auto;padding:40px 24px 72px}
+.legal-back{display:inline-flex;align-items:center;gap:10px;font-family:var(--ff-m);
+  font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--txt-3);margin-bottom:36px;transition:color .2s}
+.legal-back:hover{color:var(--brasa)}
+.legal-back svg{width:22px;height:22px;color:var(--brasa)}
+.legal-wrap h1{font-size:clamp(2rem,6vw,3rem);margin-bottom:10px}
+.legal-meta{font-family:var(--ff-m);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--txt-3);margin-bottom:38px;padding-bottom:22px;border-bottom:1px solid var(--hair)}
+.legal-wrap h2{font-size:clamp(1.15rem,3vw,1.45rem);font-weight:800;letter-spacing:-.01em;
+  margin:38px 0 12px;color:var(--caliza)}
+/* OJO: el sitio entero es OSCURO (regla `body{background:var(--pizarra)}` mas arriba), asi
+   que el texto va en claro. Se usan los tokens --txt-2 y --hair, que ya existen para eso. */
+.legal-wrap p{margin-bottom:14px;line-height:1.7;color:var(--txt-2)}
+.legal-wrap ul{margin:0 0 18px 22px}
+.legal-wrap li{margin-bottom:9px;line-height:1.7;color:var(--txt-2)}
+.legal-wrap li strong,.legal-wrap p strong{color:var(--caliza)}
+.legal-wrap a{color:var(--brasa);text-decoration:underline;text-underline-offset:3px}
+.legal-wrap a:hover{color:var(--caliza)}
+.legal-wrap code{font-family:var(--ff-m);font-size:.85em;background:var(--panel);
+  color:var(--caliza);padding:2px 6px;border-radius:5px}
+
+.legal-destacado{background:var(--panel);border-left:3px solid var(--brasa);
+  border-radius:0 12px 12px 0;padding:18px 20px;font-size:1.05rem}
+
+/* Hueco sin rellenar. Rojo a proposito: si la pagina se publica sin los datos del
+   titular, tiene que verse desde el otro lado de la sala. */
+.legal-falta{background:#c0392b;color:#fff;font-family:var(--ff-m);font-size:.72rem;
+  font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:5px}
+
+.legal-tabla{width:100%;border-collapse:collapse;margin:18px 0 22px;font-size:.94rem}
+.legal-tabla th,.legal-tabla td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--hair);
+  vertical-align:top;color:var(--txt-2)}
+.legal-tabla th{font-family:var(--ff-m);font-size:.7rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--txt-3)}
+@media(max-width:600px){
+  .legal-tabla{display:block;overflow-x:auto;white-space:nowrap}
+}

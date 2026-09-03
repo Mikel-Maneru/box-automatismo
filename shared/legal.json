@@ -1,0 +1,18 @@
+{
+  "_nota": "Version de los textos legales. La lee el frontend (la casilla del formulario) y el backend (src/routes/signup.js), que la guarda junto al consentimiento en la columna signups.politica_version. Sirve para saber QUE texto acepto cada persona: si manana cambia la politica, las altas anteriores siguen ligadas a la version que estaba vigente cuando la aceptaron. RGPD art. 7.1.",
+  "_como_versionar": "Subir la version SOLO cuando cambie algo sustancial de la politica de privacidad (finalidades, destinatarios, plazos, base juridica). Una correccion de redaccion no cuenta. Al subirla, actualizar tambien 'actualizado'.",
+  "version": "1.0",
+  "actualizado": "2026-09-02",
+
+  "_pendiente": "DATOS QUE TIENE QUE DAR XABI. Mientras esten a null, las paginas legales los muestran resaltados en rojo y NO deben publicarse como definitivas. Ver memory/people.md.",
+  "titular": {
+    "razon_social": null,
+    "nif": null,
+    "domicilio": "Polígono Ertzilla, P4, 48215 Iurreta (Bizkaia)",
+    "email": "anbotocf@gmail.com",
+    "telefono": "688 60 67 54"
+  },
+
+  "_conservacion": "Plazo propuesto, pendiente de que lo confirme el cliente.",
+  "conservacion_meses": 12
+}

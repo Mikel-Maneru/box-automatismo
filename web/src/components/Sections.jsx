@@ -361,6 +361,14 @@ export function Footer() {
             <a href="tel:+34688606754">688 60 67 54</a>
           </div>
         </div>
+        {/* Enlaces legales. El aviso legal es obligatorio (art. 10 LSSI) y la politica de
+            privacidad tiene que ser accesible desde donde se recogen los datos, asi que el
+            pie es el sitio: aparece en todas las paginas. */}
+        <div className="foot-legal">
+          <a href="/aviso-legal">Aviso legal</a>
+          <a href="/privacidad">Política de privacidad</a>
+          <a href="/cookies">Política de cookies</a>
+        </div>
         <div className="foot-bottom">
           <span>© 2025 Anboto Strength &amp; Conditioning · Polígono Ertzilla, P4, 48215 Iurreta, Bizkaia</span>
           <span className="gora">GORA ANBOTO!</span>
