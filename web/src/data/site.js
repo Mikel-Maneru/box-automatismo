@@ -26,24 +26,48 @@ export const DAYS = [
   ['mon', 'd.mon'], ['tue', 'd.tue'], ['wed', 'd.wed'],
   ['thu', 'd.thu'], ['fri', 'd.fri'], ['sat', 'd.sat'],
 ];
-// Horario de RESPALDO. La parrilla de verdad la sirve /api/schedule leyendo el sistema
-// de reservas del box; esto es lo que se prerenderiza (Google y el primer pintado) y lo
-// que se usa si el proveedor falla o tarda.
+// HORARIOS — dos salas, escritos a mano (2026-09-03).
 //
-// Generado desde la tabla que el box publica bajo su marca actual ("Anboto SC"), la que
-// incluye las clases del gimnasio Alluitz. Cuando en una franja coinciden varias clases
-// guiadas se muestran todas separadas por " · "; el entrenamiento libre (Open Box,
-// Gimnasio + Open) solo aparece en las horas que no tienen ninguna clase guiada.
+// Los mando Xabi en dos carteles, uno por sala. Es un horario PLANO a proposito: en octubre,
+// al migrar a AimHarder, pasara a venir de `GET /calendar/:fecha`, que ademas devuelve el
+// aforo. Hasta entonces, esto es la fuente de verdad.
 //
-// No se edita a mano: se regenera. Provisional hasta que Xabi mande el definitivo.
-export const SCHED = {
-  mon: [['06:30','WOD · Funcional'],['07:30','Oinarriak · Funcional'],['08:00','Gimnasio + Open'],['09:30','Gimnasio + Open'],['10:30','WOD'],['11:00','Gimnasio + Open'],['12:30','WOD'],['14:00','Gimnasio + Open'],['14:30','WOD'],['15:30','Gimnasio + Open'],['17:00','Gimnasio + Open'],['17:15','WOD · Total Strength'],['18:15','WOD · Funcional'],['18:30','Gimnasio + Open'],['19:15','WOD'],['20:00','Gimnasio + Open'],['20:15','Hyrox']],
-  tue: [['06:30','WOD · Funcional'],['07:30','WOD · Funcional'],['08:00','Gimnasio + Open'],['09:30','Gimnasio + Open'],['10:30','Funcional'],['11:00','Gimnasio + Open'],['12:30','WOD'],['14:00','Gimnasio + Open'],['14:30','WOD'],['15:30','Gimnasio + Open'],['17:00','Gimnasio + Open'],['17:15','WOD · Tonificación'],['18:15','WOD · Funcional'],['18:30','Gimnasio + Open'],['19:15','Halterofilia'],['20:00','Gimnasio + Open'],['20:15','Oinarriak']],
-  wed: [['06:30','WOD · Funcional'],['07:30','Funcional'],['08:00','Gimnasio + Open'],['09:30','Gimnasio + Open'],['10:30','WOD'],['11:00','Gimnasio + Open'],['12:30','Oinarriak'],['14:00','Gimnasio + Open'],['14:30','WOD'],['15:30','Gimnasio + Open'],['17:00','Gimnasio + Open'],['17:15','Endurance · Total Strength'],['18:15','WOD · Funcional'],['18:30','Gimnasio + Open'],['19:15','WOD'],['20:00','Gimnasio + Open'],['20:15','WOD']],
-  thu: [['06:30','WOD · Funcional'],['07:30','WOD · Hyrox'],['08:00','Gimnasio + Open'],['09:30','Gimnasio + Open'],['10:30','Total Strength'],['11:00','Gimnasio + Open'],['12:30','WOD'],['14:00','Gimnasio + Open'],['14:30','WOD'],['15:30','Gimnasio + Open'],['17:00','Gimnasio + Open'],['17:15','WOD · Movilidad + Core'],['18:15','Total Strength · Hyrox'],['18:30','Gimnasio + Open'],['19:15','WOD'],['20:00','Gimnasio + Open'],['20:15','Gymnastics']],
-  fri: [['06:30','WOD · Funcional'],['07:30','WOD · Funcional'],['08:00','Gimnasio + Open'],['09:30','Gimnasio + Open'],['10:30','WOD'],['11:00','Gimnasio + Open'],['12:30','WOD'],['14:00','Gimnasio + Open'],['14:30','WOD'],['15:30','Gimnasio + Open'],['17:00','Gimnasio + Open'],['17:15','WOD · Tonificación'],['18:15','WOD · Funcional'],['18:30','Gimnasio + Open'],['19:15','Oinarriak'],['20:00','Gimnasio + Open']],
-  sat: [['09:00','Team WOD'],['10:00','Team WOD'],['10:30','Gimnasio + Open'],['11:00','Team WOD'],['12:00','Gimnasio + Open']],
+// OJO: la llamada a /api/schedule esta DESACTIVADA en Horarios.jsx. Si se reactiva sin mas,
+// pisara esta tabla con lo que tenga WodBuster, que es el horario VIEJO. Ver el comentario
+// de ese fichero antes de tocarlo.
+//
+// Los nombres van en el vocabulario de la web, no en el del cartel, para que la seccion de
+// clases y la recomendacion por objetivo sigan casando (ver shared/clases.json):
+//   Iniciacion -> Oinarriak · Haltero -> Halterofilia · Hycross -> Hyrox
+//   Strength -> Total Strength · Mobilidad+Core -> Movilidad + Core
+export const SALAS = [
+  { id: 'anboto',  k: 'sala.anboto',  dk: 'sala.anboto.d',  nk: 'sala.anboto.n' },
+  { id: 'alluitz', k: 'sala.alluitz', dk: 'sala.alluitz.d', nk: 'sala.alluitz.n' },
+];
+
+// Sala Anboto — cross training, halterofilia, iniciacion y endurance.
+export const SCHED_ANBOTO = {
+  mon: [['06:15','WOD'],['07:15','WOD'],['10:30','WOD'],['12:30','WOD'],['14:30','WOD'],['17:15','Hyrox'],['18:15','WOD'],['19:15','WOD'],['20:15','WOD']],
+  tue: [['06:15','WOD'],['07:15','Oinarriak'],['10:30','WOD'],['12:30','WOD'],['14:30','WOD'],['17:15','WOD'],['18:15','WOD'],['19:15','Halterofilia'],['20:15','Oinarriak']],
+  wed: [['06:15','WOD'],['07:15','WOD'],['10:30','WOD'],['12:30','Oinarriak'],['14:30','WOD'],['17:15','Endurance'],['18:15','WOD'],['19:15','WOD'],['20:15','WOD']],
+  thu: [['06:15','WOD'],['07:15','WOD'],['10:30','Total Strength'],['12:30','WOD'],['14:30','WOD'],['17:15','WOD'],['18:15','Total Strength'],['19:15','WOD'],['20:15','Gymnastics']],
+  fri: [['06:15','WOD'],['07:15','WOD'],['10:30','WOD'],['12:30','WOD'],['14:30','WOD'],['17:15','WOD'],['18:15','WOD'],['19:15','Oinarriak']],
+  sat: [['09:00','Team WOD'],['10:00','Team WOD'],['11:00','Team WOD']],
 };
+
+// Sala Alluitz — salud, funcional, tonificacion y gimnasio libre.
+// Martes y jueves solo tienen tarde; el sabado no tiene clases guiadas, pero la sala abre.
+export const SCHED_ALLUITZ = {
+  mon: [['06:30','Funcional'],['07:30','Funcional'],['10:15','Funcional'],['17:30','Total Strength'],['18:30','Funcional']],
+  tue: [['17:30','Funcional'],['18:30','Hyrox']],
+  wed: [['06:30','Tonificación'],['07:30','Funcional'],['10:15','Hyrox'],['17:30','Total Strength'],['18:30','Funcional']],
+  thu: [['17:30','Funcional'],['18:30','Movilidad + Core']],
+  fri: [['06:30','Funcional'],['07:30','Hyrox'],['10:15','Funcional'],['17:30','Tonificación'],['18:30','Funcional']],
+  sat: [],
+};
+
+export const SCHED_POR_SALA = { anboto: SCHED_ANBOTO, alluitz: SCHED_ALLUITZ };
+
 // getDay(): 0=Dom..6=Sáb -> clave del día (Dom cae a lun)
 export const TODAY_KEYS = ['mon','mon','tue','wed','thu','fri','sat'];
 

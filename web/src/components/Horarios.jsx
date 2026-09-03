@@ -1,49 +1,32 @@
 import { useState, useEffect } from 'react';
 import { useLang, T } from '../i18n/LangContext.jsx';
-import { DAYS, SCHED, TODAY_KEYS, WODBUSTER_URL } from '../data/site.js';
+import { DAYS, SALAS, SCHED_POR_SALA, TODAY_KEYS, WODBUSTER_URL } from '../data/site.js';
 
-// Horario interactivo.
+// Horario interactivo: primero se elige SALA y luego el día.
 //
-// La parrilla SE PIDE al backend (/api/schedule), que la lee del sistema de reservas del
-// box: así un cambio de clase se refleja en la web sin tocar código. Pero SCHED (estático)
-// no desaparece, es la red de seguridad, y cumple tres papeles:
-//   1. Es lo que se prerenderiza, así que Google y el primer pintado ven el horario
-//      completo sin esperar a ninguna petición.
-//   2. Si el proveedor falla, tarda o devuelve algo vacío, la web sigue mostrando un
-//      horario razonable en vez de un hueco en blanco.
-//   3. Queda como referencia para saber cuándo el estático se ha quedado viejo.
+// El box son dos espacios con programación distinta —Sala Anboto (cross training) y Sala
+// Alluitz (salud y funcional)— y hasta ahora se mezclaban en una sola parrilla, que era
+// justo lo que hacía difícil entender qué se puede hacer y dónde.
 //
-// Solo se sustituye si la respuesta trae días con franjas: media respuesta sería peor
-// que el respaldo.
+// LA PARRILLA ES ESTÁTICA A PROPÓSITO (2026-09-03). Antes se pedía a `/api/schedule`, que
+// la leía del sistema de reservas. Esa llamada está QUITADA, no comentada por descuido:
+// Xabi mandó el horario nuevo en dos carteles y WodBuster todavía tiene el viejo, así que
+// reactivarla ahora sobrescribiría el horario bueno con el caducado.
+//
+// **Cuando se migre a AimHarder (octubre), aquí vuelve la carga automática**, pero contra
+// `GET /calendar/:fecha`, que da nombre, hora y aforo de una sola llamada. El endpoint
+// `/api/schedule` sigue existiendo y funcionando; simplemente no se consume desde aquí.
 export default function Horarios() {
   const { t } = useLang();
+  const [sala, setSala] = useState('anboto');
   const [day, setDay] = useState('mon');
-  const [sched, setSched] = useState(SCHED);
 
   // Default estable 'mon' para casar el prerender; el día de hoy se elige tras montar
   // (evita desajuste de hidratación por zona horaria).
   useEffect(() => { setDay(TODAY_KEYS[new Date().getDay()]); }, []);
 
-  useEffect(() => {
-    let vivo = true;
-    (async () => {
-      try {
-        const res = await fetch('/api/schedule');
-        if (!res.ok) return;                    // 503 -> nos quedamos con SCHED
-        const data = await res.json();
-        const s = data && data.schedule;
-        if (!vivo || !s) return;
-        const dias = Object.keys(s).filter((d) => Array.isArray(s[d]) && s[d].length);
-        if (!dias.length) return;               // respuesta vacía -> respaldo
-        setSched(s);
-      } catch {
-        // Sin red o backend caído: SCHED ya está puesto, no hay nada que hacer.
-      }
-    })();
-    return () => { vivo = false; };
-  }, []);
-
-  const filas = sched[day] || SCHED[day] || [];
+  const salaActual = SALAS.find((s) => s.id === sala) || SALAS[0];
+  const filas = SCHED_POR_SALA[sala]?.[day] || [];
 
   return (
     <section className="pad" id="horarios">
@@ -51,21 +34,39 @@ export default function Horarios() {
         <T as="span" className="sec-index rev-up" k="h.idx" />
         <T as="h2" className="title rev-up" k="h.title" />
         <T as="p" className="lead rev-up" k="h.lead" />
+
+        {/* Selector de sala. Va antes que los días porque la sala cambia toda la parrilla. */}
+        <div className="tt-salas rev-up">
+          {SALAS.map((s) => (
+            <button key={s.id} className={`tt-sala ${sala === s.id ? 'on' : ''}`.trim()}
+              onClick={() => setSala(s.id)} aria-pressed={sala === s.id}>
+              <span className="tt-sala-n">{t(s.k)}</span>
+              <span className="tt-sala-d">{t(s.dk)}</span>
+            </button>
+          ))}
+        </div>
+
         <div className="tt-days rev-up" id="ttDays">
           {DAYS.map(([key, labelKey]) => (
             <button key={key} className={`tt-day ${day === key ? 'on' : ''}`.trim()}
               data-d={key} onClick={() => setDay(key)}>{t(labelKey)}</button>
           ))}
         </div>
+
         <div className="tt-panel rev-up" id="ttPanel">
-          {filas.map(([time, cls], i) => (
-            <div className="tt-row" key={`${day}-${i}`}>
+          {filas.length ? filas.map(([time, cls], i) => (
+            <div className="tt-row" key={`${sala}-${day}-${i}`}>
               <span className="tm">{time}</span><span className="cl">{cls}</span>
             </div>
-          ))}
+          )) : (
+            // Pasa de verdad: el sábado la Sala Alluitz no tiene clases guiadas, pero abre.
+            <T as="p" className="tt-vacio" k="h.sinclases" />
+          )}
         </div>
+
+        {/* Cada sala tiene su propio régimen de acceso libre, y son muy distintos. */}
         <p className="tt-note rev-up">
-          <T as="span" k="h.note2" />{' '}
+          <T as="span" k={salaActual.nk} />{' '}
           <a href={WODBUSTER_URL} target="_blank" rel="noopener"><T as="span" k="h.book" /></a>
         </p>
       </div>

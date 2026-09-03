@@ -835,3 +835,19 @@ nav:not(.scrolled) .logo{text-shadow:none}
 .form-consent input{flex-shrink:0;width:18px;height:18px;margin-top:1px;accent-color:var(--brasa);cursor:pointer}
 .form-consent a{color:var(--cuero);text-decoration:underline;text-underline-offset:2px}
 .form-consent a:hover{color:var(--brasa)}
+
+/* Selector de SALA del horario. Va por delante de los dias porque cambia toda la parrilla:
+   el box son dos espacios con programacion distinta y antes se mezclaban en una sola tabla. */
+.tt-salas{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+.tt-sala{flex:1 1 260px;display:flex;flex-direction:column;gap:3px;text-align:left;
+  padding:15px 20px;border:1.5px solid var(--hair);border-radius:16px;background:transparent;
+  cursor:pointer;transition:border-color .2s,background .2s}
+.tt-sala:hover{border-color:var(--brasa)}
+.tt-sala.on{border-color:var(--brasa);background:rgba(169,120,79,.12)}
+.tt-sala-n{font-family:var(--ff-d);font-weight:900;font-size:1.05rem;letter-spacing:-.01em;color:var(--caliza)}
+.tt-sala.on .tt-sala-n{color:var(--brasa)}
+.tt-sala-d{font-family:var(--ff-m);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;color:var(--txt-3);line-height:1.4}
+/* El sabado la Sala Alluitz no tiene clases guiadas, pero abre: hay que decirlo, no dejar
+   el panel en blanco como si fuera un fallo de carga. */
+.tt-vacio{grid-column:1 / -1;padding:26px 20px;text-align:center;color:var(--txt-3);
+  border:1px dashed var(--hair);border-radius:12px}
