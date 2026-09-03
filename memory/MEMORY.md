@@ -34,7 +34,7 @@
 | **SQL pendiente** | ⚠️ **Ejecutar el final de `schema.sql` en Supabase** | RLS en las 7 tablas + columnas `consentimiento_at` y `politica_version`. Mientras no se ejecute, el alta funciona igual (hay reintento) pero **NO se guarda la prueba del consentimiento**, y el log lo grita en cada alta |
 | **Próxima acción** | 🔴 **ROTAR `SUPABASE_SERVICE_KEY`** (18 dias expuesta, acceso total a datos personales) · 🔴 **ejecutar el SQL del final de `schema.sql`** en Supabase · pedir a Xabi los **TOKENS de AimHarder** (ruta critica de octubre) y sus **datos fiscales** (razon social y NIF) para las paginas legales, que hoy los muestran como hueco ROJO · las **horas reales de apertura L–S** · rotar tambien `RESEND_API_KEY` y `ANTHROPIC_API_KEY` |
 
-### ⚠️ Diez trampas que ya nos costaron horas — no repetir
+### ⚠️ Doce trampas que ya nos costaron horas — no repetir
 
 1. **Nameservers de Vercel sin zona.** Poner `ns*.vercel-dns-*.com` en el registrador NO funciona
    si Vercel no gestiona el DNS: responden REFUSED → SERVFAIL global y no se arregla esperando.
@@ -94,6 +94,26 @@
    escribirlos (aqui bastaba con `delete process.env.NOTIFY_EMAIL` para no enviar el aviso).
    Nota: `PORT=3999 node src/index.js` **no funciona** en este repo — dotenv usa
    `override:true` y el `PORT` del `.env` pisa la variable.
+
+11. **NO borres los bundles anteriores de `public/assets/` al desplegar.** Costo romper la
+   web en produccion el 03-09. Los ficheros llevan hash en el nombre **para poder convivir**:
+   quien tenga cacheado el HTML del despliegue anterior pide LOS ASSETS DE ESE DESPLIEGUE. Si
+   se han borrado, recibe **404 en el CSS y en el JS**. Y con el JS caido, el reveal
+   (`.rev-up` -> `.in`) no corre y **las secciones se quedan invisibles al hacer scroll** —
+   que es exactamente el sintoma que reporto Mikel ("no se ve con fluidez al hacer scroll").
+   Se agravo porque en una sola sesion hubo ~8 despliegues seguidos, cada uno borrando los
+   del anterior.
+   **Regla: conservar al menos las DOS generaciones anteriores** (~300 KB). Excepcion unica:
+   que el bundle viejo contenga algo que no deba servirse (datos personales, telefono
+   retirado); comprobarlo con `grep`, no de memoria.
+   Recuperar uno: `git show <commit>:public/assets/<f> > public/assets/<f>`.
+
+12. **Para medir el reveal-on-scroll NO sirve `window.scrollTo` a saltos.** Da 0 elementos
+   revelados y parece roto: al saltar de una posicion a otra, los elementos intermedios no
+   llegan a estar en pantalla en ningun instante y el IntersectionObserver nunca dispara.
+   El 03-09 esto llevo a dar por ROTO algo que funcionaba perfectamente.
+   **Comprobarlo con scroll de verdad** (`browser_press_key PageDown`) y mirando solo los
+   que estan EN PANTALLA en ese momento.
 
 8. **Todo lo que hay en `public/` SE SIRVE, aunque lo llames "archivado" o "legacy".**
    Express sirve la carpeta entera y Vercel tambien. Descubierto el 01-09-2026 al cambiar el
