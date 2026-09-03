@@ -99,6 +99,27 @@ unos horarios, mira `realData`.**
 tres: "Anboto", "Abuztua" y "Anboto SC"). No son equivalentes y cada una vale para algo
 distinto — ver la trampa nº7 en `memory/MEMORY.md` antes de tocar el scraper.
 
+## NO borres los bundles anteriores de `public/assets/` al desplegar
+
+Aprendido a base de romperlo el 2026-09-03. Los ficheros de `public/assets/` llevan un hash
+en el nombre **precisamente para poder convivir**: mientras alguien tenga en el navegador (o
+en un nodo de la CDN) el HTML del despliegue anterior, ese HTML pide los assets de ESE
+despliegue. Si se han borrado, esa persona recibe **404 en el CSS y en el JS**, y la web se le
+queda sin estilos y sin JavaScript — y como todo lo que aparece al hacer scroll depende del
+JS, media pagina se le queda invisible.
+
+Paso de verdad: durante una sesion con varios despliegues seguidos se fueron borrando los
+bundles "huerfanos" en cada uno, y Chrome servia 404 a quien tuviera el HTML anterior.
+
+**Regla: conservar al menos las DOS generaciones anteriores.** Pesan poco (~300 KB) y son la
+red que evita romper a quien esta navegando justo en ese momento.
+
+**Excepcion, y solo esa:** si un bundle viejo contiene algo que NO debe seguir sirviendose
+—datos personales, un telefono retirado, una cifra falsa— entonces si se borra de inmediato,
+asumiendo el riesgo. Comprobarlo con un `grep` antes, no de memoria.
+
+Para recuperar uno borrado: `git show <commit>:public/assets/<fichero> > public/assets/<fichero>`.
+
 ## Cumplimiento legal — checklist para CUALQUIER web que recoja datos
 
 Aplicable a este proyecto y a los siguientes. Se añadió el 2026-09-02 después de descubrir
