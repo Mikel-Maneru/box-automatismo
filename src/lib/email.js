@@ -37,24 +37,36 @@ async function createSignup({
   if (!box) throw new Error('Box no encontrado');
 
   // Save to Supabase
-  const { data, error } = await supabase
-    .from('signups')
-    .insert({
-      box_id: box.id,
-      nombre,
-      telefono: telefono || null,
-      email: email || null,
-      nivel: nivel || null,
-      objetivo: objetivo || null,
-      como_conocio: comoConocio || null,
-      origen: origen || 'formulario',
-      // Prueba del consentimiento. Van a null cuando el alta no viene del formulario (por
-      // ejemplo, del chat), para no fingir un consentimiento que no se recogio asi.
-      consentimiento_at: consentimientoAt || null,
-      politica_version: politicaVersion || null,
-    })
-    .select()
-    .single();
+  const fila = {
+    box_id: box.id,
+    nombre,
+    telefono: telefono || null,
+    email: email || null,
+    nivel: nivel || null,
+    objetivo: objetivo || null,
+    como_conocio: comoConocio || null,
+    origen: origen || 'formulario',
+    // Prueba del consentimiento. Van a null cuando el alta no viene del formulario (por
+    // ejemplo, del chat), para no fingir un consentimiento que no se recogio asi.
+    consentimiento_at: consentimientoAt || null,
+    politica_version: politicaVersion || null,
+  };
+
+  let { data, error } = await supabase.from('signups').insert(fila).select().single();
+
+  // 42703 = la columna no existe. Pasa si el ALTER TABLE de schema.sql todavia no se ha
+  // ejecutado en Supabase. Se reintenta SIN las columnas del consentimiento para no perder
+  // el lead por una migracion pendiente: la persona ya acepto (sin aceptar no se llega aqui,
+  // lo corta signup.js), lo unico que se pierde es la PRUEBA guardada, y eso se avisa a
+  // gritos en el log en vez de dejarlo pasar en silencio.
+  if (error && (error.code === '42703' || /consentimiento_at|politica_version/.test(error.message || ''))) {
+    console.error('>>> FALTA EJECUTAR EL ALTER TABLE de schema.sql en Supabase: no se puede '
+      + 'guardar la prueba del consentimiento (consentimiento_at / politica_version). '
+      + 'El alta SI se guarda, pero sin ese respaldo. Ejecutalo cuanto antes.');
+    delete fila.consentimiento_at;
+    delete fila.politica_version;
+    ({ data, error } = await supabase.from('signups').insert(fila).select().single());
+  }
 
   if (error) throw error;
 

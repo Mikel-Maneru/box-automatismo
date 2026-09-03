@@ -99,6 +99,37 @@ unos horarios, mira `realData`.**
 tres: "Anboto", "Abuztua" y "Anboto SC"). No son equivalentes y cada una vale para algo
 distinto — ver la trampa nº7 en `memory/MEMORY.md` antes de tocar el scraper.
 
+## Cumplimiento legal — checklist para CUALQUIER web que recoja datos
+
+Aplicable a este proyecto y a los siguientes. Se añadió el 2026-09-02 después de descubrir
+que esta web llevaba meses recogiendo nombre, teléfono y email de personas reales sin nada de
+esto. **Se monta desde el primer día, no al final: rehacerlo después cuesta el triple.**
+
+1. **Aviso legal** (art. 10 LSSI). Obligatorio para una web de empresa en España. Datos del
+   titular: nombre o razón social, NIF, domicilio y contacto.
+2. **Política de privacidad** (RGPD art. 13): quién es el responsable, qué se recoge, para
+   qué, base jurídica, **quién más lo ve** (todos los proveedores, uno a uno), plazo de
+   conservación, derechos y reclamación ante la AEPD.
+3. **Consentimiento en TODOS los puntos de recogida.** Aquí eran dos y el chat se pasó por
+   alto en la primera revisión. Casilla **sin marcar de fábrica**, y validada **en el
+   servidor**: la comprobación de cliente se salta con un `curl`.
+4. **Guardar la prueba del consentimiento** (art. 7.1): momento (marca de tiempo del
+   **servidor**) y **versión del texto** aceptado. Sin eso no se puede demostrar.
+5. **Cero terceros que pongan cookies.** Autoalojar tipografías y no incrustar mapas ni
+   vídeos. Sale más barato que mantener un banner, carga más rápido y evita el banner
+   entero. Comprobarlo mirando las peticiones de red, no de memoria.
+6. **Nunca registrar datos personales en los logs.** Ni `console.log(req.body)`. Los logs se
+   guardan, se comparten y nadie declara su plazo de conservación.
+7. **Escapar todo lo que escriba el usuario** antes de meterlo en HTML o en un correo.
+   Validar la longitud no es validar el contenido.
+8. **RLS activo desde el principio** en todas las tablas, aunque solo entre el backend con
+   la service key. Cuesta una línea por tabla y es la segunda barrera si la clave se filtra.
+9. **Procedimiento de borrado listo** antes de que alguien lo pida (`scripts/datos-personales.js`).
+10. **Enlaces legales en el pie**, presentes en todas las páginas, y en el `sitemap.xml`.
+
+**No soy abogado:** estos textos son redacciones estándar y deberían revisarse antes de
+darlos por definitivos.
+
 ## Key technical constraints
 
 - `dotenv` MUST use `{ override: true }` — system has ANTHROPIC_BASE_URL/AUTH_TOKEN from Ollama proxy that would shadow .env values

@@ -31,3 +31,21 @@
 - **Brand names**: "Anboto SC" is official name; "Anboto Fitness" kept in domain/slug for backwards compat
 - **Architecture**: Widget is token-based (data-token attribute); backend validates against `boxes` table in Supabase
 - **DNS**: Changes can take 24-48h to propagate; patience required
+## Cumplimiento legal en webs que recogen datos (desde 2026-09-02)
+
+Mikel pidio expresamente que esto se tenga en cuenta **en futuros proyectos**, no solo en
+Anboto. La checklist completa vive en `CLAUDE.md` (seccion "Cumplimiento legal"), porque ahi
+se lee al empezar cada sesion. Resumen de lo que no se puede olvidar:
+
+- Aviso legal, politica de privacidad y politica de cookies **desde el primer dia**.
+- Consentimiento en **todos** los puntos de recogida — en Anboto eran dos y el chat se paso
+  por alto en la primera pasada — sin marcar de fabrica y **validado en servidor**.
+- Guardar la prueba del consentimiento: fecha del servidor + version del texto.
+- **Evitar terceros** (tipografias autoalojadas, nada de mapas incrustados) en vez de montar
+  un banner de cookies: menos trabajo, mejor experiencia y mas rapido.
+- Nunca `console.log(req.body)` donde haya datos personales.
+- RLS activo desde el principio aunque solo entre el backend.
+
+**Como se comprueba, que es lo que de verdad convence:** cargar la web y mirar las peticiones
+de red. Si no sale ni una a un tercero y no hay cookies, no hace falta banner y se puede
+demostrar.
