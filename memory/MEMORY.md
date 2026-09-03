@@ -29,9 +29,12 @@
 | **API de AimHarder** | ✅ **OFICIAL y documentada** (02-09-2026) | `api.aimharder.com`, Bearer + refresh. **`GET /calendar/:fecha`** da nombre, hora, aforo y sala; **`POST /classes/booking/guest`** reserva A NOMBRE DEL INVITADO — eso elimina de raiz el problema de la cuenta personal y deja obsoleto el plan de traspaso a su pagina de bonos. Trampas: **solo HTTP/1.1** (con h2 da 403) y el **refresh token ROTA** |
 | **Cifras de la landing** | ✅ Socios retirado (02-09-2026, `b3f2b45`) | Decia "46+ miembros activos" y 46 eran las RESEÑAS de Google. Quedan 8+ años · 6 disciplinas · 4,9★. **Ojo: "6 disciplinas" se queda corta** — el horario real tiene 12 tipos de clase |
 | **Tipos de clase** | 🔶 **6 de 12, a proposito hasta octubre** | La seccion "Una clase para cada objetivo" es una lista a mano; faltan Funcional, Tonificacion, Movilidad + Core, Team WOD, Gymnastics y Gimnasio + Open. Mikel decidio **NO parchearlo a mano**: se automatiza al migrar. **No lo arregles a mano.** El matiz de diseño (descripcion bilingue + objetivo por clase, que la API no da) esta en `decisions.md` |
-| **Próxima acción** | ⚠️ **RUTA CRITICA: que Xabi genere los TOKENS de AimHarder** (Configuracion > API, necesita ser admin) — es lo unico que bloquea empezar, y la migracion es en octubre · pedirle tambien las **horas reales de apertura de L–S**, las **fotos de los 4 coaches** y que confirme si **HYCROSS = Hyrox** · que cambie el telefono en **Google / WodBuster / Instagram** · **NO pedirle que sincronice WodBuster** (se migra en octubre, seria trabajo tirado) · `boxes.name` sigue con la marca vieja "Anboto Fitness" y el chatbot se presenta asi · rotar `RESEND_API_KEY` **y** `ANTHROPIC_API_KEY` (ambas se pegaron en un chat) |
+| **Legal / RGPD** | ✅ **EN PRODUCCION (02-09-2026)** | `/privacidad`, `/cookies`, `/aviso-legal` + casilla de consentimiento (sin marcar, validada en SERVIDOR) + aviso en el chat. Comprobado en produccion: **0 peticiones a terceros, 0 cookies** |
+| **Datos expuestos** | 🔶 **2 de 3 corregidos** | ✅ Fuera el `console.log(req.body)` que metia nombre/telefono/email en los logs · ✅ escapado de HTML en 7 sitios · ⚠️ **la SUPABASE_SERVICE_KEY SIGUE SIN ROTAR** desde el 18-08: es el punto mas grave, da acceso total a datos de personas reales y no caduca hasta 2036 |
+| **SQL pendiente** | ⚠️ **Ejecutar el final de `schema.sql` en Supabase** | RLS en las 7 tablas + columnas `consentimiento_at` y `politica_version`. Mientras no se ejecute, el alta funciona igual (hay reintento) pero **NO se guarda la prueba del consentimiento**, y el log lo grita en cada alta |
+| **Próxima acción** | 🔴 **ROTAR `SUPABASE_SERVICE_KEY`** (18 dias expuesta, acceso total a datos personales) · 🔴 **ejecutar el SQL del final de `schema.sql`** en Supabase · pedir a Xabi los **TOKENS de AimHarder** (ruta critica de octubre) y sus **datos fiscales** (razon social y NIF) para las paginas legales, que hoy los muestran como hueco ROJO · las **horas reales de apertura L–S** · rotar tambien `RESEND_API_KEY` y `ANTHROPIC_API_KEY` |
 
-### ⚠️ Nueve trampas que ya nos costaron horas — no repetir
+### ⚠️ Diez trampas que ya nos costaron horas — no repetir
 
 1. **Nameservers de Vercel sin zona.** Poner `ns*.vercel-dns-*.com` en el registrador NO funciona
    si Vercel no gestiona el DNS: responden REFUSED → SERVFAIL global y no se arregla esperando.
@@ -77,6 +80,20 @@
    Como se averiguo cual estaba vigente: **contrastando contra la disponibilidad real de
    mañana** por la API. La tabla nueva decia 10:30 Funcional y la API devolvia 10:15 WOD.
    No te fies del titulo ni del orden: **comprueba contra lo que se puede reservar.**
+
+10. **`pkill` NO mata procesos de Node en Windows desde Git Bash.** El 02-09 costo cuatro
+   altas de prueba en la base de datos REAL y cuatro correos al box. Se creia estar probando
+   codigo nuevo y respondia el servidor viejo, que seguia vivo: el nuevo moria con
+   EADDRINUSE **en segundo plano y sin que se viera**, y como el puerto respondia 200, la
+   comprobacion de "ya ha arrancado" daba por bueno el proceso equivocado.
+   **Como matarlo de verdad:** `Get-CimInstance Win32_Process -Filter "Name='node.exe'"`
+   filtrando por `CommandLine` y `Stop-Process -Force`, desde PowerShell.
+   **Y la leccion de fondo:** antes de probar contra la base de datos de produccion,
+   confirmar que el servidor que responde es el que acabas de arrancar — que el puerto
+   conteste no lo demuestra. Mejor aun: si la prueba escribe datos, buscar la forma de no
+   escribirlos (aqui bastaba con `delete process.env.NOTIFY_EMAIL` para no enviar el aviso).
+   Nota: `PORT=3999 node src/index.js` **no funciona** en este repo — dotenv usa
+   `override:true` y el `PORT` del `.env` pisa la variable.
 
 8. **Todo lo que hay en `public/` SE SIRVE, aunque lo llames "archivado" o "legacy".**
    Express sirve la carpeta entera y Vercel tambien. Descubierto el 01-09-2026 al cambiar el

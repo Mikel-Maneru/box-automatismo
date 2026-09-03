@@ -646,3 +646,46 @@ que faltan a la seccion pidiendole a Xabi una frase y un objetivo por clase, y M
 esperar al cambio a AimHarder. **Consecuencia asumida:** hasta octubre la seccion "Una clase
 para cada objetivo" seguira mostrando 6 de las 12 clases que el box da de verdad. No es un
 descuido: si un futuro yo lo ve, que NO lo arregle a mano — se resuelve al automatizarlo.
+
+## 2026-09-02: Cumplimiento legal y proteccion de datos
+
+Mikel detecto que faltaba todo lo legal. La auditoria encontro ademas exposicion real de
+datos, no solo paginas ausentes. Desplegado y verificado en produccion.
+
+**Lo que se arreglo, por orden de gravedad:**
+1. `/api/signup` volcaba **el cuerpo entero a los logs** — nombre, telefono y email de cada
+   persona, en los logs de Vercel, sin plazo ni aviso. Fuera.
+2. El nombre se interpolaba **sin escapar** en 7 sitios (paginas de `webhook.js` y correos).
+   Nuevo `src/lib/html.js`. El ASUNTO del correo se deja sin escapar a proposito: es texto
+   plano y escaparlo mandaria `&#39;` a la bandeja del box.
+3. **RLS** en las 7 tablas, sin politicas (deniega todo). No rompe nada: la app entra con la
+   service key, que lo ignora, y el frontend nunca habla con Supabase — comprobado, no hay
+   ninguna clave suya en el bundle.
+
+**Decision de fondo sobre cookies: quitar los terceros en vez de poner un banner.** Las
+tipografias se autoalojan (Archivo en version variable, sin cursivas porque el CSS no usa
+ninguna) y el mapa incrustado se sustituye por una tarjeta con boton. Resultado medido en
+produccion: **13 peticiones, todas propias, 0 cookies**. No es que se omita el banner, es que
+deja de hacer falta — y ademas la web carga antes y deja de enviar la IP de cada visita a
+Google. Si algun dia se vuelve a incrustar algo de fuera, vuelve el banner.
+
+**Consentimiento en los DOS puntos de recogida.** El chat se paso por alto en la primera
+pasada y tambien pide nombre y telefono. Casilla sin marcar de fabrica, **validada en el
+servidor** con comparacion estricta (`!== true`, asi la cadena `"true"` no cuela), y prueba
+guardada con marca de tiempo del SERVIDOR y version del texto desde `shared/legal.json`.
+
+**Textos en castellano primero** (decision de Mikel): el euskera se añade sobre el texto ya
+revisado, para no traducir dos veces. Los datos fiscales que faltan de Xabi se pintan como un
+hueco ROJO en la propia pagina, para que no se publiquen a medias sin que nadie lo note.
+
+**Un fallo propio que casi llega a produccion:** las columnas del consentimiento estan en
+`schema.sql` pero **aun no existen en Supabase**, asi que el insert habria fallado y se
+habrian perdido TODAS las altas. Ahora hay reintento sin esas columnas si la BD las rechaza
+(codigo 42703), con un aviso a gritos en el log. Se probo de verdad antes de desplegar.
+
+**Pendiente y que NO puede hacer el codigo:** rotar la `SUPABASE_SERVICE_KEY` (18 dias
+expuesta, acceso total a datos de personas reales, no caduca hasta 2036) y ejecutar el SQL
+del final de `schema.sql`.
+
+**Para futuros proyectos:** checklist en `CLAUDE.md` y en `memory/preferences.md`. Lo
+importante no es la lista, es cuando se aplica: desde el primer dia.
