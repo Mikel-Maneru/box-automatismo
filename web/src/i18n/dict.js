@@ -84,6 +84,7 @@ export const I18N = {
   'ig.idx':['08 — Instagram','08 — Instagram'],'ig.title':['Buen rollo<br><em>en el feed</em>','Giro ona<br><em>feed-ean</em>'],
   'ig.lead':['Entrenamientos, comunidad y momentos reales del box.','Entrenamenduak, komunitatea eta boxeko benetako uneak.'],'ig.cta':['Ver @anbotofitness','Ikusi @anbotofitness'],
   'foot.dir':['Cómo llegar','Nola iritsi'],
+  'map.sub':['A un paso de la salida de la A8 de Durango, con aparcamiento fácil.','Durangoko A8 irteeratik gertu, aparkatzeko erraztasunarekin.'],
   'form.sending':['Enviando...','Bidaltzen...'],'form.ok':['¡Perfecto! En breve nos ponemos en contacto contigo. Eskerrik asko.','Primeran! Laster jarriko gara zurekin harremanetan. Eskerrik asko.'],'form.err':['Algo ha fallado, escríbenos por WhatsApp','Zerbait gaizki joan da, idatzi WhatsApp bidez'],
   'menu.word':['Menú','Menua'],
   'pb.eyebrow':['Comunidad','Komunitatea'],

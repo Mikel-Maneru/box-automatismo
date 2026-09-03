@@ -297,11 +297,20 @@ export function MapEmbed() {
   return (
     <section className="pad" style={{ paddingBottom: 0 }}>
       <div className="wrap">
-        <div className="map-box">
-          <iframe
-            src="https://maps.google.com/maps?q=Anboto+Pol%C3%ADgono+Ertzilla+P4+Iurreta+Bizkaia&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-            title="Ubicación de Anboto SC en Iurreta" aria-label="Mapa con ubicación de Anboto SC en Iurreta"></iframe>
+        {/* Aqui habia un iframe de Google Maps. Se retiro el 2026-09-02: ponia cookies de
+            Google en el navegador de cada visita ANTES de que nadie aceptara nada, y era uno
+            de los dos motivos por los que la web habria necesitado banner. La tarjeta no
+            carga nada de fuera; quien quiera el mapa lo abre el mismo con el boton.
+            La ubicacion sigue en el JSON-LD (`geo` y `address` en web/index.html), asi que
+            Google la conoce igual de bien que antes. */}
+        <div className="map-box map-card">
+          <Pin />
+          <p className="map-addr">Polígono Ertzilla, P4<br />48215 Iurreta, Bizkaia</p>
+          <T as="p" className="map-sub" k="map.sub" />
+          <a className="btn btn-primary" href="https://maps.google.com/?q=Poligono+Ertzilla+P4+Iurreta+Bizkaia"
+             target="_blank" rel="noopener">
+            <T as="span" k="foot.dir" />
+          </a>
         </div>
       </div>
     </section>
