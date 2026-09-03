@@ -823,3 +823,15 @@ nav:not(.scrolled) .logo{text-shadow:none}
 @media(max-width:600px){
   .legal-tabla{display:block;overflow-x:auto;white-space:nowrap}
 }
+
+/* Casilla de consentimiento del formulario. Sin marcar de fabrica y obligatoria: el RGPD
+   pide un acto afirmativo. El acento en brasa la hace visible sin gritar. */
+/* OJO con el color: esta casilla vive DENTRO de .signup-card, que tiene fondo CLARO
+   (--caliza) aunque el resto de la pagina sea oscuro. Con los tokens del tema oscuro
+   (--txt-2) el texto quedaba practicamente invisible. Se usa --granito, que es el mismo
+   que las demas etiquetas de la tarjeta. */
+.form-consent{display:flex;align-items:flex-start;gap:11px;margin:6px 0 16px;cursor:pointer;
+  font-size:.85rem;line-height:1.5;color:var(--granito)}
+.form-consent input{flex-shrink:0;width:18px;height:18px;margin-top:1px;accent-color:var(--brasa);cursor:pointer}
+.form-consent a{color:var(--cuero);text-decoration:underline;text-underline-offset:2px}
+.form-consent a:hover{color:var(--brasa)}

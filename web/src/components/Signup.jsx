@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { useLang, T } from '../i18n/LangContext.jsx';
 import { Check } from './icons.jsx';
 import { OBJETIVOS, OBJETIVO_VALUES, CANALES } from '../data/site.js';
+import legal from '../../../shared/legal.json';
+
+const LEGAL_VERSION = legal.version;
 
 const PERKS = ['s.k1', 's.k2', 's.k3', 's.k4'];
 
@@ -11,9 +14,11 @@ export default function Signup() {
   const { t } = useLang();
   // `objetivo` guarda el id (salud, rendimiento…) para poder recomendar clases; al enviar
   // se traduce a su valor en castellano, que es lo que valida el backend.
+  // `consentimiento` arranca en false a proposito: el RGPD exige un acto afirmativo, asi que
+  // la casilla NO puede venir marcada de fabrica.
   const [form, setForm] = useState({
     nombre: '', telefono: '', email: '', nivel: 'Sin experiencia',
-    objetivo: '', comoConocio: '', website: '',
+    objetivo: '', comoConocio: '', website: '', consentimiento: false,
   });
   const recomendadas = OBJETIVOS.find((o) => o.id === form.objetivo)?.clases || [];
   const [submitting, setSubmitting] = useState(false);
@@ -25,6 +30,8 @@ export default function Signup() {
     e.preventDefault();
     const nombre = form.nombre.trim();
     if (!nombre) return;
+    // El backend lo vuelve a comprobar: esto es solo para no dar un viaje en balde.
+    if (!form.consentimiento) { setMsg({ type: 'error', text: t('s.consent.err') }); return; }
     setSubmitting(true);
     setMsg(null);
     try {
@@ -40,6 +47,10 @@ export default function Signup() {
           comoConocio: form.comoConocio,
           origen: 'formulario',
           website: form.website,
+          // Prueba del consentimiento (RGPD art. 7.1): que lo dio y con QUE version del
+          // texto. Si manana cambia la politica, esta alta sigue ligada a la que acepto.
+          consentimiento: true,
+          politicaVersion: LEGAL_VERSION,
         }),
       });
       const data = await res.json();
@@ -47,7 +58,7 @@ export default function Signup() {
         setMsg({ type: 'success', text: t('form.ok') });
         setForm({
           nombre: '', telefono: '', email: '', nivel: 'Sin experiencia',
-          objetivo: '', comoConocio: '', website: '',
+          objetivo: '', comoConocio: '', website: '', consentimiento: false,
         });
       } else {
         setMsg({ type: 'error', text: data.error || t('form.err') });
@@ -133,6 +144,17 @@ export default function Signup() {
               </div>
               <input type="text" name="website" style={{ display: 'none' }} tabIndex={-1}
                 autoComplete="off" value={form.website} onChange={set('website')} />
+              {/* Consentimiento. Sin marcar de fabrica y obligatorio: el RGPD pide un acto
+                  afirmativo, y una casilla premarcada no lo es. */}
+              <label className="form-consent">
+                <input type="checkbox" required checked={form.consentimiento}
+                  onChange={(e) => setForm((f) => ({ ...f, consentimiento: e.target.checked }))} />
+                <span>
+                  {t('s.consent')}{' '}
+                  <a href="/privacidad" target="_blank" rel="noopener">{t('s.consent.link')}</a>.
+                </span>
+              </label>
+
               <button type="submit" className="form-btn cta-shine" id="signupBtn" disabled={submitting}>
                 {submitting ? t('form.sending') : t('s.submit')}
               </button>

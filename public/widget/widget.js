@@ -41,6 +41,8 @@
     .box-chat-send{background:#A7693B;color:#F4EDE2;border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
     .box-chat-send:hover{background:#703D26}
     .box-chat-send:disabled{background:#D1C8C1;cursor:not-allowed}
+    .box-chat-legal{padding:0 16px 10px;background:#F4EDE2;font-size:11px;line-height:1.4;color:#777069;text-align:center}
+    .box-chat-legal a{color:#A7693B;text-decoration:underline}
     @media(prefers-reduced-motion:reduce){
       .box-chat-btn,.box-chat-panel{transition:none;animation:none}
       .box-chat-btn:hover{transform:none}
@@ -92,9 +94,20 @@
 
     inputArea.appendChild(input);
     inputArea.appendChild(sendBtn);
+
+    // Aviso de privacidad. El chat pide nombre y telefono para apuntar a una clase de
+    // prueba, asi que es un punto de recogida de datos personales y necesita informar antes
+    // de recogerlos (RGPD art. 13), igual que el formulario. Va fijo debajo del campo, no
+    // como mensaje, porque addMessage usa textContent y no admite enlaces.
+    const aviso = document.createElement('div');
+    aviso.className = 'box-chat-legal';
+    aviso.innerHTML = 'Lo que escribas se guarda para poder responderte. '
+      + '<a href="/privacidad" target="_blank" rel="noopener">Politica de privacidad</a>';
+
     panel.appendChild(header);
     panel.appendChild(messages);
     panel.appendChild(inputArea);
+    panel.appendChild(aviso);
     document.body.appendChild(panel);
 
     // Close

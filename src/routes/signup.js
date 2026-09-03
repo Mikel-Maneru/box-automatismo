@@ -1,5 +1,7 @@
 const { Router } = require('express');
 const { createSignup } = require('../lib/email');
+// Misma fuente que lee el formulario, para que la version guardada no pueda desincronizarse.
+const LEGAL_VERSION = require('../../shared/legal.json').version;
 
 const router = Router();
 
@@ -10,7 +12,10 @@ const VALID_CANALES = ['Instagram', 'Google', 'Un amigo', 'Pasaba por delante', 
 
 router.post('/signup', async (req, res) => {
   try {
-    const { nombre, telefono, email, nivel, objetivo, comoConocio, origen, website } = req.body;
+    const {
+      nombre, telefono, email, nivel, objetivo, comoConocio, origen, website,
+      consentimiento, politicaVersion,
+    } = req.body;
 
     // Honeypot: if filled, silently accept without saving
     if (website) return res.json({ ok: true, honeypot: true });
@@ -47,6 +52,14 @@ router.post('/signup', async (req, res) => {
       return res.status(400).json({ error: 'Canal no válido' });
     }
 
+    // Consentimiento OBLIGATORIO. Se comprueba aqui y no solo en el formulario porque la
+    // validacion de cliente se salta con un curl, y sin consentimiento no hay base juridica
+    // para guardar el dato: guardarlo igualmente seria la propia infraccion.
+    if (consentimiento !== true) {
+      console.log('Alta rechazada: sin consentimiento');
+      return res.status(400).json({ error: 'Falta aceptar la política de privacidad' });
+    }
+
     const signup = await createSignup({
       nombre: nombre.trim(),
       telefono: telefono || null,
@@ -54,7 +67,11 @@ router.post('/signup', async (req, res) => {
       nivel: nivel || null,
       objetivo: objetivo || null,
       comoConocio: comoConocio || null,
-      origen: origen || 'formulario'
+      origen: origen || 'formulario',
+      // Prueba del consentimiento (RGPD art. 7.1): cuando lo dio y que texto acepto. La
+      // marca de tiempo la pone el SERVIDOR, no el cliente, que podria mentir.
+      consentimientoAt: new Date().toISOString(),
+      politicaVersion: politicaVersion || LEGAL_VERSION,
     });
 
     res.json({ ok: true, id: signup.id });

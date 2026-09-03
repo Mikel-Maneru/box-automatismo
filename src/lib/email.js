@@ -23,7 +23,10 @@ const MAIL_FROM = process.env.MAIL_FROM || 'Anboto SC <onboarding@resend.dev>';
 // NO afecta ni al aviso al box ni al correo de seguimiento: esos siguen activos.
 const EMAIL_ELEGIR_DIA = process.env.EMAIL_ELEGIR_DIA === 'on';
 
-async function createSignup({ nombre, telefono, email, nivel, objetivo, comoConocio, origen }) {
+async function createSignup({
+  nombre, telefono, email, nivel, objetivo, comoConocio, origen,
+  consentimientoAt, politicaVersion,
+}) {
   // Get box_id for Anboto
   const { data: box } = await supabase
     .from('boxes')
@@ -44,7 +47,11 @@ async function createSignup({ nombre, telefono, email, nivel, objetivo, comoCono
       nivel: nivel || null,
       objetivo: objetivo || null,
       como_conocio: comoConocio || null,
-      origen: origen || 'formulario'
+      origen: origen || 'formulario',
+      // Prueba del consentimiento. Van a null cuando el alta no viene del formulario (por
+      // ejemplo, del chat), para no fingir un consentimiento que no se recogio asi.
+      consentimiento_at: consentimientoAt || null,
+      politica_version: politicaVersion || null,
     })
     .select()
     .single();
